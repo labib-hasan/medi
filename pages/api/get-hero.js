@@ -1,6 +1,6 @@
 const API_URL =
 process.env.NEXT_PUBLIC_API_URL ||
-"https://hospital-production-c3b0.up.railway.app";
+"https://lavender-monkey-429786.hostingersite.com";
 
 export default async function handler(req, res) {
 
