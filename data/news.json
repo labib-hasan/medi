@@ -1,0 +1,32 @@
+{
+  "news": [
+    {
+      "id": "1772545221871",
+      "title": "aaa",
+      "content": "aaa",
+      "image": "https://res.cloudinary.com/dd20ni4kl/image/upload/v1772545215/news/pqrvveto7dxrln3d9lml.jpg",
+      "createdAt": "2026-03-03T13:40:21.871Z"
+    },
+    {
+      "id": "1772517089590",
+      "title": "qqq",
+      "content": "ssee\njjjk\nikkl",
+      "image": "",
+      "createdAt": "2026-03-03T05:51:29.590Z"
+    },
+    {
+      "id": "1772517072386",
+      "title": "ddd",
+      "content": "ddd",
+      "image": "",
+      "createdAt": "2026-03-03T05:51:12.386Z"
+    },
+    {
+      "id": "1772516636679",
+      "title": "hello labib",
+      "content": "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+      "image": "https://res.cloudinary.com/dd20ni4kl/image/upload/v1772515478/news/qfvlibnuhvnslqqzhxnf.jpg",
+      "createdAt": "2026-03-03T05:43:56.679Z"
+    }
+  ]
+}
