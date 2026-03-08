@@ -575,130 +575,186 @@ export default function DepartmentPage() {
                   return (
                     <motion.div
   key={doctor.id || index}
-  initial={{ opacity: 0, y: 30 }}
+  initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
-  transition={{ duration: 0.6, delay: index * 0.05 }}
-  whileHover={{ y: -8 }}
-  className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col transition-all hover:shadow-2xl h-[580px]"
+  transition={{ delay: index * 0.05, duration: 0.5 }}
+  whileHover={{ 
+    y: -8,
+    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+  }}
+  className="max-w-sm rounded-2xl overflow-hidden bg-white mx-auto relative group cursor-pointer"
 >
-  {/* IMAGE AREA - Clearly visible */}
-  <div className="relative h-[280px] w-full overflow-hidden bg-gradient-to-br from-blue-600 to-cyan-600">
+  {/* IMAGE SECTION - with clip path for diagonal cut */}
+  <div className="relative">
     <img
       src={doctor.image || getDoctorImage(doctor.id || index + 1)}
       alt={doctor.name}
-      className="w-full h-full object-cover object-top transition duration-700 hover:scale-110"
-      onError={(e) => {
-        e.target.src = getDoctorImage(doctor.id || index + 1);
+      className="w-full transition-transform duration-500 group-hover:scale-105"
+      style={{
+        clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
+        height: "280px",
+        objectFit: "cover",
+        objectPosition: "top center"
       }}
+      onError={(e) => { e.target.src = getDoctorImage(doctor.id || index + 1); }}
     />
 
     {/* Gradient overlay for better text visibility */}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+    <div
+      style={{
+        clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
+        position: "absolute",
+        inset: 0,
+        background: "linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(30,64,175,0.4) 100%)",
+      }}
+    ></div>
 
-    {/* Availability badge with circle indicator */}
-    <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg z-10">
+    {/* Availability badge - repositioned for better visibility */}
+    <div className="absolute top-3 left-3 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 z-10">
       <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-      <span>{isBangla ? "উপলব্ধ" : "Available"}</span>
+      {isBangla ? "উপলব্ধ" : "Available"}
     </div>
 
-    {/* Doctor name overlay at bottom of image */}
-    <div className="absolute bottom-4 left-4 right-4 text-white z-10">
-      <h3 className="text-xl font-bold leading-tight mb-1">
-        {doctor.name}
-      </h3>
-      <p className="text-sm text-white/90 font-medium">
-        {doctor.degrees || doctor.specialization}
-      </p>
-    </div>
+    {/* Circle View Profile Button - replaces green plus */}
+    <motion.div
+      initial={{ scale: 0, opacity: 0 }}
+      whileInView={{ scale: 1, opacity: 1 }}
+      transition={{ delay: index * 0.05 + 0.2, type: "spring", stiffness: 200 }}
+      whileHover={{ scale: 1.1, rotate: 5 }}
+      whileTap={{ scale: 0.9 }}
+      style={{
+        position: "absolute",
+        bottom: "20px",
+        right: "20px",
+        height: "56px",
+        width: "56px",
+        borderRadius: "50%",
+        background: "linear-gradient(135deg, #2563eb, #0891b2)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white",
+        boxShadow: "0 10px 25px -5px rgba(37, 99, 235, 0.5)",
+        zIndex: 20,
+        cursor: "pointer"
+      }}
+      onClick={() => window.location.href = `/doctors/${doctor.id}`}
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      </svg>
+    </motion.div>
   </div>
 
-  {/* CONTENT AREA - Fixed height with proper spacing */}
-  <div className="p-5 flex flex-col flex-grow bg-white">
-    
-    {/* Designation and Institute */}
-    <div className="mb-3">
-      <p className="text-gray-800 font-semibold text-base">
-        {doctor.designation || (isBangla ? "ডাক্তার" : "Doctor")}
-      </p>
-      <p className="text-gray-500 text-sm">
-        {doctor.institute || (isBangla ? "মেডিকেল সেন্টার চট্টগ্রাম" : "Medical Center Chattagram")}
-      </p>
-    </div>
+  {/* CONTENT SECTION - with proper padding to avoid cutting */}
+  <div className="pt-6 pb-6 px-5 bg-white">
+    {/* NAME - with proper truncation */}
+    <h3 className="font-bold text-xl text-gray-800 text-center mb-1 truncate" title={doctor.name}>
+      {doctor.name}
+    </h3>
 
-    {/* INFO GRID - 2 columns with proper spacing */}
-    <div className="grid grid-cols-2 gap-3 mb-3">
-      {/* Experience */}
-      <div className="min-w-0">
-        <span className="text-gray-800 font-semibold text-sm block">
+    {/* SPECIALIZATION */}
+    <p className="text-blue-600 font-medium text-sm text-center mb-2 truncate" title={doctor.degrees || doctor.specialization}>
+      {doctor.degrees || doctor.specialization}
+    </p>
+
+    {/* DESIGNATION */}
+    <p className="text-center text-sm text-gray-600 mb-4 truncate" title={doctor.designation}>
+      {doctor.designation || (isBangla ? "পরামর্শক" : "Consultant")}
+    </p>
+
+    {/* STATS SECTION - clean layout with no cutting */}
+    <div className="grid grid-cols-3 gap-2 border-t border-b border-gray-100 py-4 mb-4">
+      <div className="text-center">
+        <p className="text-gray-500 text-xs mb-1">
           {isBangla ? "অভিজ্ঞতা" : "Experience"}
-        </span>
-        <span className="text-gray-600 text-sm block truncate">
-          {doctor.experience_years || "5"} {isBangla ? "বছর" : "years"}
-        </span>
+        </p>
+        <div className="font-bold text-gray-800">
+          <span className="text-lg">{doctor.experience_years || "5"}</span>
+          <span className="text-xs ml-0.5">{isBangla ? "বছর" : "yrs"}</span>
+        </div>
       </div>
 
-      {/* Room */}
-      <div className="min-w-0">
-        <span className="text-gray-800 font-semibold text-sm block">
-          {isBangla ? "রুম নং" : "Room No."}
-        </span>
-        <span className="text-gray-600 text-sm block truncate">
-          {doctor.room_no || (isBangla ? "নির্ধারিত হবে" : "TBA")}
-        </span>
+      <div className="text-center border-l border-r border-gray-100">
+        <p className="text-gray-500 text-xs mb-1">
+          {isBangla ? "রুম নং" : "Room"}
+        </p>
+        <p className="font-bold text-gray-800 text-lg truncate px-1" title={doctor.room_no}>
+          {doctor.room_no || (isBangla ? "টিবিএ" : "TBA")}
+        </p>
       </div>
 
-      {/* Time */}
-      <div className="min-w-0">
-        <span className="text-gray-800 font-semibold text-sm block">
+      <div className="text-center">
+        <p className="text-gray-500 text-xs mb-1">
           {isBangla ? "সময়" : "Time"}
-        </span>
-        <span className="text-gray-600 text-sm block truncate">
-          {formatTimeToAMPM(doctor.visiting_time) || (isBangla ? "সকাল ৯টা - বিকাল ৫টা" : "9 AM - 5 PM")}
-        </span>
-      </div>
-
-      {/* Serial */}
-      <div className="min-w-0">
-        <span className="text-gray-800 font-semibold text-sm block">
-          {isBangla ? "সিরিয়াল" : "Serial"}
-        </span>
-        <span className="text-gray-600 text-sm block truncate">
-          {doctor.serial_note || (isBangla ? "হটলাইনে কল করুন" : "Call hotline")}
-        </span>
+        </p>
+        <p className="font-bold text-gray-800 text-xs truncate" title={formatTimeToAMPM(doctor.visiting_time)}>
+          {formatTimeToAMPM(doctor.visiting_time) || (isBangla ? "সকাল ৯টা" : "9 AM")}
+        </p>
       </div>
     </div>
 
-    {/* Phone - if available */}
-    {doctor.phone && (
-      <div className="mb-3">
-        <span className="text-gray-800 font-semibold text-sm block">
-          {isBangla ? "ফোন" : "Phone"}
-        </span>
-        <span className="text-gray-600 text-sm block truncate">
-          {doctor.phone}
-        </span>
+    {/* INSTITUTE - with proper truncation */}
+    <p className="text-gray-600 text-xs text-center mb-4 truncate px-2" title={doctor.institute}>
+      <span className="font-medium text-gray-700">{isBangla ? "হাসপাতাল:" : "Hospital:"}</span>{" "}
+      {doctor.institute || (isBangla ? "মেডিকেল সেন্টার" : "Medical Center")}
+    </p>
+
+    {/* VISITING INFO */}
+    {(doctor.visiting_time || doctor.serial_note) && (
+      <div className="space-y-1.5 mb-4">
+        {doctor.visiting_time && (
+          <p className="text-gray-600 text-xs flex items-center justify-center gap-1">
+            <svg className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="font-medium text-gray-700">{isBangla ? "সময়:" : "Time:"}</span> 
+            <span className="truncate" title={formatTimeToAMPM(doctor.visiting_time)}>
+              {formatTimeToAMPM(doctor.visiting_time)}
+            </span>
+          </p>
+        )}
+        {doctor.serial_note && (
+          <p className="text-gray-600 text-xs flex items-center justify-center gap-1">
+            <svg className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l5 5a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-5-5A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+            <span className="font-medium text-gray-700">{isBangla ? "সিরিয়াল:" : "Serial:"}</span> 
+            <span className="truncate" title={doctor.serial_note}>
+              {doctor.serial_note}
+            </span>
+          </p>
+        )}
       </div>
     )}
 
-    {/* Spacer to push button to bottom */}
-    <div className="flex-grow"></div>
+    {/* PHONE NUMBER if available */}
+    {doctor.phone && (
+      <p className="text-gray-600 text-xs text-center mb-4 flex items-center justify-center gap-1">
+        <svg className="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+        </svg>
+        <span className="font-medium text-gray-700">{isBangla ? "ফোন:" : "Phone:"}</span> 
+        {doctor.phone}
+      </p>
+    )}
 
-    {/* CTA BUTTON - View Profile */}
+    {/* PROFILE BUTTON - full width, no cutting */}
     <motion.div
-      whileHover={{ scale: 1.03 }}
+      whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className="mt-2"
     >
       <Link
         href={`/doctors/${doctor.id}`}
-        className="block w-full text-center py-3 rounded-xl text-white font-semibold text-sm transition-all duration-300"
-        style={{
-          background: "linear-gradient(135deg, #2563eb, #06b6d4)",
-          boxShadow: "0 8px 20px rgba(37, 99, 235, 0.25)"
-        }}
+        className="inline-flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold text-sm hover:from-blue-700 hover:to-cyan-700 transition-all shadow-lg shadow-blue-500/25 hover:shadow-xl"
       >
-        {isBangla ? "প্রোফাইল দেখুন" : "View Profile"}
+        {isBangla ? "সম্পূর্ণ প্রোফাইল দেখুন" : "View Full Profile"}
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
       </Link>
     </motion.div>
   </div>
