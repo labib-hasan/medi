@@ -575,97 +575,191 @@ export default function DepartmentPage() {
                   return (
                     <motion.div
                       key={doctor.id || index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.05, duration: 0.5 }}
-                      whileHover={{ y: -3, scale: 1.01 }}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all border border-gray-100 flex flex-col h-[520px]"
+                      transition={{ delay: index * 0.08, duration: 0.6, type: "spring", stiffness: 100 }}
+                      whileHover={{ y: -8, scale: 1.02 }}
+                      className="group relative bg-white rounded-2xl overflow-hidden transition-all duration-500 flex flex-col"
+                      style={{ 
+                        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04)',
+                      }}
                     >
-                      {/* Top - Picture (taller) */}
-                      <div className="w-full h-[280px] relative bg-gradient-to-br from-blue-600 to-cyan-600 flex-shrink-0">
-
-                        <img
-                          src={doctor.image || getDoctorImage(doctor.id || index + 1)}
-                          alt={doctor.name}
-                          className="w-full h-full object-cover object-top"
-                          onError={(e) => { e.target.src = getDoctorImage(doctor.id || index + 1); }}
-                        />
-
-                        {/* Availability badge */}
-                        <div className="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1">
-                          <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                          {isBangla ? "উপলব্ধ" : "Available"}
-                        </div>
+                      {/* Premium Gradient Border Effect */}
+                      <div className="absolute inset-0 rounded-2xl p-[2px] bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 animate-gradient-x"></div>
                       </div>
+                      
+                      {/* Card Inner Container */}
+                      <div className="relative bg-white rounded-2xl overflow-hidden m-[2px] flex flex-col h-full">
+                        
+                        {/* Top - Picture Section */}
+                        <div className="relative h-[260px] overflow-hidden">
+                          {/* Premium Image Overlay Gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
+                          
+                          {/* Image with Zoom Effect */}
+                          <motion.img
+                            src={doctor.image || getDoctorImage(doctor.id || index + 1)}
+                            alt={doctor.name}
+                            className="w-full h-full object-cover object-top"
+                            onError={(e) => { e.target.src = getDoctorImage(doctor.id || index + 1); }}
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.6 }}
+                          />
+                          
+                          {/* Floating Availability Badge */}
+                          <motion.div 
+                            initial={{ x: -20, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
+                            className="absolute top-3 left-3 z-20"
+                          >
+                            <div className="bg-green-500/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                              <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                              {isBangla ? "উপলব্ধ" : "Available"}
+                            </div>
+                          </motion.div>
 
-                      {/* Bottom - Information with fixed layout */}
-                      <div className="w-full p-4 flex flex-col h-[240px]">
+                          {/* Experience Badge - Top Right */}
+                          <motion.div 
+                            initial={{ x: 20, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.4, duration: 0.4 }}
+                            className="absolute top-3 right-3 z-20"
+                          >
+                            <div className="bg-black/50 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+                              <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                              </svg>
+                              {doctor.experience_years || "5"} {isBangla ? "বছর" : "years"}
+                            </div>
+                          </motion.div>
 
-                        {/* Fixed height info container */}
-                        <div className="flex flex-col h-full">
-                          {/* Name - fixed height line */}
-                          <h2 className="text-base font-bold text-gray-800 uppercase tracking-wide h-6 leading-6 truncate flex-shrink-0">
-                            {doctor.name}
-                          </h2>
+                          {/* Department Badge - Bottom Left */}
+                          <motion.div 
+                            initial={{ y: 20, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.5, duration: 0.4 }}
+                            className="absolute bottom-3 left-3 z-20"
+                          >
+                            <div className="bg-white/90 backdrop-blur-sm text-blue-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+                              {doctor.department || (isBangla ? "বিশেষজ্ঞ" : "Specialist")}
+                            </div>
+                          </motion.div>
+                        </div>
 
-                          {/* Degrees/Specialization - fixed height line */}
-                          <p className="text-blue-700 font-semibold text-sm h-5 leading-5 truncate flex-shrink-0 mt-1">
-                            {doctor.degrees || doctor.specialization}
-                          </p>
+                        {/* Bottom - Information Section */}
+                        <div className="flex-1 p-5 flex flex-col bg-gradient-to-b from-white to-gray-50/50">
+                          
+                          {/* Doctor Name */}
+                          <motion.div
+                            initial={{ y: 10, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.2, duration: 0.4 }}
+                          >
+                            <h2 className="text-lg font-bold text-gray-900 leading-tight mb-1 group-hover:text-blue-700 transition-colors">
+                              {doctor.name}
+                            </h2>
+                          </motion.div>
 
-                          {/* Designation - fixed height line */}
-                          <p className="text-gray-700 font-medium text-sm h-5 leading-5 truncate flex-shrink-0">
-                            {doctor.designation || (isBangla ? "ডাক্তার" : "Doctor")}
-                          </p>
-
-                          {/* Institute - fixed height line */}
-                          <p className="text-gray-600 text-sm h-5 leading-5 truncate flex-shrink-0">
-                            {doctor.institute || (isBangla ? "মেডিকেল সেন্টার চট্টগ্রাম" : "Medical Center Chattagram")}
-                          </p>
-
-                          {/* Experience - fixed height line */}
-                          <p className="text-gray-600 text-xs h-4 leading-4 truncate flex-shrink-0">
-                            <span className="font-medium text-gray-800">{isBangla ? "অভিজ্ঞতা:" : "Experience:"}</span> {doctor.experience_years || "5"} {isBangla ? "বছর" : "years"}
-                          </p>
-
-                          {/* Room, Time, Serial & Phone - fixed height lines */}
-                          <div className="mt-1 space-y-1 flex-shrink-0">
-                            <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-                              <span className="font-medium text-gray-800">{isBangla ? "রুম নং:" : "Room:"}</span> {doctor.room_no || (isBangla ? "নির্ধারণ করা হবে" : "TBA")}
+                          {/* Degrees/Specialization */}
+                          <motion.div
+                            initial={{ y: 10, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.25, duration: 0.4 }}
+                            className="mb-3"
+                          >
+                            <p className="text-blue-600 font-semibold text-sm truncate">
+                              {doctor.degrees || doctor.specialization}
                             </p>
-                            <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-                              <span className="font-medium text-gray-800">{isBangla ? "সময়:" : "Time:"}</span> {formatTimeToAMPM(doctor.visiting_time) || (isBangla ? "সকাল ৯টা - বিকাল ৫টা" : "9 AM - 5 PM")}
+                          </motion.div>
+
+                          {/* Designation & Institute */}
+                          <motion.div
+                            initial={{ y: 10, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
+                            className="mb-3"
+                          >
+                            <p className="text-gray-700 font-medium text-sm truncate flex items-center gap-1.5">
+                              <svg className="w-4 h-4 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                              <span className="truncate">{doctor.designation || (isBangla ? "ডাক্তার" : "Doctor")}</span>
                             </p>
-                           <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-  <span className="font-medium text-gray-800">
-    {isBangla ? "সিরিয়াল:" : "Serial:"}
-  </span>{" "}
-  {formatTimeToAMPM(doctor.serial_note) ||
-    (isBangla ? "হটলাইনে কল করুন" : "Call hotline")}
-</p>
+                            <p className="text-gray-500 text-xs ml-5.5 truncate">
+                              {doctor.institute || (isBangla ? "মেডিকেল সেন্টার চট্টগ্রাম" : "Medical Center Chattagram")}
+                            </p>
+                          </motion.div>
 
-                            {doctor.phone && (
-                              <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-                                <span className="font-medium text-gray-800">{isBangla ? "ফোন:" : "Phone:"}</span> {doctor.phone}
-                              </p>
-                            )}
-                          </div>
+                          {/* Info Grid - Room, Time, Serial */}
+                          <motion.div
+                            initial={{ y: 10, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.35, duration: 0.4 }}
+                            className="grid grid-cols-2 gap-2 mb-3 mt-auto"
+                          >
+                            {/* Room */}
+                            <div className="flex items-center gap-1.5 bg-blue-50 rounded-lg px-2 py-1.5">
+                              <svg className="w-3.5 h-3.5 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                              <span className="text-xs text-gray-600 font-medium truncate">
+                                {isBangla ? "রুম" : "Room"}: <span className="text-gray-800">{doctor.room_no || (isBangla ? "নির্ধারণ করা হবে" : "TBA")}</span>
+                              </span>
+                            </div>
 
+                            {/* Time */}
+                            <div className="flex items-center gap-1.5 bg-cyan-50 rounded-lg px-2 py-1.5">
+                              <svg className="w-3.5 h-3.5 text-cyan-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span className="text-xs text-gray-600 font-medium truncate">
+                                {formatTimeToAMPM(doctor.visiting_time) || (isBangla ? "৯টা - ৫টা" : "9AM - 5PM")}
+                              </span>
+                            </div>
+                          </motion.div>
 
-                          {/* Spacer to push button to bottom */}
-                          <div className="flex-grow"></div>
+                          {/* Serial/Phone Row */}
+                          <motion.div
+                            initial={{ y: 10, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.4, duration: 0.4 }}
+                            className="mb-4"
+                          >
+                            <div className="flex items-center gap-1.5 bg-green-50 rounded-lg px-2 py-1.5">
+                              <svg className="w-3.5 h-3.5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                              </svg>
+                              <span className="text-xs text-gray-600 font-medium truncate">
+                                {isBangla ? "সিরিয়াল:" : "Serial:"} <span className="text-green-700">{doctor.serial_note || (isBangla ? "হটলাইনে কল" : "Call hotline")}</span>
+                              </span>
+                            </div>
+                          </motion.div>
 
-                          {/* View Profile Button - always at bottom */}
-                          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-auto flex-shrink-0">
+                          {/* View Profile Button */}
+                          <motion.div 
+                            initial={{ y: 10, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ delay: index * 0.1 + 0.45, duration: 0.4 }}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="mt-auto"
+                          >
                             <Link 
                               href={`/doctors/${doctor.id}`}
-                              className="inline-flex items-center justify-center gap-2 w-full py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold text-sm hover:from-blue-700 hover:to-cyan-700 transition shadow-lg shadow-blue-500/25"
+                              className="group/btn relative inline-flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold text-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/30"
                             >
-                              {isBangla ? "প্রোফাইল দেখুন" : "View Profile"}
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
+                              {/* Button Shine Effect */}
+                              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></span>
+                              
+                              <span className="relative flex items-center gap-2">
+                                {isBangla ? "প্রোফাইল দেখুন" : "View Profile"}
+                                <svg className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              </span>
                             </Link>
                           </motion.div>
                         </div>
