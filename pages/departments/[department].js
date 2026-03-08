@@ -579,7 +579,7 @@ export default function DepartmentPage() {
   initial={{ opacity: 0, y: 20 }}
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
-  transition={{ duration: 0.05, delay: index * 0.01 }}
+  transition={{ duration: 0.2, delay: index * 0.05 }}
   whileHover={{
     y: -6,
     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.69)"

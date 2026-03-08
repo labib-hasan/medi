@@ -465,7 +465,7 @@ export default function Doctors() {
                       value={formData.name}
                       onChange={(e) => setFormData({...formData, name: e.target.value})}
                       placeholder="e.g. Dr. John Doe"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -478,7 +478,7 @@ export default function Doctors() {
                       value={formData.specialization}
                       onChange={(e) => setFormData({...formData, specialization: e.target.value})}
                       placeholder="e.g. Cardiologist"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -490,7 +490,7 @@ export default function Doctors() {
                       value={formData.degrees}
                       onChange={(e) => setFormData({...formData, degrees: e.target.value})}
                       placeholder="e.g. MBBS, FCPS, MD"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -502,7 +502,7 @@ export default function Doctors() {
                       value={formData.designation}
                       onChange={(e) => setFormData({...formData, designation: e.target.value})}
                       placeholder="e.g. Senior Consultant"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                 </div>
@@ -523,7 +523,7 @@ export default function Doctors() {
                       required
                       value={formData.department}
                       onChange={(e) => setFormData({...formData, department: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-white"
                     >
                       <option value="">Select Department</option>
                       {DEPARTMENTS.map(dept => (
@@ -540,7 +540,7 @@ export default function Doctors() {
                       value={formData.institute}
                       onChange={(e) => setFormData({...formData, institute: e.target.value})}
                       placeholder="e.g. Medical Center Hospital"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -552,7 +552,7 @@ export default function Doctors() {
                       value={formData.room_no}
                       onChange={(e) => setFormData({...formData, room_no: e.target.value})}
                       placeholder="e.g. 302"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -564,7 +564,7 @@ export default function Doctors() {
                       value={formData.experience_years}
                       onChange={(e) => setFormData({...formData, experience_years: e.target.value})}
                       placeholder="e.g. 10"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                 </div>
@@ -590,7 +590,7 @@ export default function Doctors() {
                         const endTime = formData.visiting_time?.split(' - ')[1]?.trim() || '17:00';
                         setFormData({...formData, visiting_time: `${startTime} - ${endTime}`});
                       }}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -605,7 +605,7 @@ export default function Doctors() {
                         const startTime = formData.visiting_time?.split(' - ')[0]?.trim() || '09:00';
                         setFormData({...formData, visiting_time: `${startTime} - ${endTime}`});
                       }}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   
@@ -622,7 +622,7 @@ export default function Doctors() {
                         const endTime = formData.serial_note?.includes('-') ? formData.serial_note.split('-')[1]?.trim() || '10:00' : '10:00';
                         setFormData({...formData, serial_note: `${startTime} - ${endTime}`});
                       }}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -637,7 +637,7 @@ export default function Doctors() {
                         const startTime = formData.serial_note?.includes('-') ? formData.serial_note.split('-')[0]?.trim() || '10:00' : '10:00';
                         setFormData({...formData, serial_note: `${startTime} - ${endTime}`});
                       }}
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   
@@ -692,7 +692,7 @@ export default function Doctors() {
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
                       placeholder="+880 123 4567890"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                   <div>
@@ -704,7 +704,7 @@ export default function Doctors() {
                       value={formData.email}
                       onChange={(e) => setFormData({...formData, email: e.target.value})}
                       placeholder="doctor@hospital.com"
-                      className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                      className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                     />
                   </div>
                 </div>
@@ -720,7 +720,7 @@ export default function Doctors() {
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="Brief description about the doctor..."
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
+                  className="text-black w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
                 />
               </div>
 
