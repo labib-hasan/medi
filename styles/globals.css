@@ -2202,3 +2202,52 @@ nav .fixed ul ul li a:hover {
 }
 
 
+
+
+
+
+/* =========================================
+   MD SCREEN SAME AS LG DESIGN
+   ========================================= */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+  /* HERO HEIGHT */
+  .hero-wrapper {
+    height: 80vh !important;
+  }
+
+  /* CARE TILES */
+  .care-tiles-wrap {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+
+  /* DEPARTMENTS */
+  .dept-grid {
+    grid-template-columns: 2fr 1fr !important;
+  }
+
+  .dept-cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    grid-template-columns: 1.6fr 1fr !important;
+  }
+
+  .cards {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* DOCTORS */
+  .doctors-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* HERO BUTTONS */
+  .hero-actions-wrap {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
+} 

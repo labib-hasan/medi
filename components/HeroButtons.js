@@ -12,7 +12,7 @@ export default function HeroButtons() {
 
   return (
     <div className="absolute bottom-8 lg:bottom-4 left-1/2 -translate-x-1/2 z-20 w-full max-w-7xl px-4 mb-5px">
-      <div className="grid lg:grid lg:grid-cols-5 grid-cols-2 md:grid-cols-5 lg:h-18 h-30 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 lg:h-18 h-30 gap-4">
         {buttons.map((btn, index) => (
          <Link
   key={index}

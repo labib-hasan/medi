@@ -126,7 +126,7 @@ const mainMenuItems = [
 
 useEffect(() => {
   const handleResize = () => {
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth >= 1024) {
       setMobileMenuOpen(false);
       setOpenSubmenu(null);
     }
@@ -150,7 +150,7 @@ useEffect(() => {
       {/* Main navbar */}
       <header className="bg-gray-100 border-b justify-between items-center fixed top-0 left-0 right-0 z-20 border-gray-300">
          {/* New top bar */}
-        <div className="hidden md:flex flex-row flex-nowrap justify-between items-center px-2 sm:px-4 py-1 text-xs text-gray-700 border-b border-gray-300">
+        <div className="hidden lg:flex flex-row flex-nowrap justify-between items-center px-2 sm:px-4 py-1 text-xs text-gray-700 border-b border-gray-300">
           <div className="flex ml-2 flex-nowrap space-x-1 sm:space-x-2 md:space-x-6 text-xs">
             {menuItems.map((item, idx) =>
               item.submenu ? (
@@ -223,14 +223,14 @@ useEffect(() => {
                 width={32}
                 height={32}
                 unoptimized
-                className="h-6 w-auto md:h-8"
+                className="h-6 w-auto lg:h-8"
               />
               <span className="text-xs md:text-sm text-blue-500 uppercase tracking-widest font-bold">
   Medical Center</span>
             </Link>
 
             {/* Desktop menu */}
-            <ul className="hidden md:flex space-x-3 text-xs text-gray-700 font-medium">
+           <ul className="hidden lg:flex space-x-3 text-xs text-gray-700 font-medium">
               {mainMenuItems.map((item, idx) =>
                 item.submenu ? (
                   <li key={idx} className="relative group">
@@ -265,7 +265,7 @@ useEffect(() => {
            {/* Mobile toggle button */}
 <button
   onClick={() => setMobileMenuOpen(true)}
-  className="md:hidden p-2 rounded-xl 
+  className="lg:hidden p-2 rounded-xl 
   bg-gradient-to-br from-blue-600 via-cyan-500 to-teal-400 
   text-white shadow-[0_4px_16px_rgba(0,180,255,0.35)] 
   active:scale-60 transition-all duration-150"
