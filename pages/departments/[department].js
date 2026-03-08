@@ -574,103 +574,132 @@ export default function DepartmentPage() {
                   
                   return (
                     <motion.div
-                      key={doctor.id || index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.05, duration: 0.5 }}
-                      whileHover={{ y: -3, scale: 1.01 }}
-                      className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all border border-gray-100 flex flex-col h-[520px]"
-                    >
-                      {/* Top - Picture (taller) */}
-                      <div className="w-full h-[280px] relative bg-gradient-to-br from-blue-600 to-cyan-600 flex-shrink-0">
+  key={doctor.id || index}
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ delay: index * 0.05 }}
+  whileHover={{ y: -6 }}
+  className="max-w-sm rounded-xl overflow-hidden shadow-xl bg-white mx-auto"
+>
 
-                        <img
-                          src={doctor.image || getDoctorImage(doctor.id || index + 1)}
-                          alt={doctor.name}
-                          className="w-full h-full object-cover object-top"
-                          onError={(e) => { e.target.src = getDoctorImage(doctor.id || index + 1); }}
-                        />
+  {/* IMAGE SECTION */}
+  <div className="relative">
+    <img
+      src={doctor.image || getDoctorImage(doctor.id || index + 1)}
+      alt={doctor.name}
+      className="w-full"
+      style={{
+        clipPath: "polygon(0 0,100% 0,100% 70%,0% 100%)",
+        height: "260px",
+        objectFit: "cover"
+      }}
+    />
 
-                        {/* Availability badge */}
-                        <div className="absolute top-3 right-3 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg flex items-center gap-1">
-                          <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                          {isBangla ? "উপলব্ধ" : "Available"}
-                        </div>
-                      </div>
+    {/* overlay */}
+    <div
+      style={{
+        clipPath: "polygon(0 0,100% 0,100% 70%,0% 100%)",
+        position: "absolute",
+        inset: 0,
+        background: "rgba(30,64,175,0.55)"
+      }}
+    ></div>
 
-                      {/* Bottom - Information with fixed layout */}
-                      <div className="w-full p-4 flex flex-col h-[240px]">
+    {/* floating plus icon */}
+    <div
+      style={{
+        position: "absolute",
+        bottom: "20px",
+        right: "20px",
+        height: "60px",
+        width: "60px",
+        borderRadius: "50%",
+        background: "#22c55e",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white",
+        fontSize: "30px",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.25)"
+      }}
+    >
+      +
+    </div>
+  </div>
 
-                        {/* Fixed height info container */}
-                        <div className="flex flex-col h-full">
-                          {/* Name - fixed height line */}
-                          <h2 className="text-base font-bold text-gray-800 uppercase tracking-wide h-6 leading-6 truncate flex-shrink-0">
-                            {doctor.name}
-                          </h2>
+  {/* CONTENT */}
+  <div className="pt-4 pb-6 px-5 flex flex-col items-center">
 
-                          {/* Degrees/Specialization - fixed height line */}
-                          <p className="text-blue-700 font-semibold text-sm h-5 leading-5 truncate flex-shrink-0 mt-1">
-                            {doctor.degrees || doctor.specialization}
-                          </p>
+    {/* NAME */}
+    <p className="font-bold text-2xl text-gray-800 text-center">
+      {doctor.name}
+    </p>
 
-                          {/* Designation - fixed height line */}
-                          <p className="text-gray-700 font-medium text-sm h-5 leading-5 truncate flex-shrink-0">
-                            {doctor.designation || (isBangla ? "ডাক্তার" : "Doctor")}
-                          </p>
+    {/* SPECIALIZATION */}
+    <p className="text-gray-500 mb-2">
+      {doctor.degrees || doctor.specialization}
+    </p>
 
-                          {/* Institute - fixed height line */}
-                          <p className="text-gray-600 text-sm h-5 leading-5 truncate flex-shrink-0">
-                            {doctor.institute || (isBangla ? "মেডিকেল সেন্টার চট্টগ্রাম" : "Medical Center Chattagram")}
-                          </p>
+    {/* DESIGNATION */}
+    <p className="text-center text-sm text-gray-600 mb-3">
+      {doctor.designation}
+    </p>
 
-                          {/* Experience - fixed height line */}
-                          <p className="text-gray-600 text-xs h-4 leading-4 truncate flex-shrink-0">
-                            <span className="font-medium text-gray-800">{isBangla ? "অভিজ্ঞতা:" : "Experience:"}</span> {doctor.experience_years || "5"} {isBangla ? "বছর" : "years"}
-                          </p>
+    {/* SOCIAL ICONS */}
+    <div className="flex gap-3 mb-4">
 
-                          {/* Room, Time, Serial & Phone - fixed height lines */}
-                          <div className="mt-1 space-y-1 flex-shrink-0">
-                            <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-                              <span className="font-medium text-gray-800">{isBangla ? "রুম নং:" : "Room:"}</span> {doctor.room_no || (isBangla ? "নির্ধারণ করা হবে" : "TBA")}
-                            </p>
-                            <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-                              <span className="font-medium text-gray-800">{isBangla ? "সময়:" : "Time:"}</span> {formatTimeToAMPM(doctor.visiting_time) || (isBangla ? "সকাল ৯টা - বিকাল ৫টা" : "9 AM - 5 PM")}
-                            </p>
-                           <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-  <span className="font-medium text-gray-800">
-    {isBangla ? "সিরিয়াল:" : "Serial:"}
-  </span>{" "}
-  {formatTimeToAMPM(doctor.serial_note) ||
-    (isBangla ? "হটলাইনে কল করুন" : "Call hotline")}
-</p>
+      <div className="w-9 h-9 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm">
+        f
+      </div>
 
-                            {doctor.phone && (
-                              <p className="text-gray-600 text-xs h-4 leading-4 truncate">
-                                <span className="font-medium text-gray-800">{isBangla ? "ফোন:" : "Phone:"}</span> {doctor.phone}
-                              </p>
-                            )}
-                          </div>
+      <div className="w-9 h-9 rounded-full bg-sky-400 flex items-center justify-center text-white text-sm">
+        t
+      </div>
 
+      <div className="w-9 h-9 rounded-full bg-pink-500 flex items-center justify-center text-white text-sm">
+        in
+      </div>
 
-                          {/* Spacer to push button to bottom */}
-                          <div className="flex-grow"></div>
+    </div>
 
-                          {/* View Profile Button - always at bottom */}
-                          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="mt-auto flex-shrink-0">
-                            <Link 
-                              href={`/doctors/${doctor.id}`}
-                              className="inline-flex items-center justify-center gap-2 w-full py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg font-semibold text-sm hover:from-blue-700 hover:to-cyan-700 transition shadow-lg shadow-blue-500/25"
-                            >
-                              {isBangla ? "প্রোফাইল দেখুন" : "View Profile"}
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                              </svg>
-                            </Link>
-                          </motion.div>
-                        </div>
-                      </div>
-                    </motion.div>
+    {/* STATS */}
+    <div className="flex gap-6 text-center mt-2">
+
+      <div>
+        <p className="text-gray-500 text-xs">
+          {isBangla ? "অভিজ্ঞতা" : "Experience"}
+        </p>
+        <b className="text-lg">{doctor.experience_years || 5}</b>
+      </div>
+
+      <div>
+        <p className="text-gray-500 text-xs">
+          {isBangla ? "রুম" : "Room"}
+        </p>
+        <b className="text-lg">{doctor.room_no || "TBA"}</b>
+      </div>
+
+      <div>
+        <p className="text-gray-500 text-xs">
+          {isBangla ? "দিন" : "Days"}
+        </p>
+        <b className="text-lg">
+          {getVisitingDaysArray(doctor.visiting_days).length}
+        </b>
+      </div>
+
+    </div>
+
+    {/* PROFILE BUTTON */}
+    <Link
+      href={`/doctors/${doctor.id}`}
+      className="mt-5 w-full text-center py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+    >
+      {isBangla ? "প্রোফাইল দেখুন" : "View Profile"}
+    </Link>
+
+  </div>
+</motion.div>
                   );
                 })}
                 </div>
