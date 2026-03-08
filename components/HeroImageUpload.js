@@ -101,7 +101,7 @@ export default function HeroImageUpload({ isAdmin = false }) {
     h-full           /* ✅ height always full */
     w-auto           /* ✅ width flexible */
     object-cover     /* ✅ width can crop */
-    max-w-none       /* ✅ prevent forced shrink */
+         /* ✅ prevent forced shrink */
   "
                 />
               ) : (
