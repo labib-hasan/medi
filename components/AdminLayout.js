@@ -52,11 +52,11 @@ export default function AdminLayout({ children }) {
           <input
             type="text"
             placeholder="Search doctor, patient..."
-            className="w-1/3 px-4 py-2 border rounded-lg text-sm focus:outline-none"
+            className="text-black w-1/3 px-4 py-2 border rounded-lg text-sm focus:outline-none"
           />
 
           <div className="flex items-center gap-4">
-            <span className="text-sm font-medium">Admin</span>
+            <span className="bg-blue-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600">Admin</span>
             <button
               onClick={() => {
                 localStorage.removeItem("token");
