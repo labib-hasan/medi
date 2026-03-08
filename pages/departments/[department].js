@@ -579,177 +579,128 @@ export default function DepartmentPage() {
   whileInView={{ opacity: 1, y: 0 }}
   viewport={{ once: true }}
   transition={{ duration: 0.6, delay: index * 0.05 }}
-  whileHover={{ y: -10 }}
-  className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col transition-all hover:shadow-2xl h-full"
+  whileHover={{ y: -8 }}
+  className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col transition-all hover:shadow-2xl h-[580px]"
 >
-
-  {/* IMAGE AREA */}
-  <div className="relative h-[250px] w-full overflow-hidden flex-shrink-0">
-
+  {/* IMAGE AREA - Clearly visible */}
+  <div className="relative h-[280px] w-full overflow-hidden bg-gradient-to-br from-blue-600 to-cyan-600">
     <img
       src={doctor.image || getDoctorImage(doctor.id || index + 1)}
       alt={doctor.name}
-      className="w-full h-full object-cover object-top transition duration-500 hover:scale-110"
+      className="w-full h-full object-cover object-top transition duration-700 hover:scale-110"
       onError={(e) => {
         e.target.src = getDoctorImage(doctor.id || index + 1);
       }}
     />
 
-    {/* gradient overlay - lighter to keep photo visible */}
-    <div
-      style={{
-        position: "absolute",
-        inset: 0,
-        background:
-          "linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.05))"
-      }}
-    />
+    {/* Gradient overlay for better text visibility */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
-    {/* availability badge */}
-    <div
-      style={{
-        position: "absolute",
-        top: "14px",
-        right: "14px",
-        background: "#22c55e",
-        color: "white",
-        fontSize: "12px",
-        fontWeight: "600",
-        padding: "4px 10px",
-        borderRadius: "999px",
-        display: "flex",
-        alignItems: "center",
-        gap: "6px",
-        boxShadow: "0 5px 15px rgba(0,0,0,0.2)"
-      }}
-    />
-      <span
-        style={{
-          width: "8px",
-          height: "8px",
-          background: "white",
-          borderRadius: "50%",
-          animation: "pulse 1.5s infinite"
-        }}
-      ></span>
-
-      {isBangla ? "উপলব্ধ" : "Available"}
+    {/* Availability badge with circle indicator */}
+    <div className="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg z-10">
+      <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+      <span>{isBangla ? "উপলব্ধ" : "Available"}</span>
     </div>
 
-    {/* doctor name overlay */}
-    <div
-      style={{
-        position: "absolute",
-        bottom: "16px",
-        left: "16px",
-        right: "16px",
-        color: "white"
-      }}
-    >
-      <h3 className="text-lg font-bold leading-tight truncate">
+    {/* Doctor name overlay at bottom of image */}
+    <div className="absolute bottom-4 left-4 right-4 text-white z-10">
+      <h3 className="text-xl font-bold leading-tight mb-1">
         {doctor.name}
       </h3>
-
-      <p className="text-sm opacity-90 truncate">
+      <p className="text-sm text-white/90 font-medium">
         {doctor.degrees || doctor.specialization}
       </p>
     </div>
+  </div>
 
-  
-
-
-  {/* CONTENT */}
-  <div className="p-5 flex flex-col flex-grow">
-
-    {/* designation */}
-    <p className="text-gray-700 font-semibold text-sm truncate">
-      {doctor.designation || (isBangla ? "ডাক্তার" : "Doctor")}
-    </p>
-
-    <p className="text-gray-500 text-sm mb-3 truncate">
-      {doctor.institute ||
-        (isBangla
-          ? "মেডিকেল সেন্টার চট্টগ্রাম"
-          : "Medical Center Chattagram")}
-    </p>
-
-
-    {/* INFO GRID */}
-    <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm text-gray-600">
-
-      <div className="truncate">
-        <span className="font-medium text-gray-800">
-          {isBangla ? "অভিজ্ঞতা:" : "Experience:"}
-        </span>
-        <br />
-        <span className="truncate">{doctor.experience_years || "5"} {isBangla ? "বছর" : "years"}</span>
-      </div>
-
-      <div className="truncate">
-        <span className="font-medium text-gray-800">
-          {isBangla ? "রুম:" : "Room:"}
-        </span>
-        <br />
-        <span className="truncate">{doctor.room_no || "TBA"}</span>
-      </div>
-
-      <div className="truncate">
-        <span className="font-medium text-gray-800">
-          {isBangla ? "সময়:" : "Time:"}
-        </span>
-        <br />
-        <span className="truncate">
-          {formatTimeToAMPM(doctor.visiting_time) ||
-            (isBangla ? "সকাল ৯টা - বিকাল ৫টা" : "9 AM - 5 PM")}
-        </span>
-      </div>
-
-      <div className="truncate">
-        <span className="font-medium text-gray-800">
-          {isBangla ? "সিরিয়াল:" : "Serial:"}
-        </span>
-        <br />
-        <span className="truncate">
-          {doctor.serial_note ||
-            (isBangla ? "হটলাইনে কল করুন" : "Call hotline")}
-        </span>
-      </div>
-
+  {/* CONTENT AREA - Fixed height with proper spacing */}
+  <div className="p-5 flex flex-col flex-grow bg-white">
+    
+    {/* Designation and Institute */}
+    <div className="mb-3">
+      <p className="text-gray-800 font-semibold text-base">
+        {doctor.designation || (isBangla ? "ডাক্তার" : "Doctor")}
+      </p>
+      <p className="text-gray-500 text-sm">
+        {doctor.institute || (isBangla ? "মেডিকেল সেন্টার চট্টগ্রাম" : "Medical Center Chattagram")}
+      </p>
     </div>
 
+    {/* INFO GRID - 2 columns with proper spacing */}
+    <div className="grid grid-cols-2 gap-3 mb-3">
+      {/* Experience */}
+      <div className="min-w-0">
+        <span className="text-gray-800 font-semibold text-sm block">
+          {isBangla ? "অভিজ্ঞতা" : "Experience"}
+        </span>
+        <span className="text-gray-600 text-sm block truncate">
+          {doctor.experience_years || "5"} {isBangla ? "বছর" : "years"}
+        </span>
+      </div>
 
-    {/* PHONE */}
+      {/* Room */}
+      <div className="min-w-0">
+        <span className="text-gray-800 font-semibold text-sm block">
+          {isBangla ? "রুম নং" : "Room No."}
+        </span>
+        <span className="text-gray-600 text-sm block truncate">
+          {doctor.room_no || (isBangla ? "নির্ধারিত হবে" : "TBA")}
+        </span>
+      </div>
+
+      {/* Time */}
+      <div className="min-w-0">
+        <span className="text-gray-800 font-semibold text-sm block">
+          {isBangla ? "সময়" : "Time"}
+        </span>
+        <span className="text-gray-600 text-sm block truncate">
+          {formatTimeToAMPM(doctor.visiting_time) || (isBangla ? "সকাল ৯টা - বিকাল ৫টা" : "9 AM - 5 PM")}
+        </span>
+      </div>
+
+      {/* Serial */}
+      <div className="min-w-0">
+        <span className="text-gray-800 font-semibold text-sm block">
+          {isBangla ? "সিরিয়াল" : "Serial"}
+        </span>
+        <span className="text-gray-600 text-sm block truncate">
+          {doctor.serial_note || (isBangla ? "হটলাইনে কল করুন" : "Call hotline")}
+        </span>
+      </div>
+    </div>
+
+    {/* Phone - if available */}
     {doctor.phone && (
-      <p className="text-sm text-gray-600 mt-3 truncate">
-        <span className="font-medium text-gray-800">
-          {isBangla ? "ফোন:" : "Phone:"}
-        </span>{" "}
-        {doctor.phone}
-      </p>
+      <div className="mb-3">
+        <span className="text-gray-800 font-semibold text-sm block">
+          {isBangla ? "ফোন" : "Phone"}
+        </span>
+        <span className="text-gray-600 text-sm block truncate">
+          {doctor.phone}
+        </span>
+      </div>
     )}
 
+    {/* Spacer to push button to bottom */}
+    <div className="flex-grow"></div>
 
-    {/* CTA BUTTON */}
+    {/* CTA BUTTON - View Profile */}
     <motion.div
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.96 }}
-      className="mt-auto pt-4"
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.98 }}
+      className="mt-2"
     >
-
       <Link
         href={`/doctors/${doctor.id}`}
-        className="block w-full text-center py-2.5 rounded-lg text-white font-semibold text-sm transition-all duration-300"
+        className="block w-full text-center py-3 rounded-xl text-white font-semibold text-sm transition-all duration-300"
         style={{
-          background:
-            "linear-gradient(135deg,#2563eb,#06b6d4)",
-          boxShadow: "0 10px 25px rgba(37,99,235,0.3)"
+          background: "linear-gradient(135deg, #2563eb, #06b6d4)",
+          boxShadow: "0 8px 20px rgba(37, 99, 235, 0.25)"
         }}
       >
         {isBangla ? "প্রোফাইল দেখুন" : "View Profile"}
       </Link>
-
     </motion.div>
-
   </div>
 </motion.div>
                   );
