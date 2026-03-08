@@ -206,8 +206,8 @@ export default function DoctorProfile() {
 
   const shareProfile = async () => {
     const shareData = {
-      title: `Dr. ${doctor.name} - ${doctor.specialization}`,
-      text: `Book an appointment with Dr. ${doctor.name}, ${doctor.specialization} at our hospital.`,
+      title: `${doctor.name} - ${doctor.specialization}`,
+      text: `Book an appointment with ${doctor.name}, ${doctor.specialization} at our hospital.`,
       url: window.location.href
     };
 
@@ -232,7 +232,7 @@ export default function DoctorProfile() {
   };
 
   const handleWhatsAppShare = () => {
-    const text = `Book an appointment with Dr. ${doctor.name}, ${doctor.specialization}\n${window.location.href}`;
+    const text = `Book an appointment with ${doctor.name}, ${doctor.specialization}\n${window.location.href}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   };
 
@@ -380,7 +380,7 @@ export default function DoctorProfile() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-4xl md:text-5xl font-bold text-white mb-2"
               >
-                Dr. {doctor.name}
+               {doctor.name}
               </motion.h1>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -694,7 +694,7 @@ export default function DoctorProfile() {
                     >
                       <h3 className="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
                         <span className="w-1 h-8 bg-gradient-to-b from-cyan-500 to-blue-600 rounded-full"></span>
-                        About Dr. {doctor.name.split(' ')[1] || doctor.name}
+                        About {doctor.name.split(' ')[1] || doctor.name}
                       </h3>
                       <div className="prose max-w-none">
                         <p className="text-slate-600 leading-relaxed text-lg">
