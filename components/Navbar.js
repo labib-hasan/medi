@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "../context/LanguageContext";
@@ -17,6 +17,9 @@ const NavButton = ({ children }) => (
 export default function Navbar() {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuAnimating, setMenuAnimating] = useState(false);
+  const [menuItemsVisible, setMenuItemsVisible] = useState(false);
+  const drawerRef = useRef(null);
   const { language, changeLanguage } = useLanguage();
   const t = translations[language];
 
@@ -135,6 +138,29 @@ useEffect(() => {
   window.addEventListener("resize", handleResize);
   return () => window.removeEventListener("resize", handleResize);
 }, []);
+
+useEffect(() => {
+  if (mobileMenuOpen) {
+    setMenuAnimating(true);
+    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      setMenuItemsVisible(true);
+      setMenuAnimating(false);
+    }, 150);
+  } else {
+    setMenuItemsVisible(false);
+    setMenuAnimating(true);
+    document.body.style.overflow = "unset";
+    setTimeout(() => {
+      setMenuAnimating(false);
+    }, 300);
+  }
+}, [mobileMenuOpen]);
+
+const closeMenu = () => {
+  setMobileMenuOpen(false);
+  setOpenSubmenu(null);
+};
 
  
 
@@ -300,29 +326,55 @@ useEffect(() => {
 
 
 </div>
-{/* Mobile Overlay */}
+{/* Mobile Overlay - Premium Animation */}
+{/* Premium Glass Overlay */}
 <div
-  className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+  className={`fixed inset-0 z-40 transition-all duration-500 ${
     mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
   }`}
-  onClick={() => setMobileMenuOpen(false)}
+  onClick={closeMenu}
+  style={{
+    backdropFilter: "blur(18px) saturate(160%)",
+    WebkitBackdropFilter: "blur(18px) saturate(160%)",
+    background:
+      "linear-gradient(135deg, rgba(10,20,40,0.55), rgba(20,40,80,0.35))",
+  }}
 />
 
-{/* Premium Mobile Drawer */}
+{/* Premium Mobile Drawer - Spring Animation */}
 <div
-  className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-50 shadow-2xl rounded-l-3xl transform transition-transform duration-300 ease-in-out ${
-    mobileMenuOpen ? "translate-x-0" : "translate-x-full"
-  }`}
+  ref={drawerRef}
+  className={`fixed top-0 right-0 h-full w-[85%] max-w-sm z-50 rounded-l-[32px]
+  transform transition-all duration-500 ease-[cubic-bezier(.16,1,.3,1)]
+  ${mobileMenuOpen ? "translate-x-0 opacity-100 scale-100" : "translate-x-full opacity-80 scale-95"}`}
+  style={{
+    backdropFilter: "blur(24px) saturate(180%)",
+    WebkitBackdropFilter: "blur(24px) saturate(180%)",
+    background:
+      "linear-gradient(160deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35))",
+    borderLeft: "1px solid rgba(255,255,255,0.4)",
+    boxShadow:
+      "-40px 0 80px rgba(0,0,0,0.25), inset 0 0 0 1px rgba(255,255,255,0.2)",
+  }}
 >
-  {/* Header */}
-  <div className="flex items-center justify-between px-5 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-tl-3xl">
-    <div>
+{/* Header with premium animation */}
+  <div
+  className="flex items-center justify-between px-6 py-5 text-white rounded-tl-[32px] relative overflow-hidden"
+  style={{
+    background:
+      "linear-gradient(135deg, rgba(0,140,255,0.85), rgba(0,200,255,0.55))",
+    backdropFilter: "blur(12px)",
+  }}
+>
+    {/* Animated shine effect */}
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+    <div className="relative z-10">
       <h3 className="font-bold text-lg">Medical Center</h3>
       <p className="text-xs opacity-90">Premium Healthcare</p>
     </div>
     <button
-      onClick={() => setMobileMenuOpen(false)}
-      className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition"
+      onClick={closeMenu}
+      className="p-2 rounded-full bg-white/20 hover:bg-white/40 transition-all duration-300 hover:rotate-90 active:scale-95"
     >
       <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -354,23 +406,26 @@ useEffect(() => {
     </button>
   </div>
 
-  {/* Menu Content */}
+{/* Menu Content with staggered animations */}
   <div className="h-[calc(100%-120px)] overflow-y-auto px-4 py-4 space-y-2">
 
     {mainMenuItems.map((item, idx) =>
       item.submenu ? (
         <div
           key={idx}
-          className="bg-gray-50 rounded-xl overflow-hidden shadow-sm"
+         className="rounded-2xl overflow-hidden backdrop-blur-lg border border-white/40 shadow-[0_10px_40px_rgba(0,0,0,0.15)] bg-white/40 hover:bg-white/60 transition-all duration-300"
+          style={{
+            animation: mobileMenuOpen ? `slideInLeft 0.4s ease-out ${idx * 0.05}s both` : 'none',
+          }}
         >
           <button
             onClick={() => toggleSubmenu(idx)}
-            className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-100 transition"
+            className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold text-gray-800 hover:bg-gray-100 transition-all duration-300 hover:pl-5 active:scale-[0.98]"
           >
-            <span>{item.label}</span>
+            <span className="transition-transform duration-300">{item.label}</span>
             <svg
-              className={`w-4 h-4 transition-transform ${
-                openSubmenu === idx ? "rotate-180" : ""
+              className={`w-4 h-4 transition-all duration-300 ${
+                openSubmenu === idx ? "rotate-180 scale-110" : ""
               }`}
               fill="none"
               stroke="currentColor"
@@ -382,10 +437,10 @@ useEffect(() => {
           </button>
 
           <div
-  className={`transition-all duration-300 ${
-    openSubmenu === idx ? "max-h-[300px] opacity-100" : "max-h-0 opacity-0"
-  } overflow-hidden`}
->
+            className={`transition-all duration-400 ease-out ${
+              openSubmenu === idx ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+            } overflow-hidden`}
+          >
 
            <div className="flex flex-col bg-white border-t max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100">
 
@@ -393,8 +448,8 @@ useEffect(() => {
                 <Link
                   key={subidx}
                   href={subitem.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="px-5 py-2.5 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition"
+                  onClick={closeMenu}
+                  className="px-5 py-2.5 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue-500"
                 >
                   {subitem.label}
                 </Link>
@@ -406,30 +461,35 @@ useEffect(() => {
         <Link
           key={idx}
           href={item.href}
-          onClick={() => setMobileMenuOpen(false)}
-          className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-800 bg-gray-50 hover:bg-blue-50 hover:text-blue-600 transition shadow-sm"
+          onClick={closeMenu}
+         className="block px-4 py-3 rounded-xl text-sm font-semibold text-gray-900 backdrop-blur-md bg-white/40 border border-white/40 hover:bg-white/70 hover:shadow-lg transition-all duration-300 hover:scale-[1.03]"
+          style={{
+            animation: mobileMenuOpen ? `slideInLeft 0.4s ease-out ${idx * 0.05}s both` : 'none',
+          }}
         >
           {item.label}
         </Link>
       )
     )}
 
-    {/* Hotline Card */}
-    <div className="mt-4 p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg">
-      <p className="text-xs opacity-90">24/7 Emergency Hotline</p>
-      <h4 className="text-lg font-bold mt-1">+8809610-818888</h4>
+    {/* Hotline Card with pulse animation */}
+    <div 
+      className="mt-4 p-4 rounded-2xl bg-gradient-to-br from-cyan-500 via-blue-500 to-indigo-600
+shadow-[0_10px_40px_rgba(0,120,255,0.4)] text-white shadow-lg relative overflow-hidden group"
+      style={{
+        animation: mobileMenuOpen ? `slideInLeft 0.4s ease-out ${mainMenuItems.length * 0.05}s both` : 'none',
+      }}
+    >
+      {/* Animated pulse rings */}
+      <div className="absolute inset-0 bg-white/20 rounded-2xl scale-0 group-hover:scale-100 transition-transform duration-700 ease-out" />
+      <div className="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-40 group-hover:animate-shine" />
+      <div className="relative z-10">
+        <p className="text-xs opacity-90">24/7 Emergency Hotline</p>
+        <h4 className="text-lg font-bold mt-1">+8809610-818888</h4>
+      </div>
     </div>
   </div>
 </div>
-
-
-          {/* Overlay */}
-          {mobileMenuOpen && (
-            <div
-              className="fixed inset-0 bg-transparent bg-opacity-40 z-40 md:hidden"
-              onClick={() => setMobileMenuOpen(false)}
-            ></div>
-          )}
         </nav>
       </header>
     </>

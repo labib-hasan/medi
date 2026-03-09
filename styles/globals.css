@@ -1862,6 +1862,31 @@ nav .fixed ul ul li a:hover {
 .animate-delay-700 { animation-delay: 0.7s; }
 .animate-delay-800 { animation-delay: 0.8s; }
 
+/* Mobile Menu Animations */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 200%;
+  }
+}
+
+.animate-shine {
+  animation: shine 1.5s ease-in-out infinite;
+}
+
 /* Premium Glass Morphism */
 .glass-premium {
   background: rgba(255, 255, 255, 0.15);
@@ -2252,4 +2277,14 @@ nav .fixed ul ul li a:hover {
     grid-template-columns: repeat(5, 1fr) !important;
   }
 
+} 
+
+@keyframes glassFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.mobile-glass-card:hover {
+  animation: glassFloat 3s ease-in-out infinite;
 } 
