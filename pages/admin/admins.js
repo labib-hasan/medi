@@ -259,14 +259,12 @@ export default function AdminsManagement() {
                     >
                       Edit
                     </button>
-                    {admin.role !== 'superadmin' && (
-                      <button
-                        onClick={() => handleDelete(admin.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        Delete
-                      </button>
-                    )}
+                    <button
+                      onClick={() => handleDelete(admin.id)}
+                      className="text-red-600 hover:text-red-900"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
