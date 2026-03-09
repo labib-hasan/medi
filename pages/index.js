@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "../components/Navbar";
@@ -29,6 +29,8 @@ const getDoctorImage = (doctor) => {
 };
 
 export default function HomePage() {
+  const [visibleSections, setVisibleSections] = useState({});
+const sectionRefs = useRef([]);
   const { language } = useLanguage();
   const t = translations[language] || translations.en;
   
@@ -62,6 +64,27 @@ export default function HomePage() {
     loadData();
   }, []);
 
+  useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setVisibleSections((prev) => ({
+            ...prev,
+            [entry.target.dataset.section]: true,
+          }));
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  sectionRefs.current.forEach((el) => {
+    if (el) observer.observe(el);
+  });
+
+  return () => observer.disconnect();
+}, []);
   // Days array for translations
   const weekDays = language === 'bn' 
     ? ["শনিবার", "রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার"]
@@ -99,7 +122,13 @@ const selectedDoctors = targetDepartments
       </section>
 
      {/* Quick Access Tiles */}
-<section className="care-tiles">
+<section
+  ref={(el) => (sectionRefs.current[0] = el)}
+  data-section="tiles"
+  className={`care-tiles transition-all duration-1000 ${
+    visibleSections.tiles ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+  }`}
+>
   <div className="care-tiles-wrap">
 
     <Link href="/departments" className="care-tile group hover-lift">
@@ -161,7 +190,13 @@ const selectedDoctors = targetDepartments
   </div>
 </section>
 
-      <section className="dept-modern">
+      <section
+  ref={(el) => (sectionRefs.current[1] = el)}
+  data-section="departments"
+  className={`dept-modern transition-all duration-1000 ${
+    visibleSections.departments ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+  }`}
+>
   <div className="dept-wrap">
 
     {/* HEADER */}
@@ -243,7 +278,7 @@ const selectedDoctors = targetDepartments
 
 
       {/* Services Section */}
-   <section className="services-pro">
+  <section className="services-pro">
       <div className="services-wrapper">
         {/* HEADER */}
         <div className="services-header">
@@ -364,7 +399,13 @@ const selectedDoctors = targetDepartments
 
 
      {/* Appointment CTA Section */}
-<section className="cta-texture-zone">
+<section
+  ref={(el) => (sectionRefs.current[4] = el)}
+  data-section="cta"
+  className={`cta-texture-zone transition-all duration-1000 ${
+    visibleSections.cta ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+  }`}
+>
   <section className="cta-float">
     <div className="cta-float-wrap">
       <div className="cta-float-left">

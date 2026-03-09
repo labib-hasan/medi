@@ -884,6 +884,8 @@ p, span, li, a, button, input, textarea {
   padding: 0px 20px;
   margin-top: 50px;
   margin-bottom: -70px;
+  position: relative;
+  z-index: 10;
 }
 
 .care-tiles-wrap {
