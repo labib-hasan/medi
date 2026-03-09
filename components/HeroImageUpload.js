@@ -23,22 +23,25 @@ export default function HeroImageUpload({ isAdmin = false }) {
   }, []);
 
   // Auto slider
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!sliderRef.current) return;
+  // Auto slider (disabled in admin panel)
+useEffect(() => {
+  if (isAdmin) return; // ❌ disable auto scroll for admin
 
-      const slider = sliderRef.current;
-      const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+  const interval = setInterval(() => {
+    if (!sliderRef.current) return;
 
-      if (slider.scrollLeft >= maxScrollLeft) {
-        slider.scrollTo({ left: 0, behavior: "smooth" });
-      } else {
-        slider.scrollBy({ left: slider.clientWidth, behavior: "smooth" });
-      }
-    }, 3000);
+    const slider = sliderRef.current;
+    const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
 
-    return () => clearInterval(interval);
-  }, []);
+    if (slider.scrollLeft >= maxScrollLeft) {
+      slider.scrollTo({ left: 0, behavior: "smooth" });
+    } else {
+      slider.scrollBy({ left: slider.clientWidth, behavior: "smooth" });
+    }
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, [isAdmin]);
 
   // Upload image
   const handleUpload = async (e, index) => {
@@ -87,7 +90,12 @@ export default function HeroImageUpload({ isAdmin = false }) {
 
       {/* HERO SLIDER */}
       <div className="relative h-[50vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
-        <div ref={sliderRef} className="flex overflow-x-auto scroll-smooth snap-x h-full scrollbar-hide">
+        <div
+  ref={sliderRef}
+  className={`flex overflow-x-auto snap-x h-full scrollbar-hide ${
+    isAdmin ? "" : "scroll-smooth"
+  }`}
+>
           {images.map((img, index) => (
             <div
               key={index}
@@ -95,15 +103,10 @@ export default function HeroImageUpload({ isAdmin = false }) {
             >
               {img ? (
                 <img
-                  src={img}
-                  alt={`Hero ${index}`}
-                  className="
-    h-full           /* ✅ height always full */
-    w-auto           /* ✅ width flexible */
-    object-cover     /* ✅ width can crop */
-         /* ✅ prevent forced shrink */
-  "
-                />
+  src={img}
+  alt={`Hero ${index}`}
+  className="w-full h-full object-cover object-top"
+/>
               ) : (
                 <div className="flex flex-col items-center justify-center text-gray-600">
                   <div className="w-24 h-24 border-4 border-dashed border-gray-400 rounded-lg mb-4" />

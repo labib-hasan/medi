@@ -408,7 +408,7 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-4 sm:mb-6 lg:mb-8"
+          className="mb-4 sm:mb-6 lg:mb-8 "
         >
           <div className="bg-white dark:bg-gray-800 rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="p-3 sm:p-4 lg:p-5 bg-gradient-to-r from-purple-600 to-pink-600 text-white flex items-center gap-2 sm:gap-3">
