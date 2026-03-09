@@ -66,6 +66,7 @@ const getVisitingDaysArray = (days) => {
 };
 
 export default function PathologyPage() {
+  const [coverImages, setCoverImages] = useState({});
   const [doctors, setDoctors] = useState(fallbackPathologyDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -73,6 +74,20 @@ export default function PathologyPage() {
   useEffect(() => {
     fetchDoctors();
   }, []);
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("hospital_cover_images");
+
+    if (saved) {
+      try {
+        setCoverImages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Cover image parse error:", e);
+      }
+    }
+  }
+}, []);
 
   const fetchDoctors = async () => {
     try {
@@ -111,6 +126,15 @@ export default function PathologyPage() {
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
 
+  const getCoverImage = () => {
+  const key = "diag_pathology";
+
+  return (
+    coverImages[key] ||
+    "https://images.unsplash.com/photo-1579154204601-01588f351e67"
+  );
+};
+
   return (
     <>
       <Navbar />
@@ -118,7 +142,7 @@ export default function PathologyPage() {
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1579154204601-01588f351e67"
+  src={getCoverImage()}
           alt="Pathology"
           fill
           className="object-cover"

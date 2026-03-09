@@ -240,19 +240,19 @@ const closeMenu = () => {
         </div>
 
         {/* Main navigation */}
-        <nav className="flex items-center justify-center px-2 sm:px-4 lg:px-6 py-3 bg-gray-100 shadow-md z-50 mt-0 relative">
+        <nav className="flex items-center justify-center px-2 sm:px-2 lg:px-5  bg-gray-100 shadow-md z-50 mt-0 relative">
           <div className="flex items-center justify-between w-full max-w-7xl">
-            <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
+            <Link href="/" className="flex items-center space-x-0 flex-shrink-0">
               <Image
-                src="https://banner2.cleanpng.com/20180605/jwr/kisspng-computer-icons-interview-engineering-hospita-5b166644787189.9441098015281946284934.jpg"
+                src="logo.jpg"
                 alt="Hospital"
                 width={32}
                 height={32}
                 unoptimized
-                className="h-6 w-auto lg:h-8"
+                className="h-22 lg:h-24 mx-[-9] lg:mt-[-8] w-74"
               />
-              <span className="text-xs md:text-sm text-blue-500 uppercase tracking-widest font-bold">
-  Medical Center</span>
+              {/* <span className="text-xs md:text-sm text-blue-500 uppercase tracking-widest font-bold">
+  Medical Center</span> */}
             </Link>
 
             {/* Desktop menu */}

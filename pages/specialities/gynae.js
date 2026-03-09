@@ -58,6 +58,7 @@ const formatTimeToAMPM = (timeString) => {
 };
 
 export default function GynaePage() {
+  const [coverImages, setCoverImages] = useState({});
   const [doctors, setDoctors] = useState(fallbackGynaeDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -65,6 +66,20 @@ export default function GynaePage() {
   useEffect(() => {
     fetchDoctors();
   }, []);
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("hospital_cover_images");
+
+    if (saved) {
+      try {
+        setCoverImages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Cover image parse error:", e);
+      }
+    }
+  }
+}, []);
 
   const fetchDoctors = async () => {
     try {
@@ -102,7 +117,15 @@ export default function GynaePage() {
   const MAX_VISIBLE_DOCTORS = 8;
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
+ 
+  const getCoverImage = () => {
+  const key = "spec_gynae";
 
+  return (
+    coverImages[key] ||
+    "https://images.unsplash.com/photo-1551836022-d5d88e9218df"
+  );
+};
   return (
     <>
       <Navbar />
@@ -110,7 +133,7 @@ export default function GynaePage() {
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1551836022-d5d88e9218df"
+  src={getCoverImage()}
           alt="Gynecology & Obstetrics"
           fill
           className="object-cover"

@@ -321,6 +321,7 @@ const getVisitingDaysArray = (days) => {
 };
 
 export default function DepartmentPage() {
+  const [coverImages, setCoverImages] = useState({});
   const router = useRouter();
   const { department } = router.query;
   const [doctors, setDoctors] = useState(allFallbackDoctors);
@@ -340,11 +341,25 @@ export default function DepartmentPage() {
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
 
+  
   useEffect(() => {
     if (department) {
       fetchDoctors();
     }
   }, [department]);
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("hospital_cover_images");
+    if (saved) {
+      try {
+        setCoverImages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Error parsing cover images", e);
+      }
+    }
+  }
+}, []);
 
   const fetchDoctors = async () => {
     try {
@@ -439,6 +454,15 @@ export default function DepartmentPage() {
       setLoading(false);
     }
   };
+  const getCoverImage = () => {
+  const key = `dept_${department}`;
+
+  return (
+    coverImages[key] ||
+    deptConfig.image ||
+    "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200"
+  );
+};
 
   // Translation helpers
   const dayNames = isBangla 
@@ -450,7 +474,7 @@ export default function DepartmentPage() {
       <Navbar />
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
         <Image
-          src={deptConfig.image}
+          src={getCoverImage()}
           alt={getTitle(deptConfig.title)}
           fill
           className="object-cover"

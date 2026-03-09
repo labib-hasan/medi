@@ -117,7 +117,7 @@ const selectedDoctors = targetDepartments
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative md:pt-17 pt-14 ">
+      <section className="pt-[88px] lg:pt-[120px]">
         <HeroImageUpload isAdmin={false} />
       </section>
 

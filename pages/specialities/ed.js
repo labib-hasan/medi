@@ -66,6 +66,7 @@ const getVisitingDaysArray = (days) => {
 };
 
 export default function EDPage() {
+  const [coverImages, setCoverImages] = useState({});
   const [doctors, setDoctors] = useState(fallbackEDDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -73,7 +74,19 @@ export default function EDPage() {
   useEffect(() => {
     fetchDoctors();
   }, []);
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("hospital_cover_images");
 
+    if (saved) {
+      try {
+        setCoverImages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Cover image parse error:", e);
+      }
+    }
+  }
+}, []);
   const fetchDoctors = async () => {
     try {
       if (typeof window === 'undefined') {
@@ -110,7 +123,14 @@ export default function EDPage() {
   const MAX_VISIBLE_DOCTORS = 8;
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
+const getCoverImage = () => {
+  const key = "spec_ed";
 
+  return (
+    coverImages[key] ||
+    "https://images.unsplash.com/photo-1516549655169-df83a0774514"
+  );
+};
   return (
     <>
       <Navbar />
@@ -118,7 +138,7 @@ export default function EDPage() {
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1516549655169-df83a0774514"
+  src={getCoverImage()}
           alt="Emergency Department"
           fill
           className="object-cover"

@@ -66,6 +66,7 @@ const getVisitingDaysArray = (days) => {
 };
 
 export default function RadiologyPage() {
+  const [coverImages, setCoverImages] = useState({});
   const [doctors, setDoctors] = useState(fallbackRadiologyDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -73,6 +74,20 @@ export default function RadiologyPage() {
   useEffect(() => {
     fetchDoctors();
   }, []);
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("hospital_cover_images");
+
+    if (saved) {
+      try {
+        setCoverImages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Cover image parse error:", e);
+      }
+    }
+  }
+}, []);
 
   const fetchDoctors = async () => {
     try {
@@ -111,6 +126,14 @@ export default function RadiologyPage() {
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
 
+  const getCoverImage = () => {
+  const key = "diag_radiology";
+
+  return (
+    coverImages[key] ||
+    "https://images.unsplash.com/photo-1551190822-a9333d879b1f"
+  );
+};
   return (
     <>
       <Navbar />
@@ -118,7 +141,7 @@ export default function RadiologyPage() {
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
         <Image
-          src="https://images.unsplash.com/photo-1551190822-a9333d879b1f"
+  src={getCoverImage()}
           alt="Radiology"
           fill
           className="object-cover"
