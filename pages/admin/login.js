@@ -21,10 +21,21 @@ export default function AdminLogin() {
     setMounted(true);
     // Check if superadmin exists
     checkSuperadmin();
-    // Check if already logged in
+    // Check if already logged in - redirect to dashboard if authorized
     const token = localStorage.getItem('adminToken');
-    if (token) {
-      router.push('/admin/dashboard');
+    const userStr = localStorage.getItem('adminUser');
+    if (token && userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        if (user.role === 'superadmin' || user.role === 'admin') {
+          router.push('/admin/dashboard');
+          return;
+        }
+      } catch (err) {
+        // Invalid user data, clear and stay on login
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
+      }
     }
   }, [router]);
 
