@@ -1,28 +1,143 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../utils/translations";
 
-// Department data (keep as is from your original code)
-const departmentData = { /* ... your existing department data ... */ };
+// Department data with translations (keep as is from your original code)
+const departmentData = {
+  "medicine": {
+    title: { en: "Department of Medicine", bn: "মেডিসিন বিভাগ" },
+    subtitle: { en: "Comprehensive Internal Medicine Healthcare Services", bn: "ব্যাপক অভ্যন্তরীণ চিকিৎসা স্বাস্থ্যসেবা" },
+    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200",
+    intro: { en: "You have a fever and also a little pain in the chest for about a week. Everyone is saying to show the doctor. But do not understand which doctor you have to go to. The kind of doctors we go to in this kind of situation are the doctors of medicine. These reputable physicians treat patients by prescribing medications according to their condition, not in any specific field, and refer to the specialist doctor at a particular specialty. At Medical Center Chattagram, the eight best medicine specialists of Chittagong are providing treatment to patients with dedication and compassion.", bn: "আপনার জ্বর আছে এবং বুকে একটু ব্যথা প্রায় এক সপ্তাহ ধরে। সবাই বলছে ডাক্তারকে দেখাতে। কিন্তু বুঝতে পারছেন না কোন ডাক্তারের কাছে যেতে হবে। এই পরিস্থিতিতে আমরা যে ডাক্তারদের কাছে যাই তারা হলেন মেডিসিনের ডাক্তার। এই সম্মানিত চিকিৎসকরা তাদের অবস্থা অনুযায়ী ওষুধ প্রদান করে রোগীদের চিকিৎসা করেন এবং প্রয়োজনে বিশেষজ্ঞ ডাক্তারের কাছে রেফার করেন। মেডিকেল সেন্টার চট্টগ্রামে চট্টগ্রামের সেরা আটজন মেডিসিন বিশেষজ্ঞ নিষ্ঠা ও সহানুভূতির সাথে রোগীদের চিকিৎসা প্রদান করছেন।" },
+    services: [
+      { title: { en: "General Medicine", bn: "সাধারণ মেডিসিন" }, desc: { en: "Diagnosis and treatment of common illnesses, chronic diseases, and preventive healthcare for adults.", bn: "প্রাপ্তবয়স্কদের সাধারণ অসুস্থতা, দীর্ঘস্থায়ী রোগ এবং প্রতিরোধমূলক স্বাস্থ্যসেবার নির্ণয় ও চিকিৎসা।" } },
+      { title: { en: "Diabetes & Endocrinology", bn: "ডায়াবেটিস ও এন্ডোক্রিনোলজি" }, desc: { en: "Specialized care for diabetes, thyroid disorders, and hormonal conditions.", bn: "ডায়াবেটিস, থাইরয়েড ব্যাধি এবং হরমোনাল অবস্থার বিশেষায়িত যত্ন।" } },
+      { title: { en: "Infectious Diseases", bn: "সংক্রামক রোগ" }, desc: { en: "Expert management of infectious diseases including tropical diseases and COVID-19.", bn: "ট্রোপিক্যাল রোগ এবং COVID-19 সহ সংক্রামক রোগের বিশেষজ্ঞ ব্যবস্থাপনা।" } },
+      { title: { en: "Rheumatology", bn: "রিউম্যাটোলজি" }, desc: { en: "Treatment of arthritis, autoimmune diseases, and musculoskeletal disorders.", bn: "আর্থ্রাইটিস, অটোইমিউন রোগ এবং মাস্কুলোস্কেলেটাল ব্যাধির চিকিৎসা।" } }
+    ],
+    facilities: { en: ["24/7 Emergency Medicine", "Inpatient Department", "Outpatient Services", "Diabetes Clinic", "Critical Care Support", "Laboratory Services", "Imaging & Diagnostics", "Pharmacy Services", "Health Check Packages"], bn: ["২৪/৭ জরুরি মেডিসিন", "ভর্তি বিভাগ", "বহির্বিভাগ সেবা", "ডায়াবেটিস ক্লিনিক", "ক্রিটিক্যাল কেয়ার সাপোর্ট", "ল্যাবরেটরি সেবা", "ইমেজিং ও ডায়াগনস্টিকস", "ফার্মেসি সেবা", "হেলথ চেক প্যাকেজ"] }
+  },
+  "cardiology": {
+    title: { en: "Department of Cardiology", bn: "কার্ডিওলজি বিভাগ" },
+    subtitle: { en: "Comprehensive Heart Care Services", bn: "ব্যাপক হৃদরোগ চিকিৎসা সেবা" },
+    image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=1200",
+    intro: { en: "Heart disease is one of the leading causes of death worldwide.", bn: "হৃদরোগ বিশ্বব্যাপী মৃত্যুর অন্যতম প্রধান কারণ।" },
+    services: [
+      { title: { en: "Interventional Cardiology", bn: "ইন্টারভেনশনাল কার্ডিওলজি" }, desc: { en: "Cardiac catheterization, angioplasty, and stent placement.", bn: "কার্ডিয়াক ক্যাথেটারাইজেশন, এনজিওপ্লাস্টি এবং স্টেন্ট প্লেসমেন্ট।" } },
+      { title: { en: "Non-Invasive Cardiology", bn: "নন-ইনভেসিভ কার্ডিওলজি" }, desc: { en: "ECG, echocardiography, stress testing, and cardiac CT.", bn: "ECG, ইকোকার্ডিওগ্রাফি, স্ট্রেস টেস্টিং এবং কার্ডিয়াক CT।" } },
+      { title: { en: "Heart Failure Management", bn: "হার্ট ফেইলিওর ম্যানেজমেন্ট" }, desc: { en: "Comprehensive care for chronic heart failure patients.", bn: "দীর্ঘস্থায়ী হৃদরোগীদের জন্য ব্যাপক যত্ন।" } },
+      { title: { en: "Cardiac Surgery", bn: "কার্ডিয়াক সার্জারি" }, desc: { en: "CABG, valve surgery, and complex cardiac procedures.", bn: "CABG, ভালভ সার্জারি এবং জটিল কার্ডিয়াক পদ্ধতি।" } }
+    ],
+    facilities: { en: ["Cardiac Cath Lab", "CCU", "Echocardiography", "Treadmill Test", "Holter Monitoring", "Cardiac Rehab", "Structural Heart Program", "Heart Failure Clinic", "24/7 Cardiac Emergency"], bn: ["কার্ডিয়াক ক্যাথ ল্যাব", "CCU", "ইকোকার্ডিওগ্রাফি", "ট্রেডমিল টেস্ট", "হল্টার মনিটরিং", "কার্ডিয়াক রিহ্যাব", "স্ট্রাকচারাল হার্ট প্রোগ্রাম", "হার্ট ফেইলিওর ক্লিনিক", "২৪/৭ কার্ডিয়াক জরুরি"] }
+  },
+  // ... rest of your department data (keep as is)
+};
 
-// Department mapping (keep as is)
-const departmentMap = { /* ... your existing mapping ... */ };
+// Department mapping from URL slug to standard department name
+const departmentMap = {
+  "medicine": "Medicine",
+  "cardiology": "Cardiology",
+  "neuro-medicine": "Neuro Medicine",
+  "gastroenterology": "Gastroenterology",
+  "ent": "ENT",
+  "gynee-obs": "Gynee & Obs.",
+  "nephrology": "Nephrology",
+  "orthopedics": "Orthopedics",
+  "oncology": "Oncology",
+  "psychiatry": "Psychiatry",
+  "pediatrics": "Pediatrics",
+  "physical-medicine": "Physical Medicine",
+  "skin-vd": "Skin & VD",
+  "surgery": "Surgery",
+  "urology": "Urology"
+};
 
-// Fallback doctors (keep as is)
-const allFallbackDoctors = [ /* ... your existing fallback doctors ... */ ];
+// Extended fallback doctors for demonstration
+const allFallbackDoctors = [
+  { id: 1, name: "Prof. Dr. A. S. M. Zahed", specialization: "Senior Consultant", experience_years: 15, degrees: "MBBS, FCPS (Medicine)", designation: "Professor, Medicine", institute: "Chattogram Medical College", department: "Medicine", visiting_days: ["Sunday", "Tuesday", "Thursday"], visiting_time: "4.30 pm to 9 pm", room_no: "308", phone: "+880 1234 567890", serial_note: "Call our hotline" },
+  { id: 2, name: "Dr. Sarah Khan", specialization: "Consultant", experience_years: 10, degrees: "MBBS, FCPS (Gynae)", designation: "Associate Professor", institute: "Chattogram Medical College", department: "Gynecology", visiting_days: ["Saturday", "Monday", "Wednesday"], visiting_time: "10 am to 4 pm", room_no: "405", phone: "+880 1234 567891", serial_note: "First come first serve" },
+  // ... rest of your fallback doctors
+];
 
-// Utility functions (keep as is)
-const getDoctorImage = (id) => `https://randomuser.me/api/portraits/${id % 2 === 0 ? "men" : "women"}/${(id * 17) % 90}.jpg`;
+const getDoctorImage = (id) =>
+  `https://randomuser.me/api/portraits/${id % 2 === 0 ? "men" : "women"}/${(id * 17) % 90}.jpg`;
 
-const formatTimeToAMPM = (timeString) => { /* ... your existing function ... */ };
+const formatTimeToAMPM = (timeString) => {
+  if (!timeString || typeof timeString !== 'string') return '';
 
-const getVisitingDaysArray = (days) => { /* ... your existing function ... */ };
+  // Replace periods with colons for consistency
+  let normalized = timeString.replace(/(\d)\.(\d)/g, '$1:$2').trim();
+
+  // Helper function to convert a single time to 12-hour format
+  const convertTo12Hour = (timeStr) => {
+    if (!timeStr) return '';
+
+    // Extract hour, minute, and period
+    const match = timeStr.match(/^(\d{1,2}):?(\d{2})?\s*(am|pm|AM|PM)?$/i);
+    if (!match) return timeStr;
+
+    let [, hourStr, minuteStr, period] = match;
+    let hour = parseInt(hourStr);
+    let minute = minuteStr || '00';
+
+    // Ensure minute is 2 digits
+    if (minute.length === 1) minute = '0' + minute;
+
+    // If period is specified, use it
+    if (period) {
+      period = period.toUpperCase();
+      if (period === 'AM' && hour === 12) hour = 0;
+      if (period === 'PM' && hour !== 12) hour += 12;
+      // Convert back to 12-hour for display
+      if (hour === 0) return `12:${minute} AM`;
+      if (hour < 12) return `${hour}:${minute} AM`;
+      if (hour === 12) return `12:${minute} PM`;
+      return `${hour - 12}:${minute} PM`;
+    }
+
+    // No period specified, assume 24-hour format
+    if (hour === 0) return `12:${minute} AM`;
+    if (hour === 12) return `12:${minute} PM`;
+    if (hour < 12) return `${hour}:${minute} AM`;
+    return `${hour - 12}:${minute} PM`;
+  };
+
+  // Check for time ranges (with various separators)
+  const rangePatterns = [
+    /(\d{1,2}:?\d*\s*(?:am|pm)?)\s*-\s*(\d{1,2}:?\d*\s*(?:am|pm)?)/i,
+    /(\d{1,2}:?\d*\s*(?:am|pm)?)\s*to\s*(\d{1,2}:?\d*\s*(?:am|pm)?)/i,
+    /(\d{1,2}:?\d*\s*(?:am|pm)?)\s*—\s*(\d{1,2}:?\d*\s*(?:am|pm)?)/i
+  ];
+
+  for (const pattern of rangePatterns) {
+    const match = normalized.match(pattern);
+    if (match) {
+      const startTime = convertTo12Hour(match[1].trim());
+      const endTime = convertTo12Hour(match[2].trim());
+      return `${startTime} - ${endTime}`;
+    }
+  }
+
+  // Single time
+  return convertTo12Hour(normalized);
+};
+
+const getVisitingDaysArray = (days) => {
+  if (!days) return [];
+  if (typeof days === 'string') {
+    try {
+      days = JSON.parse(days);
+    } catch {
+      return [];
+    }
+  }
+  return Array.isArray(days) ? days : [];
+};
 
 // Optimized Floating Particle with reduced animation complexity
 const FloatingParticle = ({ delay = 0, size = 4, left = "0%", top = "0%" }) => (
@@ -221,10 +336,48 @@ const useInView = (ref, options = {}) => {
   return isInView;
 };
 
-export default function DepartmentPage() {
+// Default fallback department for 404/unknown departments
+const DEFAULT_DEPARTMENT = "medicine";
+
+// Get static paths for all possible departments
+export async function getStaticPaths() {
+  const paths = Object.keys(departmentData).map((dept) => ({
+    params: { department: dept },
+  }));
+
+  return {
+    paths,
+    fallback: 'blocking', // or true/false based on your needs
+  };
+}
+
+// Get static props for the department page
+export async function getStaticProps({ params }) {
+  const { department } = params;
+  
+  // Validate department exists
+  if (!departmentData[department]) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      department,
+    },
+    revalidate: 3600, // Revalidate every hour
+  };
+}
+
+export default function DepartmentPage({ department: staticDepartment }) {
   const [coverImages, setCoverImages] = useState({});
   const router = useRouter();
-  const { department } = router.query;
+  const { department: queryDepartment } = router.query;
+  
+  // Use static department from props if available, otherwise use query param
+  const department = staticDepartment || queryDepartment || DEFAULT_DEPARTMENT;
+  
   const [doctors, setDoctors] = useState(allFallbackDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
@@ -245,14 +398,27 @@ export default function DepartmentPage() {
   const smoothHeroOpacity = useSpring(heroOpacity, springConfig);
 
   const t = translations[language] || translations.en;
-  const deptConfig = useMemo(() => departmentData[department] || departmentData["medicine"], [department]);
+  
+  // Safely get department config with fallback
+  const deptConfig = useMemo(() => {
+    if (!department) return departmentData[DEFAULT_DEPARTMENT];
+    return departmentData[department] || departmentData[DEFAULT_DEPARTMENT];
+  }, [department]);
+  
   const isBangla = language === 'bn';
 
-  // Memoize translations
-  const getTitle = useCallback((obj) => obj[language] || obj.en, [language]);
-  const getIntro = useCallback((obj) => obj[language] || obj.en, [language]);
+  // Memoize translations with safe access
+  const getTitle = useCallback((obj) => {
+    if (!obj) return '';
+    return obj[language] || obj.en || '';
+  }, [language]);
+  
+  const getIntro = useCallback((obj) => {
+    if (!obj) return '';
+    return obj[language] || obj.en || '';
+  }, [language]);
 
-  const MAX_VISIBLE_DOCTORS = 6; // Reduced for better performance
+  const MAX_VISIBLE_DOCTORS = 6;
   const displayedDoctors = useMemo(() => 
     showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS),
     [doctors, showAll]
@@ -293,7 +459,7 @@ export default function DepartmentPage() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/doctors`, { signal });
       if (!response.ok) {
         console.log("API response not ok, using fallback data");
-        const standardDeptName = departmentMap[department] || department.replace(/-/g, ' ').replace(/&/g, 'and');
+        const standardDeptName = departmentMap[department] || department?.replace(/-/g, ' ').replace(/&/g, 'and') || '';
         const filteredFallback = allFallbackDoctors.filter(doc => {
           const docDept = (doc.department || '');
           return docDept === standardDeptName;
@@ -307,9 +473,9 @@ export default function DepartmentPage() {
       const data = await response.json();
       
       if (Array.isArray(data)) {
-        const standardDeptName = departmentMap[department] || department.replace(/-/g, ' ').replace(/&/g, 'and');
+        const standardDeptName = departmentMap[department] || department?.replace(/-/g, ' ').replace(/&/g, 'and') || '';
         const standardDeptNameLower = standardDeptName.toLowerCase();
-        const urlDeptNameLower = department.replace(/-/g, ' ').replace(/&/g, 'and').toLowerCase();
+        const urlDeptNameLower = department?.replace(/-/g, ' ').replace(/&/g, 'and').toLowerCase() || '';
         
         const filteredDoctors = data.filter(doc => {
           const docDept = (doc.department || '').toLowerCase().trim();
@@ -339,7 +505,7 @@ export default function DepartmentPage() {
     } catch (error) {
       if (error.name !== 'AbortError') {
         console.error("Error fetching doctors:", error);
-        const standardDeptName = departmentMap[department] || department.replace(/-/g, ' ').replace(/&/g, 'and');
+        const standardDeptName = departmentMap[department] || department?.replace(/-/g, ' ').replace(/&/g, 'and') || '';
         const filteredFallback = allFallbackDoctors.filter(doc => {
           const docDept = (doc.department || '');
           return docDept === standardDeptName;
@@ -355,13 +521,24 @@ export default function DepartmentPage() {
     }
   };
 
+  // Safe image getter with fallback
   const getCoverImage = useCallback(() => {
+    if (!department) return "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200";
+    
     const key = `dept_${department}`;
-    return (
-      coverImages[key] ||
-      deptConfig.image ||
-      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200"
-    );
+    
+    // Check if cover image exists in localStorage
+    if (coverImages[key]) {
+      return coverImages[key];
+    }
+    
+    // Check if department config exists and has image
+    if (deptConfig && deptConfig.image) {
+      return deptConfig.image;
+    }
+    
+    // Default fallback image
+    return "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200";
   }, [coverImages, department, deptConfig]);
 
   // Translation helpers
@@ -371,13 +548,26 @@ export default function DepartmentPage() {
     [isBangla]
   );
 
-  // Premium Stats
+  // Premium Stats with safe values
   const departmentStats = useMemo(() => [
     { icon: "👨‍⚕️", value: doctors.length, label: isBangla ? "বিশেষজ্ঞ ডাক্তার" : "Specialists" },
     { icon: "🏥", value: "24/7", label: isBangla ? "সেবা" : "Service" },
     { icon: "⭐", value: "15+", label: isBangla ? "বছরের অভিজ্ঞতা" : "Years Experience" },
     { icon: "🛏️", value: "50+", label: isBangla ? "শয্যা" : "Beds" }
   ], [doctors.length, isBangla]);
+
+  // If no department, show loading or 404
+  if (!department) {
+    return (
+      <>
+        <Navbar />
+        <div style={{ paddingTop: "80px", textAlign: "center", padding: "100px 24px" }}>
+          <h2>Loading...</h2>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -457,7 +647,7 @@ export default function DepartmentPage() {
                   {isBangla ? "হোম" : "Home"}
                 </Link>
                 <span style={{ color: "#3b82f6" }}>•</span>
-                <span style={{ color: "white" }}>{getTitle(deptConfig.title)}</span>
+                <span style={{ color: "white" }}>{getTitle(deptConfig?.title)}</span>
               </div>
               
               {/* Title */}
@@ -475,7 +665,7 @@ export default function DepartmentPage() {
                   WebkitTextFillColor: "transparent"
                 }}
               >
-                {getTitle(deptConfig.title)}
+                {getTitle(deptConfig?.title)}
               </motion.h1>
               
               {/* Subtitle */}
@@ -491,7 +681,7 @@ export default function DepartmentPage() {
                   lineHeight: 1.5
                 }}
               >
-                {getTitle(deptConfig.subtitle)}
+                {getTitle(deptConfig?.subtitle)}
               </motion.p>
               
               {/* CTA Buttons */}
@@ -579,7 +769,7 @@ export default function DepartmentPage() {
             </div>
 
             {/* Department Introduction */}
-            {deptConfig.intro && (
+            {deptConfig?.intro && (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -700,7 +890,7 @@ export default function DepartmentPage() {
                     gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
                     gap: 20
                   }}>
-                    {deptConfig.services.map((item, i) => (
+                    {deptConfig?.services?.map((item, i) => (
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, y: 15 }}
@@ -794,7 +984,7 @@ export default function DepartmentPage() {
                     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                     gap: 16
                   }}>
-                    {deptConfig.services.map((item, i) => (
+                    {deptConfig?.services?.map((item, i) => (
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -862,7 +1052,7 @@ export default function DepartmentPage() {
                     gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
                     gap: 12
                   }}>
-                    {Array.isArray(deptConfig.facilities) && deptConfig.facilities.map((f, i) => (
+                    {Array.isArray(deptConfig?.facilities) && deptConfig.facilities.map((f, i) => (
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, scale: 0.9 }}
