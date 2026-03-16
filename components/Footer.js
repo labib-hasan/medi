@@ -143,7 +143,7 @@ const Footer = () => {
   target="_blank"
   rel="noopener noreferrer"
 >
-  &copy;2026 Mysoft_LH /// Tawazun Computer | All Rights Reserved
+  &copy;2026 Tawazun Computer _LH | All Rights Reserved
 </a>
       </footer>
     </div>

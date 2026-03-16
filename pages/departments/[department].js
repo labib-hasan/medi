@@ -35,7 +35,175 @@ const departmentData = {
     ],
     facilities: { en: ["Cardiac Cath Lab", "CCU", "Echocardiography", "Treadmill Test", "Holter Monitoring", "Cardiac Rehab", "Structural Heart Program", "Heart Failure Clinic", "24/7 Cardiac Emergency"], bn: ["কার্ডিয়াক ক্যাথ ল্যাব", "CCU", "ইকোকার্ডিওগ্রাফি", "ট্রেডমিল টেস্ট", "হল্টার মনিটরিং", "কার্ডিয়াক রিহ্যাব", "স্ট্রাকচারাল হার্ট প্রোগ্রাম", "হার্ট ফেইলিওর ক্লিনিক", "২৪/৭ কার্ডিয়াক জরুরি"] }
   },
-  // ... rest of your department data (keep as is)
+  "neuro-medicine": {
+    title: { en: "Department of Neuro Medicine", bn: "নিউরো মেডিসিন বিভাগ" },
+    subtitle: { en: "Advanced Neurological Care & Treatment", bn: "উন্নত নিউরোলজিক্যাল যত্ন ও চিকিৎসা" },
+    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200",
+    intro: { en: "The brain and nervous system are the most complex parts of the human body.", bn: "মস্তিষ্ক এবং স্নায়ুতন্ত্র মানবদেহের সবচেয়ে জটিল অংশ।" },
+    services: [
+      { title: { en: "Neurology", bn: "নিউরোলজি" }, desc: { en: "Diagnosis and treatment of brain, spine, and nervous system disorders.", bn: "মস্তিষ্ক, মেরুদণ্ড এবং স্নায়ুতন্ত্রের ব্যাধির নির্ণয় ও চিকিৎসা।" } },
+      { title: { en: "Stroke Management", bn: "স্ট্রোক ম্যানেজমেন্ট" }, desc: { en: "Emergency care and rehabilitation for stroke patients.", bn: "স্ট্রোক রোগীদের জরুরি যত্ন ও পুনর্বাসন।" } },
+      { title: { en: "Epilepsy Treatment", bn: "এপিলেপসি চিকিৎসা" }, desc: { en: "Comprehensive care for epilepsy and seizure disorders.", bn: "এপিলেপসি এবং অনুরোধ ব্যাধির জন্য ব্যাপক যত্ন।" } },
+      { title: { en: "Movement Disorders", bn: "মুভমেন্ট ডিসঅর্ডার" }, desc: { en: "Treatment for Parkinson's disease and other movement disorders.", bn: "পার্কিনসন্স রোগ এবং অন্যান্য মুভমেন্ট ডিসঅর্ডারের চিকিৎসা।" } }
+    ],
+    facilities: { en: ["Neuro ICU", "EEG Lab", "EMG/NCV Testing", "Stroke Unit", "Neurorehabilitation", "MRI/CT Imaging", "Sleep Lab", "Neurosurgery Support", "24/7 Emergency"], bn: ["নিউরো ICU", "EEG ল্যাব", "EMG/NCV টেস্টিং", "স্ট্রোক ইউনিট", "নিউরোরিহ্যাবিলিটেশন", "MRI/CT ইমেজিং", "স্লিপ ল্যাব", "নিউরোসার্জারি সাপোর্ট", "২৪/৭ জরুরি"] }
+  },
+  "gastroenterology": {
+    title: { en: "Department of Gastroenterology", bn: "গ্যাস্ট্রোএন্টারোলজি বিভাগ" },
+    subtitle: { en: "Advanced Digestive & Liver Care", bn: "উন্নত হজম ও লিভার যত্ন" },
+    image: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1200",
+    intro: { en: "Digestive health is fundamental to overall well-being.", bn: "হজম স্বাস্থ্য সামগ্রিক সুস্থতার মূল ভিত্তি।" },
+    services: [
+      { title: { en: "Gastroenterology", bn: "গ্যাস্ট্রোএন্টারোলজি" }, desc: { en: "Diagnosis and treatment of digestive system disorders.", bn: "পাচনতন্ত্রের ব্যাধির নির্ণয় ও চিকিৎসা।" } },
+      { title: { en: "Hepatology", bn: "হেপাটোলজি" }, desc: { en: "Liver disease management including hepatitis and cirrhosis.", bn: "হেপাটাইটিস এবং সিরোসিস সহ লিভার রোগ ব্যবস্থাপনা।" } },
+      { title: { en: "Endoscopy", bn: "এন্ডোস্কোপি" }, desc: { en: "Gastroscopy, colonoscopy, and therapeutic endoscopy.", bn: "গ্যাস্ট্রোস্কোপি, কোলোনোস্কোপি এবং থেরাপিউটিক এন্ডোস্কোপি।" } },
+      { title: { en: "Pancreatology", bn: "প্যাঙ্ক্রিওটোলজি" }, desc: { en: "Treatment of pancreatic disorders.", bn: "অগ্ন্যাশয়ের ব্যাধির চিকিৎসা।" } }
+    ],
+    facilities: { en: ["Endoscopy Suite", "ERCP", "Liver Clinic", "GI Lab", "Capsule Endoscopy", "Hepatology Unit", "Gastroenterology OPD", "24/7 Emergency", "Day Care"], bn: ["এন্ডোস্কোপি স্যুট", "ERCP", "লিভার ক্লিনিক", "GI ল্যাব", "ক্যাপসুল এন্ডোস্কোপি", "হেপাটোলজি ইউনিট", "গ্যাস্ট্রোএন্টারোলজি OPD", "২৪/৭ জরুরি", "ডে কেয়ার"] }
+  },
+  "ent": {
+    title: { en: "Department of ENT", bn: "ENT বিভাগ" },
+    subtitle: { en: "Ear, Nose, Throat & Head-Neck Surgery", bn: "কান, নাক, গলা ও মাথা-গলা সার্জারি" },
+    image: "https://images.unsplash.com/photo-1584063366292-4c8e9f1a5c0e?w=1200",
+    intro: { en: "Ear, Nose, and Throat disorders are extremely common.", bn: "কান, নাক এবং গলার ব্যাধি খুবই সাধারণ।" },
+    services: [
+      { title: { en: "Otology", bn: "অটোলজি" }, desc: { en: "Treatment of ear disorders, hearing loss, and balance problems.", bn: "কানের ব্যাধি, শ্রবণ ক্ষতি এবং ভারসাম্য সমস্যার চিকিৎসা।" } },
+      { title: { en: "Rhinology", bn: "রাইনোলজি" }, desc: { en: "Management of nasal and sinus conditions.", bn: "নাক এবং সাইনাসের অবস্থা ব্যবস্থাপনা।" } },
+      { title: { en: "Laryngology", bn: "ল্যারিংগোলজি" }, desc: { en: "Voice and throat disorder treatment.", bn: "কণ্ঠস্বর এবং গলার ব্যাধি চিকিৎসা।" } },
+      { title: { en: "Head & Neck Surgery", bn: "মাথা ও গলা সার্জারি" }, desc: { en: "Surgical treatment of head and neck tumors.", bn: "মাথা এবং গলার টিউমারের শল্য চিকিৎসা।" } }
+    ],
+    facilities: { en: ["Audiology Lab", "Endoscopy Suite", "Otology OT", "Sinus Surgery", "Hearing Aid Center", "Sleep Apnea Clinic", "Vertigo Clinic", "Speech Therapy", "24/7 Emergency"], bn: ["অডিওলজি ল্যাব", "এন্ডোস্কোপি স্যুট", "অটোলজি OT", "সাইনাস সার্জারি", "হেয়ারিং এইড সেন্টার", "স্লিপ অ্যাপনা ক্লিনিক", "ভার্টিগো ক্লিনিক", "স্পিচ থেরাপি", "২৪/৭ জরুরি"] }
+  },
+  "gynee-obs": {
+    title: { en: "Department of Gynecology & Obstetrics", bn: "গাইনি ও প্রসূতি বিভাগ" },
+    subtitle: { en: "Complete Women's Healthcare", bn: "সম্পূর্ণ মহিলা স্বাস্থ্যসেবা" },
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200",
+    intro: { en: "Women's healthcare needs special attention at every stage of life.", bn: "মহিলাদের স্বাস্থ্যসেবা জীবনের প্রতিটি পর্যায়ে বিশেষ মনোযোগ প্রয়োজন।" },
+    services: [
+      { title: { en: "Obstetrics", bn: "প্রসূতি" }, desc: { en: "Prenatal care, delivery, and postpartum care.", bn: "প্রসব পূর্ব যত্ন, প্রসব এবং প্রসব পরবর্তী যত্ন।" } },
+      { title: { en: "Gynecology", bn: "গাইনোকোলজি" }, desc: { en: "Women's reproductive health services.", bn: "মহিলাদের প্রজনন স্বাস্থ্য সেবা।" } },
+      { title: { en: "High-Risk Pregnancy", bn: "উচ্চ ঝুঁকিপূর্ণ গর্ভাবস্থা" }, desc: { en: "Specialized care for complicated pregnancies.", bn: "জটিল গর্ভাবস্থার জন্য বিশেষায়িত যত্ন।" } },
+      { title: { en: "Fertility Treatment", bn: "ফার্টিলিটি চিকিৎসা" }, desc: { en: "IVF and reproductive medicine services.", bn: "IVF এবং প্রজনন চিকিৎসা সেবা।" } }
+    ],
+    facilities: { en: ["Labor & Delivery", "NICU", "Fetal Medicine Unit", "Gyne Oncology", "Laparoscopic Surgery", "IVF Center", "Antenatal Clinic", "Postnatal Care", "24/7 Emergency"], bn: ["লেবার ও ডেলিভারি", "NICU", "ফিটাল মেডিসিন ইউনিট", "গাইনি অনকোলজি", "ল্যাপারোস্কোপিক সার্জারি", "IVF সেন্টার", "এন্টেনেটাল ক্লিনিক", "পোস্টনেটাল কেয়ার", "২৪/৭ জরুরি"] }
+  },
+  "nephrology": {
+    title: { en: "Department of Nephrology", bn: "নেফ্রোলজি বিভাগ" },
+    subtitle: { en: "Comprehensive Kidney Care", bn: "ব্যাপক কিডনি যত্ন" },
+    image: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=1200",
+    intro: { en: "Kidney diseases are often silent until they reach advanced stages.", bn: "কিডনি রোগ প্রায়ই উন্নত পর্যায়ে না পৌঁছানো পর্যন্ত নীরব থাকে।" },
+    services: [
+      { title: { en: "Nephrology", bn: "নেফ্রোলজি" }, desc: { en: "Kidney disease diagnosis and management.", bn: "কিডনি রোগ নির্ণয় ও ব্যবস্থাপনা।" } },
+      { title: { en: "Dialysis", bn: "ডায়ালাইসিস" }, desc: { en: "Hemodialysis and peritoneal dialysis services.", bn: "হিমোডায়ালাইসিস এবং পেরিটোনিয়াল ডায়ালাইসিস সেবা।" } },
+      { title: { en: "Kidney Transplantation", bn: "কিডনি ট্রান্সপ্লান্টেশন" }, desc: { en: "Pre and post-transplant care.", bn: "ট্রান্সপ্লান্ট পূর্ব ও পরবর্তী যত্ন।" } },
+      { title: { en: "Hypertension", bn: "উচ্চ রক্তচাপ" }, desc: { en: "Blood pressure management and renal hypertension.", bn: "রক্তচাপ ব্যবস্থাপনা এবং রেনাল উচ্চ রক্তচাপ।" } }
+    ],
+    facilities: { en: ["Dialysis Center", "Kidney Transplant Unit", "Nephrology ICU", "CAPD Program", "AV Fistula Surgery", "Hypertension Clinic", "Urinalysis Lab", "24/7 Emergency", "Renal Nutrition"], bn: ["ডায়ালাইসিস সেন্টার", "কিডনি ট্রান্সপ্লান্ট ইউনিট", "নেফ্রোলজি ICU", "CAPD প্রোগ্রাম", "AV ফিস্টুলা সার্জারি", "হাইপারটেনশন ক্লিনিক", "ইউরিনালাইসিস ল্যাব", "২৪/৭ জরুরি", "রেনাল নিউট্রিশন"] }
+  },
+  "orthopedics": {
+    title: { en: "Department of Orthopedics", bn: "অর্থোপেডিক্স বিভাগ" },
+    subtitle: { en: "Bone, Joint & Trauma Care", bn: "হাড়, জয়েন্ট ও ট্রমা যত্ন" },
+    image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=1200",
+    intro: { en: "Bone and joint problems can severely affect mobility and quality of life.", bn: "হাড় এবং জয়েন্টের সমস্যা গতিশীলতা এবং জীবনের মানিকে গুরুতরভাবে প্রভাবিত করতে পারে।" },
+    services: [
+      { title: { en: "Orthopedic Surgery", bn: "অর্থোপেডিক সার্জারি" }, desc: { en: "Joint replacement, arthroscopy, and trauma surgery.", bn: "জয়েন্ট রিপ্লেসমেন্ট, আর্থ্রোস্কোপি এবং ট্রমা সার্জারি।" } },
+      { title: { en: "Spine Surgery", bn: "স্পাইন সার্জারি" }, desc: { en: "Treatment of spinal disorders and injuries.", bn: "মেরুদণ্ডের ব্যাধি এবং আঘাতের চিকিৎসা।" } },
+      { title: { en: "Sports Medicine", bn: "স্পোর্টস মেডিসিন" }, desc: { en: "Sports injury treatment and rehabilitation.", bn: "ক্রীড়া আঘাতের চিকিৎসা ও পুনর্বাসন।" } },
+      { title: { en: "Pediatric Orthopedics", bn: "পেডিয়াট্রিক অর্থোপেডিক্স" }, desc: { en: "Children's bone and joint care.", bn: "শিশুদের হাড় ও জয়েন্ট যত্ন।" } }
+    ],
+    facilities: { en: ["Joint Replacement Center", "Spine Surgery OT", "Arthroscopy Suite", "Trauma Center", "Physiotherapy", "Sports Medicine", "Orthopedic Rehab", "24/7 Emergency", "Bone Density"], bn: ["জয়েন্ট রিপ্লেসমেন্ট সেন্টার", "স্পাইন সার্জারি OT", "আর্থ্রোস্কোপি স্যুট", "ট্রমা সেন্টার", "ফিজিওথেরাপি", "স্পোর্টস মেডিসিন", "অর্থোপেডিক রিহ্যাব", "২৪/৭ জরুরি", "বোন ডেনসিটি"] }
+  },
+  "oncology": {
+    title: { en: "Department of Oncology", bn: "অনকোলজি বিভাগ" },
+    subtitle: { en: "Comprehensive Cancer Care", bn: "ব্যাপক ক্যান্সার যত্ন" },
+    image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?w=1200",
+    intro: { en: "Cancer is a devastating diagnosis, but early detection can lead to cure.", bn: "ক্যান্সার একটি বিধ্বংসী রোগ নির্ণয়, তবে প্রারম্ভিক সনাক্তকরণ নিরাময়ে পরিচালিত করতে পারে।" },
+    services: [
+      { title: { en: "Medical Oncology", bn: "মেডিকেল অনকোলজি" }, desc: { en: "Chemotherapy and cancer medication treatment.", bn: "কেমোথেরাপি এবং ক্যান্সার ওষুধ চিকিৎসা।" } },
+      { title: { en: "Radiation Oncology", bn: "রেডিয়েশন অনকোলজি" }, desc: { en: "Advanced radiation therapy for cancer.", bn: "ক্যান্সারের জন্য উন্নত রেডিয়েশন থেরাপি।" } },
+      { title: { en: "Surgical Oncology", bn: "সার্জিক্যাল অনকোলজি" }, desc: { en: "Cancer removal and tumor surgery.", bn: "ক্যান্সার অপসারণ এবং টিউমার সার্জারি।" } },
+      { title: { en: "Palliative Care", bn: "প্যালিয়েটিভ কেয়ার" }, desc: { en: "Pain management and quality of life care.", bn: "ব্যথা ব্যবস্থাপনা এবং জীবনের মানের যত্ন।" } }
+    ],
+    facilities: { en: ["Chemotherapy Day Care", "Linear Accelerator", "Brachytherapy", "PET-CT", "Oncology ICU", "Palliative Care", "Cancer Screening", "Genetic Counseling", "24/7 Emergency"], bn: ["কেমোথেরাপি ডে কেয়ার", "লিনিয়ার অ্যাক্সিলেরেটর", "ব্র্যাকিথেরাপি", "PET-CT", "অনকোলজি ICU", "প্যালিয়েটিভ কেয়ার", "ক্যান্সার স্ক্রিনিং", "জেনেটিক কাউন্সেলিং", "২৪/৭ জরুরি"] }
+  },
+  "psychiatry": {
+    title: { en: "Department of Psychiatry", bn: "সাইকিয়াট্রি বিভাগ" },
+    subtitle: { en: "Mental Health & Behavioral Sciences", bn: "মানসিক স্বাস্থ্য ও আচরণবিজ্ঞান" },
+    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200",
+    intro: { en: "Mental health is as important as physical health.", bn: "মানসিক স্বাস্থ্য শারীরিক স্বাস্থ্যের মতোই গুরুত্বপূর্ণ।" },
+    services: [
+      { title: { en: "General Psychiatry", bn: "সাধারণ সাইকিয়াট্রি" }, desc: { en: "Diagnosis and treatment of mental disorders.", bn: "মানসিক ব্যাধির নির্ণয় ও চিকিৎসা।" } },
+      { title: { en: "Child Psychiatry", bn: "শিশু সাইকিয়াট্রি" }, desc: { en: "Mental health services for children and adolescents.", bn: "শিশু এবং কিশোর-কিশোরীদের মানসিক স্বাস্থ্য সেবা।" } },
+      { title: { en: "Addiction Treatment", bn: "আ্যডিকশন চিকিৎসা" }, desc: { en: "Drug and alcohol rehabilitation programs.", bn: "মাদক ও অ্যালকোহল পুনর্বাসন প্রোগ্রাম।" } },
+      { title: { en: "Psychotherapy", bn: "সাইকোথেরাপি" }, desc: { en: "Individual and group therapy sessions.", bn: "ব্যক্তিগত এবং গ্রুপ থেরাপি সেশন।" } }
+    ],
+    facilities: { en: ["Inpatient Psychiatry", "ECT Therapy", "Psychology Lab", "Addiction Center", "Child Guidance", "Sleep Disorder Clinic", "Outpatient Clinic", "24/7 Crisis Line", "Rehabilitation"], bn: ["ইনপেশেন্ট সাইকিয়াট্রি", "ECT থেরাপি", "সাইকোলজি ল্যাব", "অ্যাডিকশন সেন্টার", "শিশু গাইডেন্স", "স্লিপ ডিসঅর্ডার ক্লিনিক", "আউটপেশেন্ট ক্লিনিক", "২৪/৭ ক্রাইসিস লাইন", "পুনর্বাসন"] }
+  },
+  "pediatrics": {
+    title: { en: "Department of Pediatrics", bn: "পেডিয়াট্রিক্স বিভাগ" },
+    subtitle: { en: "Comprehensive Child Healthcare", bn: "ব্যাপক শিশু স্বাস্থ্যসেবা" },
+    image: "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=1200",
+    intro: { en: "Children are not small adults; they have unique healthcare needs.", bn: "শিশুরা ছোট প্রাপ্তবয়স্ক নয়; তাদের অনন্য স্বাস্থ্যসেবার প্রয়োজনীয়তা রয়েছে।" },
+    services: [
+      { title: { en: "General Pediatrics", bn: "সাধারণ পেডিয়াট্রিক্স" }, desc: { en: "Comprehensive healthcare for infants and children.", bn: "শিশু এবং শিশুদের জন্য ব্যাপক স্বাস্থ্যসেবা।" } },
+      { title: { en: "Pediatric ICU", bn: "পেডিয়াট্রিক ICU" }, desc: { en: "Critical care for seriously ill children.", bn: "গুরুতর অসুস্থ শিশুদের জন্য ক্রিটিক্যাল কেয়ার।" } },
+      { title: { en: "Neonatology", bn: "নিওন্যাটোলজি" }, desc: { en: "Care for newborns and premature infants.", bn: "নবজাত এবং প্রিম্যাচার শিশুদের যত্ন।" } },
+      { title: { en: "Pediatric Surgery", bn: "পেডিয়াট্রিক সার্জারি" }, desc: { en: "Surgical services for children.", bn: "শিশুদের জন্য শল্য চিকিৎসা সেবা।" } }
+    ],
+    facilities: { en: ["NICU", "Pediatric ICU", "Well Baby Clinic", "Vaccination Center", "Pediatric Emergency", "Child Development Center", "Neonatal Surgery", "24/7 Pediatric Care", "Ambulance Service"], bn: ["NICU", "পেডিয়াট্রিক ICU", "ওয়েল বেবি ক্লিনিক", "ভ্যাক্সিনেশন সেন্টার", "পেডিয়াট্রিক জরুরি", "শিশু ডেভেলপমেন্ট সেন্টার", "নিওনেটাল সার্জারি", "২৪/৭ পেডিয়াট্রিক কেয়ার", "অ্যাম্বুলেন্স সেবা"] }
+  },
+  "physical-medicine": {
+    title: { en: "Department of Physical Medicine", bn: "ফিজিক্যাল মেডিসিন বিভাগ" },
+    subtitle: { en: "Rehabilitation & Pain Management", bn: "পুনর্বাসন ও ব্যথা ব্যবস্থাপনা" },
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200",
+    intro: { en: "Recovery from illness, injury, or surgery often requires rehabilitation.", bn: "অসুস্থতা, আঘাত বা অপারেশন থেকে সুস্থতা প্রায়ই পুনর্বাসন প্রয়োজন।" },
+    services: [
+      { title: { en: "Physiotherapy", bn: "ফিজিওথেরাপি" }, desc: { en: "Movement therapy and rehabilitation exercises.", bn: "মুভমেন্ট থেরাপি এবং পুনর্বাসন ব্যায়াম।" } },
+      { title: { en: "Pain Management", bn: "ব্যথা ব্যবস্থাপনা" }, desc: { en: "Chronic pain treatment and intervention.", bn: "দীর্ঘস্থায়ী ব্যথা চিকিৎসা ও হস্তক্ষেপ।" } },
+      { title: { en: "Occupational Therapy", bn: "অকুপেশনাল থেরাপি" }, desc: { en: "Rehabilitation for daily living skills.", bn: "দৈনন্দিন জীবন দক্ষতার জন্য পুনর্বাসন।" } },
+      { title: { en: "Electrotherapy", bn: "ইলেক্ট্রোথেরাপি" }, desc: { en: "Modern pain relief treatments.", bn: "আধুনিক ব্যথা উপশম চিকিৎসা।" } }
+    ],
+    facilities: { en: ["Physiotherapy Gym", "Electrotherapy Unit", "Hydrotherapy", "Occupational Therapy", "Pain Clinic", "Sports Rehab", "Stroke Rehab", "Back Pain Center", "24/7 Emergency"], bn: ["ফিজিওথেরাপি জিম", "ইলেক্ট্রোথেরাপি ইউনিট", "হাইড্রোথেরাপি", "অকুপেশনাল থেরাপি", "পেইন ক্লিনিক", "স্পোর্টস রিহ্যাব", "স্ট্রোক রিহ্যাব", "ব্যাক পেইন সেন্টার", "২৪/৭ জরুরি"] }
+  },
+  "skin-vd": {
+    title: { en: "Department of Skin & VD", bn: "স্কিন ও VD বিভাগ" },
+    subtitle: { en: "Dermatology & Venereology Care", bn: "ডার্মাটোলজি ও ভেনেরিওলজি যত্ন" },
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=1200",
+    intro: { en: "Skin is the largest organ of the body and reflects overall health.", bn: "ত্বক শরীরের বৃহত্তম অঙ্গ এবং সামগ্রিক স্বাস্থ্য প্রতিফলিত করে।" },
+    services: [
+      { title: { en: "Dermatology", bn: "ডার্মাটোলজি" }, desc: { en: "Skin disease diagnosis and treatment.", bn: "ত্বকের রোগ নির্ণয় ও চিকিৎসা।" } },
+      { title: { en: "Cosmetology", bn: "কসমেটোলজি" }, desc: { en: "Skin aesthetic and cosmetic procedures.", bn: "ত্বকের সৌন্দর্য এবং প্রসাধন পদ্ধতি।" } },
+      { title: { en: "Venereology", bn: "ভেনেরিওলজি" }, desc: { en: "Sexually transmitted infection treatment.", bn: "যৌন সংক্রমিত সংক্রমণের চিকিৎসা।" } },
+      { title: { en: "Laser Therapy", bn: "লেজার থেরাপি" }, desc: { en: "Advanced laser treatments for skin conditions.", bn: "ত্বকের অবস্থার জন্য উন্নত লেজার চিকিৎসা।" } }
+    ],
+    facilities: { en: ["Dermatology OPD", "Cosmetology Center", "Laser Suite", "STI Clinic", "Skin Biopsy", "Cryotherapy", "Phototherapy", "Allergy Testing", "24/7 Emergency"], bn: ["ডার্মাটোলজি OPD", "কসমেটোলজি সেন্টার", "লেজার স্যুট", "STI ক্লিনিক", "স্কিন বায়োপসি", "ক্রায়োথেরাপি", "ফোটোথেরাপি", "অ্যালার্জি টেস্টিং", "২৪/৭ জরুরি"] }
+  },
+  "surgery": {
+    title: { en: "Department of Surgery", bn: "সার্জারি বিভাগ" },
+    subtitle: { en: "Comprehensive Surgical Services", bn: "ব্যাপক শল্য চিকিৎসা সেবা" },
+    image: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=1200",
+    intro: { en: "Surgery is often the best treatment option for many conditions.", bn: "অনেক অবস্থার জন্য সার্জারি প্রায়ই সেরা চিকিৎসা বিকল্প।" },
+    services: [
+      { title: { en: "General Surgery", bn: "সাধারণ সার্জারি" }, desc: { en: "Abdominal and gastrointestinal surgery.", bn: "পেট এবং গ্যাস্ট্রোইনটেস্টাইনাল সার্জারি।" } },
+      { title: { en: "Laparoscopic Surgery", bn: "ল্যাপারোস্কোপিক সার্জারি" }, desc: { en: "Minimally invasive surgical techniques.", bn: "ন্যূনতম আক্রমণাত্মক শল্য কৌশল।" } },
+      { title: { en: "Vascular Surgery", bn: "ভাস্কুলার সার্জারি" }, desc: { en: "Blood vessel and circulation surgery.", bn: "রক্তনালী এবং রক্ত সংবহন সার্জারি।" } },
+      { title: { en: "Trauma Surgery", bn: "ট্রমা সার্জারি" }, desc: { en: "Emergency surgical care for injuries.", bn: "আঘাতের জন্য জরুরি শল্য যত্ন।" } }
+    ],
+    facilities: { en: ["Main OT", "Laparoscopic OT", "Recovery Room", "Surgical ICU", "Pre-op Suite", "Post-op Care", "Day Surgery", "24/7 Emergency", "Ambulance"], bn: ["মেইন OT", "ল্যাপারোস্কোপিক OT", "রিকভারি রুম", "সার্জিক্যাল ICU", "প্রি-অপ স্যুট", "পোস্ট-অপ কেয়ার", "ডে সার্জারি", "২৪/৭ জরুরি", "অ্যাম্বুলেন্স"] }
+  },
+  "urology": {
+    title: { en: "Department of Urology", bn: "ইউরোলজি বিভাগ" },
+    subtitle: { en: "Comprehensive Urological Care", bn: "ব্যাপক ইউরোলজিক্যাল যত্ন" },
+    image: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?w=1200",
+    intro: { en: "Urological problems can affect quality of life.", bn: "ইউরোলজিক্যাল সমস্যা জীবনের মান প্রভাবিত করতে পারে।" },
+    services: [
+      { title: { en: "Urology", bn: "ইউরোলজি" }, desc: { en: "Urinary tract and male reproductive system care.", bn: "মূত্রনালী এবং পুরুষ প্রজনন তন্ত্রের যত্ন।" } },
+      { title: { en: "Endourology", bn: "এন্ডোইউরোলজি" }, desc: { en: "Minimally invasive urinary tract procedures.", bn: "ন্যূনতম আক্রমণাত্মক মূত্রনালী পদ্ধতি।" } },
+      { title: { en: "Uro-Oncology", bn: "ইউরো-অনকোলজি" }, desc: { en: "Cancer treatment for urinary system.", bn: "মূত্রতন্ত্রের জন্য ক্যান্সার চিকিৎসা।" } },
+      { title: { en: "Kidney Stone Management", bn: "কিডনি স্টোন ম্যানেজমেন্ট" }, desc: { en: "Stone removal and prevention treatment.", bn: "পাথর অপসারণ এবং প্রতিরোধ চিকিৎসা।" } }
+    ],
+    facilities: { en: ["Urology OT", "ESWL Unit", "Urodynamics Lab", "Laser Surgery", "Andrology Lab", "Stone Clinic", "Urology OPD", "24/7 Emergency", "Minor OT"], bn: ["ইউরোলজি OT", "ESWL ইউনিট", "ইউরোডায়নামিক্স ল্যাব", "লেজার সার্জারি", "অ্যান্ড্রোলজি ল্যাব", "স্টোন ক্লিনিক", "ইউরোলজি OPD", "২৪/৭ জরুরি", "মাইনর OT"] }
+  }
 };
 
 // Department mapping from URL slug to standard department name
@@ -45,7 +213,7 @@ const departmentMap = {
   "neuro-medicine": "Neuro Medicine",
   "gastroenterology": "Gastroenterology",
   "ent": "ENT",
-  "gynee-obs": "Gynee & Obs.",
+  "gynee-obs": "Gynee & Obs.",  // Fixed: matches admin panel exactly
   "nephrology": "Nephrology",
   "orthopedics": "Orthopedics",
   "oncology": "Oncology",
@@ -382,7 +550,7 @@ export default function DepartmentPage({ department: staticDepartment }) {
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
   const { language } = useLanguage();
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("doctors");
   const heroRef = useRef(null);
   
   // Smooth scroll animation
@@ -832,10 +1000,11 @@ export default function DepartmentPage({ department: staticDepartment }) {
               flexWrap: "wrap"
             }}>
               {[
+                 { id: "doctors", label: isBangla ? "ডাক্তার" : "Doctors", icon: "👨‍⚕️" },
                 { id: "overview", label: isBangla ? "ওভারভিউ" : "Overview", icon: "📊" },
                 { id: "services", label: isBangla ? "সেবাসমূহ" : "Services", icon: "⚕️" },
-                { id: "facilities", label: isBangla ? "সুবিধা" : "Facilities", icon: "🏥" },
-                { id: "doctors", label: isBangla ? "ডাক্তার" : "Doctors", icon: "👨‍⚕️" }
+                { id: "facilities", label: isBangla ? "সুবিধা" : "Facilities", icon: "🏥" }
+               
               ].map((tab) => (
                 <motion.button
                   key={tab.id}
@@ -871,231 +1040,6 @@ export default function DepartmentPage({ department: staticDepartment }) {
 
             {/* Tab Content */}
             <AnimatePresence mode="wait">
-              {activeTab === "overview" && (
-                <motion.div
-                  key="overview"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Services Grid */}
-                  <SectionHeader 
-                    title={isBangla ? "আমাদের সেবাসমূহ" : "Our Services"}
-                    subtitle={isBangla ? "আমরা প্রদান করি এমন বিশেষায়িত সেবা" : "Specialized care we provide"}
-                    icon="⚕️"
-                  />
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-                    gap: 20
-                  }}>
-                    {deptConfig?.services?.map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 15 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-30px" }}
-                        transition={{ delay: i * 0.05, duration: 0.3 }}
-                        whileHover={{ 
-                          y: -4, 
-                          boxShadow: "0 25px 40px -15px rgba(0, 0, 0, 0.15)",
-                          transition: { duration: 0.15 }
-                        }}
-                        style={{
-                          background: "white",
-                          borderRadius: 20,
-                          padding: 28,
-                          boxShadow: "0 15px 30px -12px rgba(0, 0, 0, 0.1)",
-                          border: "1px solid rgba(226, 232, 240, 0.6)",
-                          position: "relative",
-                          overflow: "hidden",
-                          cursor: "default",
-                          willChange: "transform"
-                        }}
-                      >
-                        {/* Icon */}
-                        <div style={{
-                          width: 44,
-                          height: 44,
-                          background: "linear-gradient(135deg, #dbeafe, #e0f2fe)",
-                          borderRadius: 14,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: 22,
-                          marginBottom: 14
-                        }}>
-                          {String.fromCodePoint(0x1F489 + i)}
-                        </div>
-                        
-                        <h3 style={{
-                          fontSize: 18,
-                          fontWeight: 700,
-                          color: "#0f172a",
-                          marginBottom: 6
-                        }}>
-                          {getTitle(item.title)}
-                        </h3>
-                        
-                        <p style={{
-                          fontSize: 13,
-                          lineHeight: 1.6,
-                          color: "#64748b",
-                          margin: 0
-                        }}>
-                          {getIntro(item.desc)}
-                        </p>
-                        
-                        {/* Hover Effect Line */}
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileHover={{ width: "100%" }}
-                          transition={{ duration: 0.2 }}
-                          style={{
-                            position: "absolute",
-                            bottom: 0,
-                            left: 0,
-                            height: 3,
-                            background: "linear-gradient(90deg, #3b82f6, #06b6d4)"
-                          }}
-                        />
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {activeTab === "services" && (
-                <motion.div
-                  key="services"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <SectionHeader 
-                    title={isBangla ? "বিস্তারিত সেবা" : "Detailed Services"}
-                    subtitle={isBangla ? "আমাদের বিশেষায়িত চিকিৎসা সেবা" : "Our specialized medical services"}
-                    icon="🔬"
-                  />
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                    gap: 16
-                  }}>
-                    {deptConfig?.services?.map((item, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-30px" }}
-                        transition={{ delay: i * 0.04, duration: 0.3 }}
-                        whileHover={{ 
-                          y: -3,
-                          boxShadow: "0 20px 35px -12px rgba(0, 0, 0, 0.12)",
-                          transition: { duration: 0.15 }
-                        }}
-                        style={{
-                          background: "white",
-                          borderRadius: 18,
-                          padding: 20,
-                          boxShadow: "0 8px 20px -8px rgba(0, 0, 0, 0.08)",
-                          border: "1px solid #e2e8f0",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 10,
-                          cursor: "default",
-                          willChange: "transform"
-                        }}
-                      >
-                        <div style={{
-                          width: 36,
-                          height: 36,
-                          background: "#3b82f6",
-                          borderRadius: 10,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "white",
-                          fontSize: 18
-                        }}>
-                          {i + 1}
-                        </div>
-                        <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0f172a" }}>
-                          {getTitle(item.title)}
-                        </h3>
-                        <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>
-                          {getIntro(item.desc)}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
-              {activeTab === "facilities" && (
-                <motion.div
-                  key="facilities"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <SectionHeader 
-                    title={isBangla ? "সুবিধা ও সেবা" : "Facilities & Services"}
-                    subtitle={isBangla ? "আধুনিক সুবিধাসমূহ" : "Modern amenities and features"}
-                    icon="🏛️"
-                  />
-                  <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                    gap: 12
-                  }}>
-                    {Array.isArray(deptConfig?.facilities) && deptConfig.facilities.map((f, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true, margin: "-30px" }}
-                        transition={{ delay: i * 0.02, duration: 0.25 }}
-                        whileHover={{ 
-                          scale: 1.03, 
-                          backgroundColor: "#f0f9ff",
-                          boxShadow: "0 10px 20px -8px rgba(0, 0, 0, 0.08)",
-                          transition: { duration: 0.15 }
-                        }}
-                        style={{
-                          background: "white",
-                          borderRadius: 14,
-                          padding: 16,
-                          textAlign: "center",
-                          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.03)",
-                          border: "1px solid #e2e8f0",
-                          cursor: "default",
-                          transition: "background 0.2s",
-                          willChange: "transform"
-                        }}
-                      >
-                        <div style={{
-                          fontSize: 28,
-                          marginBottom: 6
-                        }}>
-                          {String.fromCodePoint(0x1F3E5 + i % 10)}
-                        </div>
-                        <span style={{
-                          fontSize: 13,
-                          fontWeight: 500,
-                          color: "#1e293b"
-                        }}>
-                          {typeof f === 'object' ? (f[language] || f.en) : f}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-
               {activeTab === "doctors" && (
                 <motion.div
                   key="doctors"
@@ -1444,6 +1388,233 @@ export default function DepartmentPage({ department: staticDepartment }) {
                   )}
                 </motion.div>
               )}
+              {activeTab === "overview" && (
+                <motion.div
+                  key="overview"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {/* Services Grid */}
+                  <SectionHeader 
+                    title={isBangla ? "আমাদের সেবাসমূহ" : "Our Services"}
+                    subtitle={isBangla ? "আমরা প্রদান করি এমন বিশেষায়িত সেবা" : "Specialized care we provide"}
+                    icon="⚕️"
+                  />
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                    gap: 20
+                  }}>
+                    {deptConfig?.services?.map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 15 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-30px" }}
+                        transition={{ delay: i * 0.05, duration: 0.3 }}
+                        whileHover={{ 
+                          y: -4, 
+                          boxShadow: "0 25px 40px -15px rgba(0, 0, 0, 0.15)",
+                          transition: { duration: 0.15 }
+                        }}
+                        style={{
+                          background: "white",
+                          borderRadius: 20,
+                          padding: 28,
+                          boxShadow: "0 15px 30px -12px rgba(0, 0, 0, 0.1)",
+                          border: "1px solid rgba(226, 232, 240, 0.6)",
+                          position: "relative",
+                          overflow: "hidden",
+                          cursor: "default",
+                          willChange: "transform"
+                        }}
+                      >
+                        {/* Icon */}
+                        <div style={{
+                          width: 44,
+                          height: 44,
+                          background: "linear-gradient(135deg, #dbeafe, #e0f2fe)",
+                          borderRadius: 14,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 22,
+                          marginBottom: 14
+                        }}>
+                          {String.fromCodePoint(0x1F489 + i)}
+                        </div>
+                        
+                        <h3 style={{
+                          fontSize: 18,
+                          fontWeight: 700,
+                          color: "#0f172a",
+                          marginBottom: 6
+                        }}>
+                          {getTitle(item.title)}
+                        </h3>
+                        
+                        <p style={{
+                          fontSize: 13,
+                          lineHeight: 1.6,
+                          color: "#64748b",
+                          margin: 0
+                        }}>
+                          {getIntro(item.desc)}
+                        </p>
+                        
+                        {/* Hover Effect Line */}
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileHover={{ width: "100%" }}
+                          transition={{ duration: 0.2 }}
+                          style={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            height: 3,
+                            background: "linear-gradient(90deg, #3b82f6, #06b6d4)"
+                          }}
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "services" && (
+                <motion.div
+                  key="services"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <SectionHeader 
+                    title={isBangla ? "বিস্তারিত সেবা" : "Detailed Services"}
+                    subtitle={isBangla ? "আমাদের বিশেষায়িত চিকিৎসা সেবা" : "Our specialized medical services"}
+                    icon="🔬"
+                  />
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                    gap: 16
+                  }}>
+                    {deptConfig?.services?.map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-30px" }}
+                        transition={{ delay: i * 0.04, duration: 0.3 }}
+                        whileHover={{ 
+                          y: -3,
+                          boxShadow: "0 20px 35px -12px rgba(0, 0, 0, 0.12)",
+                          transition: { duration: 0.15 }
+                        }}
+                        style={{
+                          background: "white",
+                          borderRadius: 18,
+                          padding: 20,
+                          boxShadow: "0 8px 20px -8px rgba(0, 0, 0, 0.08)",
+                          border: "1px solid #e2e8f0",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 10,
+                          cursor: "default",
+                          willChange: "transform"
+                        }}
+                      >
+                        <div style={{
+                          width: 36,
+                          height: 36,
+                          background: "#3b82f6",
+                          borderRadius: 10,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                          fontSize: 18
+                        }}>
+                          {i + 1}
+                        </div>
+                        <h3 style={{ fontSize: 16, fontWeight: 600, color: "#0f172a" }}>
+                          {getTitle(item.title)}
+                        </h3>
+                        <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.5 }}>
+                          {getIntro(item.desc)}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "facilities" && (
+                <motion.div
+                  key="facilities"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <SectionHeader 
+                    title={isBangla ? "সুবিধা ও সেবা" : "Facilities & Services"}
+                    subtitle={isBangla ? "আধুনিক সুবিধাসমূহ" : "Modern amenities and features"}
+                    icon="🏛️"
+                  />
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                    gap: 12
+                  }}>
+                    {Array.isArray(deptConfig?.facilities) && deptConfig.facilities.map((f, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-30px" }}
+                        transition={{ delay: i * 0.02, duration: 0.25 }}
+                        whileHover={{ 
+                          scale: 1.03, 
+                          backgroundColor: "#f0f9ff",
+                          boxShadow: "0 10px 20px -8px rgba(0, 0, 0, 0.08)",
+                          transition: { duration: 0.15 }
+                        }}
+                        style={{
+                          background: "white",
+                          borderRadius: 14,
+                          padding: 16,
+                          textAlign: "center",
+                          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.03)",
+                          border: "1px solid #e2e8f0",
+                          cursor: "default",
+                          transition: "background 0.2s",
+                          willChange: "transform"
+                        }}
+                      >
+                        <div style={{
+                          fontSize: 28,
+                          marginBottom: 6
+                        }}>
+                          {String.fromCodePoint(0x1F3E5 + i % 10)}
+                        </div>
+                        <span style={{
+                          fontSize: 13,
+                          fontWeight: 500,
+                          color: "#1e293b"
+                        }}>
+                          {typeof f === 'object' ? (f[language] || f.en) : f}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              
+              
             </AnimatePresence>
           </div>
         </main>
