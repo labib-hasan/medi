@@ -244,7 +244,7 @@ const closeMenu = () => {
           <div className="flex items-center justify-between w-full max-w-7xl">
             <Link href="/" className="flex items-center space-x-0 flex-shrink-0">
               <Image
-                src="logo.jpg"
+                src="/logo.jpg"
                 alt="Hospital"
                 width={32}
                 height={32}

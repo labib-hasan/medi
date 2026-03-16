@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
@@ -303,11 +303,6 @@ const formatTimeToAMPM = (timeString) => {
   return convertTo12Hour(normalized);
 };
 
-
-
-
-
-
 const getVisitingDaysArray = (days) => {
   if (!days) return [];
   if (typeof days === 'string') {
@@ -320,6 +315,190 @@ const getVisitingDaysArray = (days) => {
   return Array.isArray(days) ? days : [];
 };
 
+// Premium decorative elements with smoother animations
+const FloatingParticle = ({ delay = 0, size = 4, left = "0%", top = "0%" }) => (
+  <motion.div
+    style={{
+      position: "absolute",
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      background: "rgba(59, 130, 246, 0.2)",
+      left,
+      top,
+      filter: "blur(1px)"
+    }}
+    animate={{
+      y: [0, -30, 0],
+      x: [0, 15, 0],
+      opacity: [0.2, 0.5, 0.2]
+    }}
+    transition={{
+      duration: 8,
+      delay,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+);
+
+const GradientOrb = ({ position, color1 = "#3b82f6", color2 = "#06b6d4", size = 300, blur = 100 }) => (
+  <motion.div
+    style={{
+      position: "absolute",
+      ...position,
+      width: size,
+      height: size,
+      borderRadius: "50%",
+      background: `radial-gradient(circle, ${color1} 0%, ${color2} 70%, transparent 100%)`,
+      filter: `blur(${blur}px)`,
+      opacity: 0.15,
+      zIndex: 0,
+      pointerEvents: "none"
+    }}
+    animate={{
+      scale: [1, 1.2, 1],
+      opacity: [0.1, 0.2, 0.1]
+    }}
+    transition={{
+      duration: 10,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }}
+  />
+);
+
+// Premium Section Header with smoother animations
+const SectionHeader = ({ title, subtitle, icon }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-100px" }}
+    transition={{ duration: 0.6, ease: "easeOut" }}
+    style={{
+      textAlign: "center",
+      marginBottom: "48px",
+      position: "relative"
+    }}
+  >
+    <motion.div
+      initial={{ scale: 0, rotate: -180 }}
+      whileInView={{ scale: 1, rotate: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+      style={{
+        width: 64,
+        height: 64,
+        margin: "0 auto 16px",
+        background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+        borderRadius: "20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "white",
+        boxShadow: "0 20px 30px -10px rgba(59, 130, 246, 0.3)",
+        transform: "rotate(45deg)"
+      }}
+    >
+      <span style={{ transform: "rotate(-45deg)", fontSize: 28 }}>{icon}</span>
+    </motion.div>
+    <motion.h2
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.2, duration: 0.5 }}
+      style={{
+        fontSize: "clamp(28px, 5vw, 40px)",
+        fontWeight: 800,
+        background: "linear-gradient(135deg, #1e293b, #0f172a)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        marginBottom: 8
+      }}
+    >
+      {title}
+    </motion.h2>
+    {subtitle && (
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        style={{
+          color: "#64748b",
+          fontSize: 18,
+          maxWidth: 600,
+          margin: "0 auto"
+        }}
+      >
+        {subtitle}
+      </motion.p>
+    )}
+  </motion.div>
+);
+
+// Premium Stat Card with smoother animations
+const StatCard = ({ icon, value, label, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+    viewport={{ once: true, margin: "-50px" }}
+    transition={{ 
+      delay, 
+      duration: 0.5,
+      type: "spring",
+      stiffness: 100,
+      damping: 15
+    }}
+    whileHover={{ 
+      y: -5, 
+      boxShadow: "0 30px 40px -15px rgba(0, 0, 0, 0.2)",
+      transition: { duration: 0.2 }
+    }}
+    style={{
+      background: "white",
+      padding: 24,
+      borderRadius: 24,
+      boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.1)",
+      border: "1px solid rgba(226, 232, 240, 0.6)",
+      backdropFilter: "blur(10px)",
+      display: "flex",
+      alignItems: "center",
+      gap: 16,
+      cursor: "default"
+    }}
+  >
+    <motion.div
+      whileHover={{ rotate: [0, -10, 10, -5, 0] }}
+      transition={{ duration: 0.5 }}
+      style={{
+        width: 56,
+        height: 56,
+        background: "linear-gradient(135deg, #dbeafe, #e0f2fe)",
+        borderRadius: 16,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontSize: 28
+      }}
+    >
+      {icon}
+    </motion.div>
+    <div>
+      <motion.div 
+        initial={{ opacity: 0, x: -10 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: delay + 0.2, duration: 0.3 }}
+        style={{ fontSize: 28, fontWeight: 700, color: "#0f172a" }}
+      >
+        {value}
+      </motion.div>
+      <div style={{ fontSize: 14, color: "#64748b" }}>{label}</div>
+    </div>
+  </motion.div>
+);
+
 export default function DepartmentPage() {
   const [coverImages, setCoverImages] = useState({});
   const router = useRouter();
@@ -328,6 +507,7 @@ export default function DepartmentPage() {
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
   const { language } = useLanguage();
+  const [activeTab, setActiveTab] = useState("overview");
   
   const t = translations[language] || translations.en;
   const deptConfig = departmentData[department] || departmentData["medicine"];
@@ -349,17 +529,17 @@ export default function DepartmentPage() {
   }, [department]);
 
   useEffect(() => {
-  if (typeof window !== "undefined") {
-    const saved = localStorage.getItem("hospital_cover_images");
-    if (saved) {
-      try {
-        setCoverImages(JSON.parse(saved));
-      } catch (e) {
-        console.error("Error parsing cover images", e);
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("hospital_cover_images");
+      if (saved) {
+        try {
+          setCoverImages(JSON.parse(saved));
+        } catch (e) {
+          console.error("Error parsing cover images", e);
+        }
       }
     }
-  }
-}, []);
+  }, []);
 
   const fetchDoctors = async () => {
     try {
@@ -390,20 +570,7 @@ export default function DepartmentPage() {
         const standardDeptNameLower = standardDeptName.toLowerCase();
         const urlDeptNameLower = department.replace(/-/g, ' ').replace(/&/g, 'and').toLowerCase();
         
-        // Debug: Log all doctors and their departments
-        console.log('=== DEBUG: All doctors from API ===');
-        console.log('Total doctors:', data.length);
-        data.forEach((doc, i) => {
-          console.log(`Doctor ${i + 1}: "${doc.name}" -> Department: "${doc.department}"`);
-        });
-        console.log('===================================');
-        console.log('Current URL department:', department);
-        console.log('Standard department name:', standardDeptName);
-        console.log('Standard (lowercase):', standardDeptNameLower);
-        console.log('URL format (lowercase):', urlDeptNameLower);
-
         // Filter doctors by department - STRICT matching only
-        // Doctors from one department should NEVER show in other departments
         const filteredDoctors = data.filter(doc => {
           const docDept = (doc.department || '').toLowerCase().trim();
           const docDeptRaw = (doc.department || '').trim();
@@ -412,15 +579,10 @@ export default function DepartmentPage() {
           const match2 = docDept === urlDeptNameLower;
           const match3 = docDeptRaw === standardDeptName;
           
-          // Debug each doctor
-          console.log(`Checking "${doc.name}": dept="${docDeptRaw}" | matches: ${match1 || match2 || match3}`);
-          
           // Only exact matches allowed - no partial matching to prevent cross-department display
           return match1 || match2 || match3;
         });
 
-        console.log(`✓ Found ${filteredDoctors.length} doctors for department: ${standardDeptName}`);
-        
         // Always set the filtered doctors, even if empty (to show "No doctors found" message)
         if (filteredDoctors.length > 0) {
           setDoctors(filteredDoctors);
@@ -454,339 +616,958 @@ export default function DepartmentPage() {
       setLoading(false);
     }
   };
-  const getCoverImage = () => {
-  const key = `dept_${department}`;
 
-  return (
-    coverImages[key] ||
-    deptConfig.image ||
-    "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200"
-  );
-};
+  const getCoverImage = () => {
+    const key = `dept_${department}`;
+    return (
+      coverImages[key] ||
+      deptConfig.image ||
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=1200"
+    );
+  };
 
   // Translation helpers
   const dayNames = isBangla 
     ? ["রবিবার", "সোমবার", "মঙ্গলবার", "বুধবার", "বৃহস্পতিবার", "শুক্রবার", "শনিবার"]
     : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+  // Premium Stats
+  const departmentStats = [
+    { icon: "👨‍⚕️", value: doctors.length, label: isBangla ? "বিশেষজ্ঞ ডাক্তার" : "Specialists" },
+    { icon: "🏥", value: "24/7", label: isBangla ? "সেবা" : "Service" },
+    { icon: "⭐", value: "15+", label: isBangla ? "বছরের অভিজ্ঞতা" : "Years Experience" },
+    { icon: "🛏️", value: "50+", label: isBangla ? "শয্যা" : "Beds" }
+  ];
+
   return (
     <>
       <Navbar />
-      <section className="relative h-[300px] md:h-[420px] overflow-hidden">
-        <Image
-          src={getCoverImage()}
-          alt={getTitle(deptConfig.title)}
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center">
-          <div className="max-w-7xl mx-auto px-4">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+      
+      {/* Add padding-top to account for fixed navbar */}
+      <div style={{ paddingTop: "80px"  }}>
+        
+        {/* Premium Hero Section with Parallax */}
+        <section style={{
+          position: "relative",
+          height: "clamp(400px, 160vh, 600px)",
+          overflow: "hidden",
+          background: "#0f172a"
+        }}>
+          {/* Background Image with Parallax */}
+          <motion.div
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage: `url(${getCoverImage()})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              filter: "brightness(0.4) saturate(1.2)",
+            }}
+          />
+          
+          {/* Animated Gradient Overlay */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%), linear-gradient(90deg, rgba(15, 23, 42, 0.9) 0%, rgba(15, 23, 42, 0.4) 100%)"
+            }}
+          />
+          
+          {/* Floating Particles */}
+          <FloatingParticle left="10%" top="20%" delay={0} size={6} />
+          <FloatingParticle left="20%" top="70%" delay={2} size={4} />
+          <FloatingParticle left="80%" top="40%" delay={4} size={8} />
+          <FloatingParticle left="90%" top="80%" delay={1} size={5} />
+          
+          {/* Content */}
+          <div style={{
+            position: "relative",
+            height: "100%",
+            maxWidth: 1280,
+            margin: "0 auto",
+            padding: "0 24px",
+            display: "flex",
+            alignItems: "center",
+            zIndex: 10
+          }}>
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-3xl md:text-5xl font-bold text-white mb-3"
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              style={{ maxWidth: 800 }}
             >
-              {getTitle(deptConfig.title)}
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="text-white/90 max-w-xl"
-            >
-              {getTitle(deptConfig.subtitle)}
-            </motion.p>
+              {/* Breadcrumb */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  marginBottom: 24,
+                  color: "rgba(255, 255, 255, 0.7)",
+                  fontSize: 14,
+                  fontWeight: 500
+                }}
+              >
+                <Link href="/" style={{ color: "white", opacity: 0.8, textDecoration: "none" }}>
+                  {isBangla ? "হোম" : "Home"}
+                </Link>
+                <span style={{ color: "#3b82f6" }}>•</span>
+                <span style={{ color: "white" }}>{getTitle(deptConfig.title)}</span>
+              </motion.div>
+              
+              {/* Title with Gradient */}
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+                style={{
+                  fontSize: "clamp(40px, 8vw, 72px)",
+                  fontWeight: 800,
+                  lineHeight: 1.1,
+                  marginBottom: 16,
+                  background: "linear-gradient(135deg, #ffffff 0%, #94a3b8 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                }}
+              >
+                {getTitle(deptConfig.title)}
+              </motion.h1>
+              
+              {/* Subtitle */}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                style={{
+                  fontSize: 20,
+                  color: "rgba(255, 255, 255, 0.8)",
+                  maxWidth: 600,
+                  marginBottom: 32,
+                  lineHeight: 1.6
+                }}
+              >
+                {getTitle(deptConfig.subtitle)}
+              </motion.p>
+              
+              {/* CTA Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                style={{ display: "flex", gap: 16, flexWrap: "wrap" }}
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  style={{
+                    padding: "16px 32px",
+                    background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+                    border: "none",
+                    borderRadius: 40,
+                    color: "white",
+                    fontSize: 16,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    boxShadow: "0 20px 30px -10px rgba(59, 130, 246, 0.4)"
+                  }}
+                >
+                  {isBangla ? "এপয়েন্টমেন্ট নিন" : "Book Appointment"}
+                </motion.button>
+                
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  style={{
+                    padding: "16px 32px",
+                    background: "rgba(255, 255, 255, 0.1)",
+                    border: "1px solid rgba(255, 255, 255, 0.2)",
+                    borderRadius: 40,
+                    color: "white",
+                    fontSize: 16,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    backdropFilter: "blur(10px)"
+                  }}
+                >
+                  {isBangla ? "ডাক্তার দেখুন" : "View Doctors"}
+                </motion.button>
+              </motion.div>
+            </motion.div>
           </div>
-        </div>
-      </section>
+          
+          {/* Bottom Gradient */}
+          <div style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 100,
+            background: "linear-gradient(to top, #f8fafc, transparent)"
+          }} />
+        </section>
 
-      <section className="bg-gray-50 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Department Introduction */}
-          {deptConfig.intro && (
+        {/* Main Content */}
+        <main style={{
+          position: "relative",
+          background: "#f8fafc",
+          padding: "80px 0",
+          overflow: "hidden"
+        }}>
+          {/* Background Decorative Elements */}
+          <GradientOrb position={{ top: "-100px", right: "-100px" }} size={400} blur={120} />
+          <GradientOrb position={{ bottom: "-100px", left: "-100px" }} color1="#f97316" color2="#fbbf24" size={400} blur={120} />
+          
+          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 2 }}>
+            
+            {/* Quick Stats */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="mb-12 bg-white rounded-2xl shadow-lg p-8 md:p-10 "
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gap: 24,
+                marginBottom: 80
+              }}
             >
-              <div className="text-gray-700 text-lg leading-relaxed space-y-4">
-                <p>{getIntro(deptConfig.intro)}</p>
-              </div>
+              {departmentStats.map((stat, index) => (
+                <StatCard key={index} {...stat} delay={index * 0.1} />
+              ))}
             </motion.div>
-          )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mb-12"
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-blue-700 mb-6 text-center">
-              {isBangla ? "আমাদের সেবাসমূহ" : "Our Services"}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {deptConfig.services.map((item, i) => (
+            {/* Department Introduction */}
+            {deptConfig.intro && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                style={{
+                  background: "white",
+                  borderRadius: 40,
+                  padding: 48,
+                  marginBottom: 80,
+                  boxShadow: "0 30px 60px -20px rgba(0, 0, 0, 0.2)",
+                  border: "1px solid rgba(226, 232, 240, 0.6)",
+                  position: "relative",
+                  overflow: "hidden"
+                }}
+              >
+                {/* Decorative Element */}
                 <motion.div
-                  key={i}
-                  whileHover={{ y: -5, scale: 1.01 }}
+                  initial={{ scale: 0 }}
+                  whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
-                  className="bg-white rounded-xl shadow-md p-5 border-l-4 border-blue-600 hover:shadow-lg transition-all"
-                >
-                  <h3 className="text-base font-semibold text-gray-800 mb-1">{getTitle(item.title)}</h3>
-                  <p className="text-gray-600 text-sm">{getIntro(item.desc)}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="mb-12"
-          >
-            <h3 className="text-xl font-semibold text-gray-800 mb-5 text-center">
-              {isBangla ? "সুবিধা ও সেবা" : "Facilities & Services"}
-            </h3>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {Array.isArray(deptConfig.facilities) && deptConfig.facilities.map((f, i) => (
-                <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.03 }}
-                  viewport={{ once: true }}
-                  className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-3 text-xs text-gray-700"
-                >
-                  {typeof f === 'object' ? (f[language] || f.en) : f}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <div className="text-center mb-6">
-              <span className="text-sm uppercase tracking-wider text-blue-600 font-semibold">
-                {t.ourExperts || (isBangla ? "আমাদের বিশেষজ্ঞ" : "Our Experts")}
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-                {isBangla ? "বিশেষজ্ঞ ডাক্তার" : "Specialist Doctors"}
-              </h2>
-              <p className="text-gray-500 text-sm mt-1">{doctors.length} {isBangla ? "জন ডাক্তার উপলব্ধ" : "doctors available"}</p>
-            </div>
-
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-              </div>
-            ) : displayedDoctors.length > 0 ? (
-              <>
-                <div className="grid sm:grid-cols-2 
-                md:grid-cols-2 lg:grid-cols-4 gap-6 flex flex-col mt-auto">
-                {displayedDoctors.map((doctor, index) => {
-                  const visitingDaysArray = getVisitingDaysArray(doctor.visiting_days);
-                  const visitingDaysText = visitingDaysArray.length > 0 
-                    ? `${isBangla ? "শুধুমাত্র " : "Only "}${visitingDaysArray.join(", ")}` 
-                    : (isBangla ? "নির্দিষ্ট নয়" : "Not specified");
-                  
-                  return (
-                    <motion.div
-  key={doctor.id || index}
-  initial={{ opacity: 0, y: 20 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.2, delay: index * 0.05 }}
-  whileHover={{
-    y: -6,
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.69)"
-  }}
-  className="max-w-[280px] rounded-3xl overflow-hidden bg-gray-100 mx-auto relative group flex flex-col h-full shadow-md hover:shadow-2xl transition"
->
-
-  {/* IMAGE */}
-  <div className="relative">
-    <img
-      src={doctor.image || getDoctorImage(doctor.id || index + 1)}
-      alt={doctor.name}
-      className="w-full transition-transform duration-500 group-hover:scale-95"
-      style={{
-        clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
-        height: "280px",
-        objectFit: "cover",
-        objectPosition: "top center"
-      }}
-      onError={(e) => {
-        e.target.src = getDoctorImage(doctor.id || index + 1);
-      }}
-    />
-
-    {/* overlay */}
-    <div
-      style={{
-        clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
-        position: "absolute",
-        inset: 0,
-        background:
-          "linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(150, 159, 186, 0.32) 100%)"
-      }}
-    />
-
-    {/* availability */}
-   <div className="absolute top-2 left-2 bg-green-500 text-white text-[9px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
-      <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
-      {isBangla ? "উপলব্ধ" : "Available"}
-    </div>
-
-    {/* circle button */}
-    <motion.div
-      initial={{ scale: 0 }}
-      whileInView={{ scale: 1 }}
-      transition={{ delay: index * 0.05 + 0.2 }}
-      whileHover={{ scale: 1.4 }}
-      whileTap={{ scale: 0.9 }}
-      className="absolute bottom-5 right-5 h-14 w-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white shadow-lg  z-20"
-      onClick={() => window.location.href = `/doctors/${doctor.id}`}
-    >
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-      </svg>
-    </motion.div>
-  </div>
-
-  {/* CONTENT */}
-  <div className="p-3 flex flex-col flex-grow">
-
-    <h3 className="font-bold text-xl mt-auto  text-gray-800 text-center break-normal">
-      {doctor.name}
-    </h3>
-
-    <p className="text-blue-600 text-[11px] text-center mt-auto">
-      {doctor.degrees || doctor.specialization}
-    </p>
-
-    <p className="text-gray-500 text-[11px] text-center mt-auto">
-      {doctor.designation || (isBangla ? "পরামর্শক" : "Consultant")}
-    </p>
-
-    {/* stats */}
-    <div className="grid grid-cols-3 text-center border-t border-b border-gray-100 mt-auto text-[10px]">
-
-      <div className="text-center">
-        <p className="text-gray-400 text-[9px]">
-          {isBangla ? "অভিজ্ঞতা" : "Experience"}
-        </p>
-        <p className="font-semibold text-gray-800">
-          {doctor.experience_years || "5"}
-          <span className="text-xs ml-1">
-            {isBangla ? "বছর" : "yrs"}
-          </span>
-        </p>
-      </div>
-
-      <div className="text-center border-l border-r border-gray-100">
-        <p className="text-gray-400 text-[9px]">
-          {isBangla ? "রুম নং" : "Room"}
-        </p>
-        <p className="font-semibold text-gray-800">
-          {doctor.room_no || (isBangla ? "টিবিএ" : "TBA")}
-        </p>
-      </div>
-
-      <div className="text-center">
-        <p className="text-gray-500 text-[9px]">
-          {isBangla ? "সময়" : "Time"}
-        </p>
-        <p className="font-semibold text-gray-800 text-[10px]">
-          {formatTimeToAMPM(doctor.visiting_time) || "9 AM"}
-        </p>
-      </div>
-
-    </div>
-
-    {/* hospital */}
-    <p className="text-gray-500 text-[10px] text-center mt-auto">
-      <span className="font-medium text-gray-700">
-        {isBangla ? "হাসপাতাল:" : "Hospital:"}
-      </span>{" "}
-      {doctor.institute || "Medical Center"}
-    </p>
-
-    {/* phone */}
-    {doctor.phone && (
-      <p className="text-gray-600 text-xs text-center mt-auto">
-        <span className="font-medium text-gray-700">
-          {isBangla ? "ফোন:" : "Phone:"}
-        </span>{" "}
-        {doctor.phone}
-      </p>
-    )}
-
-    {/* BUTTON */}
-    <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="mt-auto"
-    >
-      <Link
-        href={`/doctors/${doctor.id}`}
-        className="inline-flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-3xl font-semibold text-sm hover:from-blue-500 hover:to-cyan-700 transition shadow-lg shadow-blue-500/25"
-      >
-        {isBangla ? "সম্পূর্ণ প্রোফাইল দেখুন" : "View Full Profile"}
-      </Link>
-    </motion.div>
-
-  </div>
-
-</motion.div>
-                  );
-                })}
+                  transition={{ duration: 1, type: "spring" }}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    width: 300,
+                    height: 300,
+                    background: "radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)",
+                    borderRadius: "50%"
+                  }}
+                />
+                
+                <div style={{ position: "relative", zIndex: 2 }}>
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: 80 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    style={{
+                      height: 4,
+                      background: "linear-gradient(90deg, #3b82f6, #06b6d4)",
+                      borderRadius: 2,
+                      marginBottom: 24
+                    }}
+                  />
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    style={{
+                      fontSize: 18,
+                      lineHeight: 1.8,
+                      color: "#334155",
+                      margin: 0
+                    }}
+                  >
+                    {getIntro(deptConfig.intro)}
+                  </motion.p>
                 </div>
-
-                {/* View All Button at the end */}
-                {hasMoreDoctors && !showAll && (
-                  <div className="text-center mt-8">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setShowAll(true)}
-                      className="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-xl font-semibold text-sm shadow-lg shadow-blue-500/25 hover:from-blue-700 hover:to-cyan-700 transition"
-                    >
-                      {isBangla ? `সব ${doctors.length} জন ডাক্তার দেখুন →` : `View All (${doctors.length}) Doctors →`}
-                    </motion.button>
-                  </div>
-                )}
-                {showAll && doctors.length > MAX_VISIBLE_DOCTORS && (
-                  <div className="text-center mt-8">
-                    <motion.button
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setShowAll(false)}
-                      className="px-8 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-300 transition"
-                    >
-                      {isBangla ? "কম দেখুন ↑" : "Show Less ↑"}
-                    </motion.button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="text-center py-12 bg-white rounded-xl">
-                <p className="text-gray-500">{isBangla ? "কোনো বিশেষজ্ঞ পাওয়া যায়নি" : "No specialists found"}</p>
-              </div>
+              </motion.div>
             )}
-          </motion.div>
-        </div>
-      </section>
+
+            {/* Tabs Navigation */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                gap: 16,
+                marginBottom: 48,
+                flexWrap: "wrap"
+              }}
+            >
+              {[
+                { id: "overview", label: isBangla ? "ওভারভিউ" : "Overview", icon: "📊" },
+                { id: "services", label: isBangla ? "সেবাসমূহ" : "Services", icon: "⚕️" },
+                { id: "facilities", label: isBangla ? "সুবিধা" : "Facilities", icon: "🏥" },
+                { id: "doctors", label: isBangla ? "ডাক্তার" : "Doctors", icon: "👨‍⚕️" }
+              ].map((tab) => (
+                <motion.button
+                  key={tab.id}
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveTab(tab.id)}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  style={{
+                    padding: "12px 28px",
+                    background: activeTab === tab.id 
+                      ? "linear-gradient(135deg, #3b82f6, #06b6d4)"
+                      : "white",
+                    border: activeTab === tab.id ? "none" : "1px solid #e2e8f0",
+                    borderRadius: 40,
+                    color: activeTab === tab.id ? "white" : "#64748b",
+                    fontSize: 15,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    boxShadow: activeTab === tab.id 
+                      ? "0 20px 30px -10px rgba(59, 130, 246, 0.4)"
+                      : "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                    transition: "all 0.3s ease"
+                  }}
+                >
+                  <span>{tab.icon}</span>
+                  {tab.label}
+                </motion.button>
+              ))}
+            </motion.div>
+
+            {/* Tab Content */}
+            <AnimatePresence mode="wait">
+              {activeTab === "overview" && (
+                <motion.div
+                  key="overview"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                >
+                  {/* Services Grid */}
+                  <SectionHeader 
+                    title={isBangla ? "আমাদের সেবাসমূহ" : "Our Services"}
+                    subtitle={isBangla ? "আমরা প্রদান করি এমন বিশেষায়িত সেবা" : "Specialized care we provide"}
+                    icon="⚕️"
+                  />
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                    gap: 24
+                  }}>
+                    {deptConfig.services.map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: i * 0.1, duration: 0.5, ease: "easeOut" }}
+                        whileHover={{ 
+                          y: -8, 
+                          boxShadow: "0 30px 50px -20px rgba(0, 0, 0, 0.2)",
+                          transition: { duration: 0.2 }
+                        }}
+                        style={{
+                          background: "white",
+                          borderRadius: 24,
+                          padding: 32,
+                          boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.1)",
+                          border: "1px solid rgba(226, 232, 240, 0.6)",
+                          position: "relative",
+                          overflow: "hidden",
+                          cursor: "default"
+                        }}
+                      >
+                        {/* Icon */}
+                        <motion.div
+                          whileHover={{ rotate: [0, -5, 5, 0] }}
+                          transition={{ duration: 0.5 }}
+                          style={{
+                            width: 48,
+                            height: 48,
+                            background: "linear-gradient(135deg, #dbeafe, #e0f2fe)",
+                            borderRadius: 16,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 24,
+                            marginBottom: 16
+                          }}
+                        >
+                          {String.fromCodePoint(0x1F489 + i)}
+                        </motion.div>
+                        
+                        <h3 style={{
+                          fontSize: 20,
+                          fontWeight: 700,
+                          color: "#0f172a",
+                          marginBottom: 8
+                        }}>
+                          {getTitle(item.title)}
+                        </h3>
+                        
+                        <p style={{
+                          fontSize: 14,
+                          lineHeight: 1.7,
+                          color: "#64748b",
+                          margin: 0
+                        }}>
+                          {getIntro(item.desc)}
+                        </p>
+                        
+                        {/* Hover Effect Line */}
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileHover={{ width: "100%" }}
+                          transition={{ duration: 0.3 }}
+                          style={{
+                            position: "absolute",
+                            bottom: 0,
+                            left: 0,
+                            height: 4,
+                            background: "linear-gradient(90deg, #3b82f6, #06b6d4)"
+                          }}
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "services" && (
+                <motion.div
+                  key="services"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                >
+                  <SectionHeader 
+                    title={isBangla ? "বিস্তারিত সেবা" : "Detailed Services"}
+                    subtitle={isBangla ? "আমাদের বিশেষায়িত চিকিৎসা সেবা" : "Our specialized medical services"}
+                    icon="🔬"
+                  />
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                    gap: 20
+                  }}>
+                    {deptConfig.services.map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: i * 0.05, duration: 0.4, type: "spring", stiffness: 200 }}
+                        whileHover={{ 
+                          y: -5,
+                          boxShadow: "0 25px 40px -15px rgba(0, 0, 0, 0.15)",
+                          transition: { duration: 0.2 }
+                        }}
+                        style={{
+                          background: "white",
+                          borderRadius: 20,
+                          padding: 24,
+                          boxShadow: "0 10px 30px -10px rgba(0, 0, 0, 0.1)",
+                          border: "1px solid #e2e8f0",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 12,
+                          cursor: "default"
+                        }}
+                      >
+                        <motion.div
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ duration: 0.2 }}
+                          style={{
+                            width: 40,
+                            height: 40,
+                            background: "#3b82f6",
+                            borderRadius: 12,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "white",
+                            fontSize: 20
+                          }}
+                        >
+                          {i + 1}
+                        </motion.div>
+                        <h3 style={{ fontSize: 18, fontWeight: 600, color: "#0f172a" }}>
+                          {getTitle(item.title)}
+                        </h3>
+                        <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.6 }}>
+                          {getIntro(item.desc)}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "facilities" && (
+                <motion.div
+                  key="facilities"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                >
+                  <SectionHeader 
+                    title={isBangla ? "সুবিধা ও সেবা" : "Facilities & Services"}
+                    subtitle={isBangla ? "আধুনিক সুবিধাসমূহ" : "Modern amenities and features"}
+                    icon="🏛️"
+                  />
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                    gap: 16
+                  }}>
+                    {Array.isArray(deptConfig.facilities) && deptConfig.facilities.map((f, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ delay: i * 0.03, duration: 0.3, type: "spring", stiffness: 200 }}
+                        whileHover={{ 
+                          scale: 1.08, 
+                          backgroundColor: "#f0f9ff",
+                          boxShadow: "0 15px 30px -10px rgba(0, 0, 0, 0.1)",
+                          transition: { duration: 0.2 }
+                        }}
+                        style={{
+                          background: "white",
+                          borderRadius: 16,
+                          padding: 20,
+                          textAlign: "center",
+                          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+                          border: "1px solid #e2e8f0",
+                          cursor: "default",
+                          transition: "all 0.3s ease"
+                        }}
+                      >
+                        <motion.div
+                          animate={{ 
+                            y: [0, -3, 0],
+                          }}
+                          transition={{ 
+                            duration: 3,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: i * 0.1
+                          }}
+                          style={{
+                            fontSize: 32,
+                            marginBottom: 8
+                          }}
+                        >
+                          {String.fromCodePoint(0x1F3E5 + i % 10)}
+                        </motion.div>
+                        <span style={{
+                          fontSize: 14,
+                          fontWeight: 500,
+                          color: "#1e293b"
+                        }}>
+                          {typeof f === 'object' ? (f[language] || f.en) : f}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === "doctors" && (
+                <motion.div
+                  key="doctors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                >
+                  <SectionHeader 
+                    title={isBangla ? "আমাদের বিশেষজ্ঞ ডাক্তার" : "Our Specialist Doctors"}
+                    subtitle={`${doctors.length} ${isBangla ? "জন ডাক্তার উপলব্ধ" : "doctors available"}`}
+                    icon="👥"
+                  />
+
+                  {loading ? (
+                    <div style={{ textAlign: "center", padding: 60 }}>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                        style={{
+                          width: 48,
+                          height: 48,
+                          border: "3px solid #e2e8f0",
+                          borderTopColor: "#3b82f6",
+                          borderRadius: "50%",
+                          margin: "0 auto"
+                        }}
+                      />
+                    </div>
+                  ) : displayedDoctors.length > 0 ? (
+                    <>
+                      <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                        gap: 24
+                      }}>
+                        {displayedDoctors.map((doctor, index) => {
+                          const visitingDaysArray = getVisitingDaysArray(doctor.visiting_days);
+                          const visitingDaysText = visitingDaysArray.length > 0 
+                            ? `${isBangla ? "শুধুমাত্র " : "Only "}${visitingDaysArray.join(", ")}` 
+                            : (isBangla ? "নির্দিষ্ট নয়" : "Not specified");
+                          
+                          return (
+                            <motion.div
+                              key={doctor.id || index}
+                              initial={{ opacity: 0, y: 20 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true, margin: "-50px" }}
+                              transition={{ duration: 0.2, delay: index * 0.05 }}
+                              whileHover={{
+                                y: -6,
+                                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.69)"
+                              }}
+                              className="max-w-[280px] rounded-3xl overflow-hidden bg-gray-100 mx-auto relative group flex flex-col h-full shadow-md hover:shadow-2xl transition"
+                            >
+
+                              {/* IMAGE */}
+                              <div className="relative">
+                                <img
+                                  src={doctor.image || getDoctorImage(doctor.id || index + 1)}
+                                  alt={doctor.name}
+                                  className="w-full transition-transform duration-500 group-hover:scale-95"
+                                  style={{
+                                    clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
+                                    height: "280px",
+                                    objectFit: "cover",
+                                    objectPosition: "top center"
+                                  }}
+                                  onError={(e) => {
+                                    e.target.src = getDoctorImage(doctor.id || index + 1);
+                                  }}
+                                />
+
+                                {/* overlay */}
+                                <div
+                                  style={{
+                                    clipPath: "polygon(0 0, 100% 0, 100% 75%, 0% 100%)",
+                                    position: "absolute",
+                                    inset: 0,
+                                    background:
+                                      "linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(150, 159, 186, 0.32) 100%)"
+                                  }}
+                                />
+
+                                {/* availability */}
+                               <div className="absolute top-2 left-2 bg-green-500 text-white text-[9px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
+                                  <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                                  {isBangla ? "উপলব্ধ" : "Available"}
+                                </div>
+
+                                {/* circle button */}
+                                <motion.div
+                                  initial={{ scale: 0 }}
+                                  whileInView={{ scale: 1 }}
+                                  transition={{ delay: index * 0.05 + 0.2 }}
+                                  whileHover={{ scale: 1.4 }}
+                                  whileTap={{ scale: 0.9 }}
+                                  className="absolute bottom-5 right-5 h-14 w-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white shadow-lg z-20"
+                                  onClick={() => window.location.href = `/doctors/${doctor.id}`}
+                                >
+                                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                  </svg>
+                                </motion.div>
+                              </div>
+
+                              {/* CONTENT */}
+                              <div className="p-3 flex flex-col flex-grow">
+
+                                <h3 className="font-bold text-xl mt-auto text-gray-800 text-center break-normal">
+                                  {doctor.name}
+                                </h3>
+
+                                <p className="text-blue-600 text-[11px] text-center mt-auto">
+                                  {doctor.degrees || doctor.specialization}
+                                </p>
+
+                                <p className="text-gray-500 text-[11px] text-center mt-auto">
+                                  {doctor.designation || (isBangla ? "পরামর্শক" : "Consultant")}
+                                </p>
+
+                                {/* stats */}
+                                <div className="grid grid-cols-3 text-center border-t border-b border-gray-100 mt-auto text-[10px]">
+
+                                  <div className="text-center">
+                                    <p className="text-gray-400 text-[9px]">
+                                      {isBangla ? "অভিজ্ঞতা" : "Experience"}
+                                    </p>
+                                    <p className="font-semibold text-gray-800">
+                                      {doctor.experience_years || "5"}
+                                      <span className="text-xs ml-1">
+                                        {isBangla ? "বছর" : "yrs"}
+                                      </span>
+                                    </p>
+                                  </div>
+
+                                  <div className="text-center border-l border-r border-gray-100">
+                                    <p className="text-gray-400 text-[9px]">
+                                      {isBangla ? "রুম নং" : "Room"}
+                                    </p>
+                                    <p className="font-semibold text-gray-800">
+                                      {doctor.room_no || (isBangla ? "টিবিএ" : "TBA")}
+                                    </p>
+                                  </div>
+
+                                  <div className="text-center">
+                                    <p className="text-gray-500 text-[9px]">
+                                      {isBangla ? "সময়" : "Time"}
+                                    </p>
+                                    <p className="font-semibold text-gray-800 text-[10px]">
+                                      {formatTimeToAMPM(doctor.visiting_time) || "9 AM"}
+                                    </p>
+                                  </div>
+
+                                </div>
+
+                                {/* hospital */}
+                                <p className="text-gray-500 text-[10px] text-center mt-auto">
+                                  <span className="font-medium text-gray-700">
+                                    {isBangla ? "হাসপাতাল:" : "Hospital:"}
+                                  </span>{" "}
+                                  {doctor.institute || "Medical Center"}
+                                </p>
+
+                                {/* phone */}
+                                {doctor.phone && (
+                                  <p className="text-gray-600 text-xs text-center mt-auto">
+                                    <span className="font-medium text-gray-700">
+                                      {isBangla ? "ফোন:" : "Phone:"}
+                                    </span>{" "}
+                                    {doctor.phone}
+                                  </p>
+                                )}
+
+                                {/* BUTTON */}
+                                <motion.div
+                                  whileHover={{ scale: 1.02 }}
+                                  whileTap={{ scale: 0.98 }}
+                                  className="mt-auto"
+                                >
+                                  <Link
+                                    href={`/doctors/${doctor.id}`}
+                                    className="inline-flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-3xl font-semibold text-sm hover:from-blue-500 hover:to-cyan-700 transition shadow-lg shadow-blue-500/25"
+                                  >
+                                    {isBangla ? "সম্পূর্ণ প্রোফাইল দেখুন" : "View Full Profile"}
+                                  </Link>
+                                </motion.div>
+
+                              </div>
+
+                            </motion.div>
+                          );
+                        })}
+                      </div>
+
+                      {/* View All / Show Less Button */}
+                      {(hasMoreDoctors || showAll) && (
+                        <div style={{ textAlign: "center", marginTop: 48 }}>
+                          <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => setShowAll(!showAll)}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            style={{
+                              padding: "16px 40px",
+                              background: showAll ? "white" : "linear-gradient(135deg, #3b82f6, #06b6d4)",
+                              border: showAll ? "2px solid #3b82f6" : "none",
+                              borderRadius: 40,
+                              color: showAll ? "#3b82f6" : "white",
+                              fontSize: 16,
+                              fontWeight: 600,
+                              cursor: "pointer",
+                              boxShadow: showAll 
+                                ? "none"
+                                : "0 20px 30px -10px rgba(59, 130, 246, 0.4)"
+                            }}
+                          >
+                            {showAll 
+                              ? (isBangla ? "কম দেখুন ↑" : "Show Less ↑")
+                              : (isBangla ? `সব ${doctors.length} জন ডাক্তার দেখুন →` : `View All ${doctors.length} Doctors →`)}
+                          </motion.button>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.5 }}
+                      style={{
+                        textAlign: "center",
+                        padding: 60,
+                        background: "white",
+                        borderRadius: 32,
+                        boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.1)"
+                      }}
+                    >
+                      <motion.div
+                        animate={{ 
+                          scale: [1, 1.1, 1],
+                          rotate: [0, 5, -5, 0]
+                        }}
+                        transition={{ 
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                        style={{ fontSize: 48, marginBottom: 16 }}
+                      >
+                        👨‍⚕️
+                      </motion.div>
+                      <p style={{ fontSize: 18, color: "#64748b" }}>
+                        {isBangla ? "কোনো বিশেষজ্ঞ পাওয়া যায়নি" : "No specialists found"}
+                      </p>
+                    </motion.div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </main>
+
+        {/* Premium CTA Section */}
+        <section style={{
+          background: "linear-gradient(135deg, #0f172a, #1e293b)",
+          padding: "100px 0",
+          position: "relative",
+          overflow: "hidden"
+        }}>
+          <GradientOrb position={{ top: "-150px", right: "-150px" }} color1="#3b82f6" color2="#06b6d4" size={500} blur={150} />
+          <GradientOrb position={{ bottom: "-150px", left: "-150px" }} color1="#f97316" color2="#fbbf24" size={500} blur={150} />
+          
+          <div style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            padding: "0 24px",
+            position: "relative",
+            zIndex: 2,
+            textAlign: "center"
+          }}>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              style={{
+                fontSize: "clamp(32px, 5vw, 48px)",
+                fontWeight: 700,
+                color: "white",
+                marginBottom: 24,
+                maxWidth: 800,
+                marginLeft: "auto",
+                marginRight: "auto"
+              }}
+            >
+              {isBangla 
+                ? "আপনার স্বাস্থ্য আমাদের অগ্রাধিকার" 
+                : "Your Health is Our Priority"}
+            </motion.h2>
+            
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              style={{
+                fontSize: 18,
+                color: "rgba(255, 255, 255, 0.7)",
+                marginBottom: 40,
+                maxWidth: 600,
+                marginLeft: "auto",
+                marginRight: "auto"
+              }}
+            >
+              {isBangla 
+                ? "আজই অ্যাপয়েন্টমেন্ট নিন এবং বিশেষজ্ঞ ডাক্তারের পরামর্শ নিন" 
+                : "Book an appointment today and consult with our specialist doctors"}
+            </motion.p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <motion.button
+                whileHover={{ scale: 1.05, boxShadow: "0 30px 40px -15px rgba(59, 130, 246, 0.5)" }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                style={{
+                  padding: "18px 48px",
+                  background: "linear-gradient(135deg, #3b82f6, #06b6d4)",
+                  border: "none",
+                  borderRadius: 50,
+                  color: "white",
+                  fontSize: 18,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  boxShadow: "0 20px 30px -10px rgba(59, 130, 246, 0.4)"
+                }}
+              >
+                {isBangla ? "এপয়েন্টমেন্ট নিন" : "Book Appointment"}
+              </motion.button>
+            </motion.div>
+          </div>
+        </section>
+      </div>
 
       <Footer />
+
+      {/* Global Styles for Animations */}
+      <style jsx>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+      `}</style>
     </>
   );
 }
