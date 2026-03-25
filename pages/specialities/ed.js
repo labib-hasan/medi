@@ -57,43 +57,36 @@ const formatTimeToAMPM = (timeString) => {
   return convertTo12Hour(normalized);
 };
 
+const getVisitingDaysArray = (days) => {
+  if (!days) return [];
+  if (typeof days === 'string') {
+    try { days = JSON.parse(days); } catch { return []; }
+  }
+  return Array.isArray(days) ? days : [];
+};
+
 export default function EDPage() {
-  const [coverImage, setCoverImage] = useState(null);
+  const [coverImages, setCoverImages] = useState({});
   const [doctors, setDoctors] = useState(fallbackEDDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
-  const [imageLoading, setImageLoading] = useState(true);
 
-  // Fetch cover image from database
   useEffect(() => {
-    fetchCoverImage();
+    fetchDoctors();
   }, []);
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    const saved = localStorage.getItem("hospital_cover_images");
 
-  const fetchCoverImage = async () => {
-    try {
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
-      const response = await fetch(`${API_BASE}/api/page-images?pageName=spec_ed`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.image_url) {
-          setCoverImage(data.image_url);
-        } else {
-          // Use fallback image
-          setCoverImage("https://images.unsplash.com/photo-1516549655169-df83a0774514");
-        }
-      } else {
-        // Use fallback if API fails
-        setCoverImage("https://images.unsplash.com/photo-1516549655169-df83a0774514");
+    if (saved) {
+      try {
+        setCoverImages(JSON.parse(saved));
+      } catch (e) {
+        console.error("Cover image parse error:", e);
       }
-    } catch (error) {
-      console.error("Error fetching cover image:", error);
-      setCoverImage("https://images.unsplash.com/photo-1516549655169-df83a0774514");
-    } finally {
-      setImageLoading(false);
     }
-  };
-
+  }
+}, []);
   const fetchDoctors = async () => {
     try {
       if (typeof window === 'undefined') {
@@ -101,8 +94,7 @@ export default function EDPage() {
         return;
       }
       
-      const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
-      const response = await fetch(`${API_BASE}/api/doctors`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/doctors`);
       if (!response.ok) {
         console.log("API response not ok, using fallback data");
         setLoading(false);
@@ -128,32 +120,29 @@ export default function EDPage() {
     }
   };
 
-  useEffect(() => {
-    fetchDoctors();
-  }, []);
-
   const MAX_VISIBLE_DOCTORS = 8;
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
+const getCoverImage = () => {
+  const key = "spec_ed";
 
+  return (
+    coverImages[key] ||
+    "https://images.unsplash.com/photo-1516549655169-df83a0774514"
+  );
+};
   return (
     <>
       <Navbar />
 
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
-        {!imageLoading && coverImage && (
-          <Image
-            src={coverImage}
-            alt="Emergency Department"
-            fill
-            className="object-cover"
-            priority
-          />
-        )}
-        {imageLoading && (
-          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-        )}
+        <Image
+  src={getCoverImage()}
+          alt="Emergency Department"
+          fill
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center">
           <div className="max-w-7xl mx-auto px-4">
             <motion.h1
@@ -377,7 +366,7 @@ export default function EDPage() {
                           transition={{ delay: index * 0.05 + 0.2 }}
                           whileHover={{ scale: 1.4 }}
                           whileTap={{ scale: 0.9 }}
-                          className="absolute bottom-5 right-5 h-14 w-14 rounded-full bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center text-white shadow-lg z-20"
+                          className="absolute bottom-5 right-5 h-14 w-14 rounded-full bg-gradient-to-br from-red-600 to-orange-600 flex items-center justify-center text-white shadow-lg  z-20"
                           onClick={() => window.location.href = `/doctors/${doctor.id}`}
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -390,7 +379,7 @@ export default function EDPage() {
                       {/* CONTENT */}
                       <div className="p-3 flex flex-col flex-grow">
 
-                        <h3 className="font-bold text-xl mt-auto text-gray-800 text-center break-normal">
+                        <h3 className="font-bold text-xl mt-auto  text-gray-800 text-center break-normal">
                           {doctor.name}
                         </h3>
 
@@ -522,3 +511,4 @@ export default function EDPage() {
     </>
   );
 }
+

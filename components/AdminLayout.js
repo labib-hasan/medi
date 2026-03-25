@@ -52,7 +52,7 @@ export default function AdminLayout({ children }) {
   }
 
   const handleLogout = () => {
-    adminLogout();
+    adminLogout();z
     router.push("/admin/login");
   };
 
