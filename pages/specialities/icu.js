@@ -57,22 +57,42 @@ const formatTimeToAMPM = (timeString) => {
   return convertTo12Hour(normalized);
 };
 
-const getVisitingDaysArray = (days) => {
-  if (!days) return [];
-  if (typeof days === 'string') {
-    try { days = JSON.parse(days); } catch { return []; }
-  }
-  return Array.isArray(days) ? days : [];
-};
-
 export default function ICUPage() {
+  const [coverImage, setCoverImage] = useState(null);
   const [doctors, setDoctors] = useState(fallbackICUDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
 
+  // Fetch cover image from database
   useEffect(() => {
-    fetchDoctors();
+    fetchCoverImage();
   }, []);
+
+  const fetchCoverImage = async () => {
+    try {
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+      const response = await fetch(`${API_BASE}/api/page-images?pageName=spec_icu`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.image_url) {
+          setCoverImage(data.image_url);
+        } else {
+          // Use fallback image
+          setCoverImage("https://images.unsplash.com/photo-1551190822-a9333d879b1f");
+        }
+      } else {
+        // Use fallback if API fails
+        setCoverImage("https://images.unsplash.com/photo-1551190822-a9333d879b1f");
+      }
+    } catch (error) {
+      console.error("Error fetching cover image:", error);
+      setCoverImage("https://images.unsplash.com/photo-1551190822-a9333d879b1f");
+    } finally {
+      setImageLoading(false);
+    }
+  };
 
   const fetchDoctors = async () => {
     try {
@@ -81,7 +101,8 @@ export default function ICUPage() {
         return;
       }
       
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/doctors`);
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+      const response = await fetch(`${API_BASE}/api/doctors`);
       if (!response.ok) {
         console.log("API response not ok, using fallback data");
         setLoading(false);
@@ -107,6 +128,10 @@ export default function ICUPage() {
     }
   };
 
+  useEffect(() => {
+    fetchDoctors();
+  }, []);
+
   const MAX_VISIBLE_DOCTORS = 8;
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
@@ -117,12 +142,18 @@ export default function ICUPage() {
 
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1551190822-a9333d879b1f"
-          alt="ICU - Intensive Care Unit"
-          fill
-          className="object-cover"
-        />
+        {!imageLoading && coverImage && (
+          <Image
+            src={coverImage}
+            alt="ICU - Intensive Care Unit"
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
+        {imageLoading && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center">
           <div className="max-w-7xl mx-auto px-4">
             <motion.h1
@@ -277,7 +308,7 @@ export default function ICUPage() {
                           transition={{ delay: index * 0.05 + 0.2 }}
                           whileHover={{ scale: 1.4 }}
                           whileTap={{ scale: 0.9 }}
-                          className="absolute bottom-5 right-5 h-14 w-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white shadow-lg  z-20"
+                          className="absolute bottom-5 right-5 h-14 w-14 rounded-full bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white shadow-lg z-20"
                           onClick={() => window.location.href = `/doctors/${doctor.id}`}
                         >
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -290,7 +321,7 @@ export default function ICUPage() {
                       {/* CONTENT */}
                       <div className="p-3 flex flex-col flex-grow">
 
-                        <h3 className="font-bold text-xl mt-auto  text-gray-800 text-center break-normal">
+                        <h3 className="font-bold text-xl mt-auto text-gray-800 text-center break-normal">
                           {doctor.name}
                         </h3>
 
@@ -406,9 +437,9 @@ export default function ICUPage() {
                 Our ICU team provides comprehensive critical care for the most seriously ill patients. Contact us for immediate assistance.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
-                <a href="/appointment" className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition">
+                <Link href="/appointment" className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-full hover:bg-gray-100 transition">
                   Book Appointment
-                </a>
+                </Link>
                 <a href="tel:+8809610818888" className="px-6 py-3 bg-blue-700 text-white font-semibold rounded-full hover:bg-blue-800 transition">
                   Call: +8809610-818888
                 </a>

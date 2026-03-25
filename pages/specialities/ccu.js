@@ -66,28 +66,42 @@ const getVisitingDaysArray = (days) => {
 };
 
 export default function CCUPage() {
-  const [coverImages, setCoverImages] = useState({});
+  const [coverImage, setCoverImage] = useState(null);
   const [doctors, setDoctors] = useState(fallbackCCUDoctors);
   const [loading, setLoading] = useState(true);
   const [showAll, setShowAll] = useState(false);
+  const [imageLoading, setImageLoading] = useState(true);
+
+  // Fetch cover image from database
+  useEffect(() => {
+    fetchCoverImage();
+  }, []);
+
+  const fetchCoverImage = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/page-images?pageName=spec_ccu`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.image_url) {
+          setCoverImage(data.image_url);
+        } else {
+          setCoverImage("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+        }
+      } else {
+        setCoverImage("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+      }
+    } catch (error) {
+      console.error("Error fetching cover image:", error);
+      setCoverImage("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+    } finally {
+      setImageLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchDoctors();
   }, []);
-
-  useEffect(() => {
-  if (typeof window !== "undefined") {
-    const saved = localStorage.getItem("hospital_cover_images");
-
-    if (saved) {
-      try {
-        setCoverImages(JSON.parse(saved));
-      } catch (e) {
-        console.error("Cover image parse error:", e);
-      }
-    }
-  }
-}, []);
 
   const fetchDoctors = async () => {
     try {
@@ -126,26 +140,24 @@ export default function CCUPage() {
   const displayedDoctors = showAll ? doctors : doctors.slice(0, MAX_VISIBLE_DOCTORS);
   const hasMoreDoctors = doctors.length > MAX_VISIBLE_DOCTORS;
 
-  const getCoverImage = () => {
-  const key = "spec_ccu";
-
-  return (
-    coverImages[key] ||
-    "https://images.unsplash.com/photo-1586773860418-d37222d8fce3"
-  );
-};
   return (
     <>
       <Navbar />
 
       {/* HERO SECTION */}
       <section className="relative h-[300px] md:h-[420px] overflow-hidden">
-        <Image
-  src={getCoverImage()}
-          alt="CCU"
-          fill
-          className="object-cover"
-        />
+        {!imageLoading && coverImage && (
+          <Image
+            src={coverImage}
+            alt="CCU"
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
+        {imageLoading && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+        )}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent flex items-center">
           <div className="max-w-7xl mx-auto px-4">
             <motion.h1

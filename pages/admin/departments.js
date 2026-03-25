@@ -8,7 +8,8 @@ import {
   XMarkIcon, 
   BuildingOfficeIcon,
   HeartIcon,
-  BeakerIcon
+  BeakerIcon,
+  CloudArrowUpIcon
 } from '@heroicons/react/24/outline';
 
 // Hardcoded departments that have pages
@@ -50,9 +51,6 @@ const defaultDiagnostics = [
   { id: 'pathology', name: 'Pathology', name_bn: 'প্যাথলজি', description: 'Laboratory tests and diagnostic services', description_bn: 'ল্যাবরেটরি পরীক্ষা এবং ডায়াগনস্টিক সেবা', image: '' },
 ];
 
-// Storage key for cover images
-const COVER_IMAGES_KEY = 'hospital_cover_images';
-
 export default function ManageDepartments() {
   const [departments, setDepartments] = useState(defaultDepartments);
   const [specialities, setSpecialities] = useState(defaultSpecialities);
@@ -71,34 +69,74 @@ export default function ManageDepartments() {
     image: '',
     icon: ''
   });
+  const [saveMessage, setSaveMessage] = useState({ type: '', text: '' });
   const router = useRouter();
 
-  // Load cover images from localStorage
+  // Load cover images from DATABASE instead of localStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(COVER_IMAGES_KEY);
-      if (saved) {
-        try {
-          setCoverImages(JSON.parse(saved));
-        } catch (e) {
-          console.error('Error parsing cover images:', e);
-        }
-      }
-    }
+    fetchCoverImagesFromDatabase();
   }, []);
 
-  // Save cover images to localStorage
-  const saveCoverImage = (type, id, imageUrl) => {
-    const key = `${type}_${id}`;
-    const newCoverImages = { ...coverImages, [key]: imageUrl };
-    setCoverImages(newCoverImages);
-   try {
-  localStorage.setItem(COVER_IMAGES_KEY, JSON.stringify(newCoverImages));
-} catch (e) {
-  console.warn("LocalStorage quota exceeded. Clearing old cover images.");
-  localStorage.removeItem(COVER_IMAGES_KEY);
-  localStorage.setItem(COVER_IMAGES_KEY, JSON.stringify({ [key]: imageUrl }));
-}
+  // Fetch all cover images from database
+  const fetchCoverImagesFromDatabase = async () => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/page-images`);
+      if (response.ok) {
+        const images = await response.json();
+        // Convert array to object with page_name as key
+        const imagesMap = {};
+        images.forEach(img => {
+          imagesMap[img.page_name] = img.image_url;
+        });
+        setCoverImages(imagesMap);
+      }
+    } catch (error) {
+      console.error('Error fetching cover images from database:', error);
+      // Fallback to empty object
+      setCoverImages({});
+    }
+  };
+
+  // Save cover image to DATABASE
+  const saveCoverImageToDatabase = async (pageName, imageUrl) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/page-images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageName, imageUrl })
+      });
+
+      if (response.ok) {
+        setSaveMessage({ type: 'success', text: 'Cover image saved to database!' });
+        setTimeout(() => setSaveMessage({ type: '', text: '' }), 3000);
+        return true;
+      } else {
+        const error = await response.json();
+        setSaveMessage({ type: 'error', text: 'Failed to save: ' + (error.error || 'Unknown error') });
+        return false;
+      }
+    } catch (error) {
+      console.error('Error saving cover image:', error);
+      setSaveMessage({ type: 'error', text: 'Network error: ' + error.message });
+      return false;
+    }
+  };
+
+  // Delete cover image from DATABASE
+  const deleteCoverImageFromDatabase = async (pageName) => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/page-images?pageName=${pageName}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error deleting cover image:', error);
+      return false;
+    }
   };
 
   const handleImageUpload = async (e) => {
@@ -107,7 +145,7 @@ export default function ManageDepartments() {
 
     setUploadingImage(true);
     try {
-      // Convert to base64 and save to localStorage
+      // Convert to base64
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64 = reader.result;
@@ -124,12 +162,16 @@ export default function ManageDepartments() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
+    let pageName = '';
+    let newId = '';
+    
     if (activeTab === 'departments') {
+      newId = editingItem ? editingItem.id : formData.name.toLowerCase().replace(/\s+/g, '-');
       const newDept = {
-        id: editingItem ? editingItem.id : formData.name.toLowerCase().replace(/\s+/g, '-'),
+        id: newId,
         name: formData.name,
         name_bn: formData.name_bn,
         description: formData.description,
@@ -143,14 +185,12 @@ export default function ManageDepartments() {
       } else {
         setDepartments([...departments, newDept]);
       }
+      pageName = `dept_${newId}`;
       
-      // Save cover image
-      if (formData.image) {
-        saveCoverImage('dept', newDept.id, formData.image);
-      }
     } else if (activeTab === 'specialities') {
+      newId = editingItem ? editingItem.id : formData.name.toLowerCase().replace(/\s+/g, '-');
       const newSpec = {
-        id: editingItem ? editingItem.id : formData.name.toLowerCase().replace(/\s+/g, '-'),
+        id: newId,
         name: formData.name,
         name_bn: formData.name_bn,
         description: formData.description,
@@ -163,14 +203,12 @@ export default function ManageDepartments() {
       } else {
         setSpecialities([...specialities, newSpec]);
       }
+      pageName = `spec_${newId}`;
       
-      // Save cover image
-      if (formData.image) {
-        saveCoverImage('spec', newSpec.id, formData.image);
-      }
     } else {
+      newId = editingItem ? editingItem.id : formData.name.toLowerCase().replace(/\s+/g, '-');
       const newDiag = {
-        id: editingItem ? editingItem.id : formData.name.toLowerCase().replace(/\s+/g, '-'),
+        id: newId,
         name: formData.name,
         name_bn: formData.name_bn,
         description: formData.description,
@@ -183,10 +221,23 @@ export default function ManageDepartments() {
       } else {
         setDiagnostics([...diagnostics, newDiag]);
       }
-      
-      // Save cover image
-      if (formData.image) {
-        saveCoverImage('diag', newDiag.id, formData.image);
+      pageName = `diag_${newId}`;
+    }
+    
+    // Save cover image to DATABASE
+    if (formData.image) {
+      await saveCoverImageToDatabase(pageName, formData.image);
+      // Update local state
+      setCoverImages(prev => ({ ...prev, [pageName]: formData.image }));
+    } else if (editingItem) {
+      // If editing and image was removed, delete from database
+      const oldPageName = `${activeTab === 'departments' ? 'dept' : activeTab === 'specialities' ? 'spec' : 'diag'}_${editingItem.id}`;
+      if (coverImages[oldPageName]) {
+        await deleteCoverImageFromDatabase(oldPageName);
+        // Update local state
+        const newCoverImages = { ...coverImages };
+        delete newCoverImages[oldPageName];
+        setCoverImages(newCoverImages);
       }
     }
     
@@ -206,8 +257,18 @@ export default function ManageDepartments() {
     setShowForm(true);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
+
+    const pageName = `${activeTab === 'departments' ? 'dept' : activeTab === 'specialities' ? 'spec' : 'diag'}_${id}`;
+    
+    // Delete cover image from database
+    if (coverImages[pageName]) {
+      await deleteCoverImageFromDatabase(pageName);
+      const newCoverImages = { ...coverImages };
+      delete newCoverImages[pageName];
+      setCoverImages(newCoverImages);
+    }
 
     if (activeTab === 'departments') {
       setDepartments(departments.filter(d => d.id !== id));
@@ -216,6 +277,9 @@ export default function ManageDepartments() {
     } else {
       setDiagnostics(diagnostics.filter(d => d.id !== id));
     }
+    
+    setSaveMessage({ type: 'success', text: 'Item deleted successfully!' });
+    setTimeout(() => setSaveMessage({ type: '', text: '' }), 3000);
   };
 
   const resetForm = () => {
@@ -237,7 +301,7 @@ export default function ManageDepartments() {
     return diagnostics;
   };
 
-  // Get cover image for display
+  // Get cover image from database
   const getItemImage = (item) => {
     const type = activeTab === 'departments' ? 'dept' : activeTab === 'specialities' ? 'spec' : 'diag';
     const key = `${type}_${item.id}`;
@@ -246,12 +310,22 @@ export default function ManageDepartments() {
 
   return (
     <AdminLayout>
+      {/* Success/Error Message */}
+      {saveMessage.text && (
+        <div className={`fixed top-20 right-4 z-50 p-4 rounded-lg shadow-lg ${
+          saveMessage.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+        } text-white animate-slide-in`}>
+          {saveMessage.text}
+        </div>
+      )}
+
       {/* PREMIUM HEADER */}
       <div className="bg-gradient-to-r from-slate-900 via-blue-900 to-slate-900 rounded-2xl p-6 mb-8 text-white shadow-2xl">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">Manage Departments</h1>
             <p className="text-blue-200 mt-1 text-sm">Organize hospital departments, specialities & diagnostic services</p>
+            <p className="text-blue-300 text-xs mt-2">✅ Cover images are now stored in the database (not localStorage)</p>
           </div>
           <button 
             onClick={() => setShowForm(true)}
@@ -410,7 +484,7 @@ export default function ManageDepartments() {
 
               {/* Cover Photo Upload */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Photo</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Photo (Stored in Database)</label>
                 <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 mb-3">
                   {formData.image ? (
                     <div className="relative">
@@ -437,8 +511,9 @@ export default function ManageDepartments() {
                             id="cover-upload"
                           />
                           <label htmlFor="cover-upload" className="cursor-pointer block">
-                            <BuildingOfficeIcon className="w-10 h-10 text-gray-400 mx-auto mb-2" />
+                            <CloudArrowUpIcon className="w-10 h-10 text-gray-400 mx-auto mb-2" />
                             <p className="text-gray-500 text-sm text-center">Click to upload cover photo</p>
+                            <p className="text-gray-400 text-xs text-center mt-1">Will be saved to database</p>
                           </label>
                         </>
                       )}
@@ -464,6 +539,10 @@ export default function ManageDepartments() {
                     </button>
                   )}
                 </div>
+                <p className="text-xs text-green-600 mt-2 flex items-center gap-1">
+                  <CloudArrowUpIcon className="w-3 h-3" />
+                  Images are stored in database, not localStorage
+                </p>
               </div>
 
               {activeTab === 'departments' && (
@@ -501,4 +580,3 @@ export default function ManageDepartments() {
     </AdminLayout>
   );
 }
-
