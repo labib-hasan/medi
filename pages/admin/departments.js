@@ -140,27 +140,59 @@ export default function ManageDepartments() {
   };
 
   const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const file = e.target.files[0];
+  if (!file) return;
 
-    setUploadingImage(true);
-    try {
-      // Convert to base64
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64 = reader.result;
-        setFormData({ ...formData, image: base64 });
-        setUploadingImage(false);
-      };
-      reader.onerror = () => {
-        setUploadingImage(false);
-      };
-      reader.readAsDataURL(file);
-    } catch (error) {
-      console.error('Error uploading image:', error);
+  // ✅ ADD THIS BLOCK
+  const MAX_SIZE = 50 * 1024 * 1024; // 50MB
+
+  if (file.size > MAX_SIZE) {
+    alert("Image size must be less than 50MB");
+    return;
+  }
+
+  setUploadingImage(true);
+
+  try {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      setFormData({ ...formData, image: base64 });
       setUploadingImage(false);
-    }
-  };
+    };
+    reader.onerror = () => {
+      setUploadingImage(false);
+    };
+    const handleImageUpload = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const formDataUpload = new FormData();
+  formDataUpload.append("image", file);
+
+  setUploadingImage(true);
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/upload`, {
+      method: "POST",
+      body: formDataUpload
+    });
+
+    const data = await res.json();
+
+    setFormData({ ...formData, image: data.imageUrl });
+
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setUploadingImage(false);
+  }
+};
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    setUploadingImage(false);
+  }
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
