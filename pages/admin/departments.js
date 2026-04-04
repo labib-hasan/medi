@@ -11,8 +11,9 @@ import {
   BeakerIcon
 } from '@heroicons/react/24/outline';
 
-// Hardcoded departments that have pages
-const defaultDepartments = [
+// Fetch real departments from backend API with Cloudinary covers
+const defaultDepartments = [  // Fallback data
+
   { id: "medicine", name: "Medicine", name_bn: "মেডিসিন", description: "Comprehensive Internal Medicine Healthcare Services", description_bn: "ব্যাপক অভ্যন্তরীণ চিকিৎসা স্বাস্থ্যসেবা", image: "", head_doctor: "" },
   { id: "cardiology", name: "Cardiology", name_bn: "কার্ডিওলজি", description: "Comprehensive Heart Care Services", description_bn: "ব্যাপক হৃদরোগ চিকিৎসা সেবা", image: "", head_doctor: "" },
   { id: "neuro-medicine", name: "Neuro Medicine", name_bn: "নিউরো মেডিসিন", description: "Advanced Neurological Care", description_bn: "উন্নত নিউরোলজিক্যাল যত্ন", image: "", head_doctor: "" },
@@ -73,19 +74,7 @@ export default function ManageDepartments() {
   });
   const router = useRouter();
 
-  // Load cover images from localStorage
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem(COVER_IMAGES_KEY);
-      if (saved) {
-        try {
-          setCoverImages(JSON.parse(saved));
-        } catch (e) {
-          console.error('Error parsing cover images:', e);
-        }
-      }
-    }
-  }, []);
+// Load departments from API with cover images\n  useEffect(() => {\n    const loadDepartments = async () => {\n      try {\n        const response = await fetch('/api/departments');\n        if (response.ok) {\n          const data = await response.json();\n          setDepartments(data.map(dept => ({\n            ...dept,\n            id: dept.slug || dept.id,\n            coverImage: dept.cover_image_data ? dept.cover_image_data.image_url : null\n          })));\n        } else {\n          // Fallback to hardcoded\n          setDepartments(defaultDepartments);\n        }\n      } catch (error) {\n        console.error('Failed to load departments:', error);\n        setDepartments(defaultDepartments);\n      }\n    };\n    loadDepartments();\n  }, []);
 
   // Save cover images to localStorage
   const saveCoverImage = (type, id, imageUrl) => {
