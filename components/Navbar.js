@@ -413,7 +413,7 @@ const closeMenu = () => {
       item.submenu ? (
         <div
           key={idx}
-         className="rounded-2xl overflow-hidden backdrop-blur-lg border border-white/40 shadow-[0_10px_40px_rgba(0,0,0,0.15)] bg-white/40 hover:bg-white/60 transition-all duration-300"
+         className="rounded-2xl overflow-hidden backdrop-blur-lg border border-white/40 shadow-[0_10px_40px_rgba(0,0,0,0.15)] bg-white/30 hover:bg-white/50 backdrop-blur-xl transition-all duration-300"
           style={{
             animation: mobileMenuOpen ? `slideInLeft 0.4s ease-out ${idx * 0.05}s both` : 'none',
           }}
@@ -442,14 +442,22 @@ const closeMenu = () => {
             } overflow-hidden`}
           >
 
-           <div className="flex flex-col bg-white border-t max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-100">
+          <div
+  className="flex flex-col max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400/60 scrollbar-track-transparent"
+  style={{
+    backdropFilter: "blur(28px) saturate(200%)",
+    WebkitBackdropFilter: "blur(28px) saturate(200%)",
+    background: "linear-gradient(160deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08))",
+    borderTop: "1px solid rgba(255,255,255,0.25)",
+  }}
+>
 
               {item.submenu.map((subitem, subidx) => (
                 <Link
                   key={subidx}
                   href={subitem.href}
                   onClick={closeMenu}
-                  className="px-5 py-2.5 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue-500"
+                  className="px-5 py-2.5 text-sm text-gray-600 hover:bg-white/20 hover:text-blue-600 backdrop-blur-md hover:pl-6 transition-all duration-200 border-l-2 border-transparent hover:border-blue-500"
                 >
                   {subitem.label}
                 </Link>
