@@ -78,6 +78,8 @@ const mainMenuItems = [
     submenu: [
       { label: "Medicine", href: "/departments/medicine" },
       { label: "Neuro Medicine", href: "/departments/neuro-medicine" },
+      
+      { label: "Neurosurgery", href: "/departments/neurosurgery" },
       { label: "Cardiology", href: "/departments/cardiology" },
       { label: "Gastroenterology", href: "/departments/gastroenterology" },
       { label: "ENT", href: "/departments/ent" },

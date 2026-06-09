@@ -23,6 +23,7 @@ const DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", 
 const DEPARTMENTS = [
   "Medicine",
   "Neuro Medicine", 
+  "Neurosurgery",
   "Cardiology",
   "Gastroenterology",
   "ENT",
@@ -271,21 +272,21 @@ export default function Doctors() {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-8">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 relative">
-            <MagnifyingGlassIcon className="w-5 h-5 text-gray-400 absolute left-4 top-3.5" />
+            <MagnifyingGlassIcon className="w-5 h-5 text-black absolute left-4 top-3.5" />
             <input
               type="text"
               placeholder="Search doctors by name or specialization..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 transition-all"
+              className="w-full pl-12 pr-4 py-3 border text-black  border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50 transition-all"
             />
           </div>
           <div className="relative min-w-[250px]">
-            <FunnelIcon className="w-5 h-5 text-gray-400 absolute left-4 top-3.5" />
+            <FunnelIcon className="w-5 h-5 text-black  absolute left-4 top-3.5" />
             <select
               value={filterDept}
               onChange={(e) => setFilterDept(e.target.value)}
-              className="w-full pl-12 pr-10 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none transition-all"
+              className="w-full pl-12 pr-10 text-black py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 appearance-none transition-all"
             >
               <option value="">All Departments</option>
               {DEPARTMENTS.map(dept => (
@@ -293,7 +294,7 @@ export default function Doctors() {
               ))}
             </select>
             <div className="absolute right-4 top-4 pointer-events-none">
-              <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+              <svg className="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
             </div>
           </div>
         </div>

@@ -48,6 +48,19 @@ const departmentData = {
     ],
     facilities: { en: ["Neuro ICU", "EEG Lab", "EMG/NCV Testing", "Stroke Unit", "Neurorehabilitation", "MRI/CT Imaging", "Sleep Lab", "Neurosurgery Support", "24/7 Emergency"], bn: ["নিউরো ICU", "EEG ল্যাব", "EMG/NCV টেস্টিং", "স্ট্রোক ইউনিট", "নিউরোরিহ্যাবিলিটেশন", "MRI/CT ইমেজিং", "স্লিপ ল্যাব", "নিউরোসার্জারি সাপোর্ট", "২৪/৭ জরুরি"] }
   },
+  "neurosurgery": {
+    title: { en: "Department of Neurosurgery", bn: "নিউরোসার্জারি বিভাগ" },
+    subtitle: { en: "Advanced Neurosurgical Care & Treatment", bn: "উন্নত নিউরোসার্জিক্যাল যত্ন ও চিকিৎসা" },
+    image: "https://images.unsplash.com/photo-1586773870779-6f1d3d6b1a6b?w=1200",
+    intro: { en: "Neurosurgery focuses on surgical treatment of brain, spine, and nervous system conditions.", bn: "নিউরোসার্জারি মস্তিষ্ক, মেরুদণ্ড এবং স্নায়ুতন্ত্র সম্পর্কিত রোগের সার্জিক্যাল চিকিৎসায় বিশেষায়িত।" },
+    services: [
+      { title: { en: "Brain Tumor Surgery", bn: "মস্তিষ্কের টিউমার সার্জারি" }, desc: { en: "Surgical management of benign and malignant brain tumors.", bn: "সৌম্য ও ম্যালিগন্যান্ট মস্তিষ্কের টিউমারের সার্জিক্যাল ব্যবস্থাপনা।" } },
+      { title: { en: "Spine & Disc Surgery", bn: "স্পাইন ও ডিস্ক সার্জারি" }, desc: { en: "Treatment of herniated discs and spine-related disorders.", bn: "হার্নিয়েটেড ডিস্ক ও মেরুদণ্ডজনিত ব্যাধির চিকিৎসা।" } },
+      { title: { en: "Neurovascular Surgery", bn: "নিউরোভাসকুলার সার্জারি" }, desc: { en: "Care for aneurysms, AVMs, and vascular abnormalities.", bn: "অ্যনিউরিজম, AVM এবং রক্তনালীর অস্বাভাবিকতার যত্ন।" } },
+      { title: { en: "Trauma & Emergency Neurosurgery", bn: "ট্রমা ও জরুরি নিউরোসার্জারি" }, desc: { en: "Rapid surgical intervention for head injuries and emergencies.", bn: "মাথার আঘাত ও জরুরি অবস্থায় দ্রুত সার্জিক্যাল হস্তক্ষেপ।" } }
+    ],
+    facilities: { en: ["Neurosurgery OT", "Neuro ICU", "Advanced Imaging", "Stereotactic Planning", "Rehabilitation Support", "Post-op Monitoring", "Neuro Navigation", "24/7 Emergency", "Multidisciplinary Care"], bn: ["নিউরোসার্জারি OT", "নিউরো ICU", "অ্যাডভান্সড ইমেজিং", "স্টেরিওট্যাকটিক প্ল্যানিং", "রিহ্যাবিলিটেশন সাপোর্ট", "পোস্ট-অপ মনিটরিং", "নিউরো ন্যাভিগেশন", "২৪/৭ জরুরি", "মাল্টিডিসিপ্লিনারি কেয়ার"] }
+  },
   "gastroenterology": {
     title: { en: "Department of Gastroenterology", bn: "গ্যাস্ট্রোএন্টারোলজি বিভাগ" },
     subtitle: { en: "Advanced Digestive & Liver Care", bn: "উন্নত হজম ও লিভার যত্ন" },
@@ -222,7 +235,8 @@ const departmentMap = {
   "physical-medicine": "Physical Medicine",
   "skin-vd": "Skin & VD",
   "surgery": "Surgery",
-  "urology": "Urology"
+  "urology": "Urology",
+  "neurosurgery": "Neurosurgery"
 };
 
 // Extended fallback doctors for demonstration
@@ -540,11 +554,7 @@ export async function getStaticProps({ params }) {
 
 export default function DepartmentPage({ department: staticDepartment }) {
   const [coverImages, setCoverImages] = useState({});
-  const router = useRouter();
-  const { department: queryDepartment } = router.query;
-  
-  // Use static department from props if available, otherwise use query param
-  const department = staticDepartment || queryDepartment || DEFAULT_DEPARTMENT;
+ const department = staticDepartment || DEFAULT_DEPARTMENT;
   
   const [doctors, setDoctors] = useState(allFallbackDoctors);
   const [loading, setLoading] = useState(true);
@@ -799,7 +809,7 @@ export default function DepartmentPage({ department: staticDepartment }) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
-              style={{ maxWidth: 800 }}
+              style={{ maxWidth: 1200 }}
             >
               {/* Breadcrumb */}
               <div style={{
