@@ -26,6 +26,8 @@ const DEPARTMENTS = [
   "Neurosurgery",
   "Cardiology",
   "Gastroenterology",
+  "Hepatology",
+  "Hematology",
   "ENT",
   "Gynee & Obs.",
   "Nephrology",

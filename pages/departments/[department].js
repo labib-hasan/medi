@@ -74,6 +74,111 @@ const departmentData = {
     ],
     facilities: { en: ["Endoscopy Suite", "ERCP", "Liver Clinic", "GI Lab", "Capsule Endoscopy", "Hepatology Unit", "Gastroenterology OPD", "24/7 Emergency", "Day Care"], bn: ["এন্ডোস্কোপি স্যুট", "ERCP", "লিভার ক্লিনিক", "GI ল্যাব", "ক্যাপসুল এন্ডোস্কোপি", "হেপাটোলজি ইউনিট", "গ্যাস্ট্রোএন্টারোলজি OPD", "২৪/৭ জরুরি", "ডে কেয়ার"] }
   },
+
+  "hepatology": {
+  title: { en: "Department of Hepatology", bn: "হেপাটোলজি বিভাগ" },
+  subtitle: { en: "Comprehensive Liver Care & Hepatobiliary Services", bn: "ব্যাপক লিভার ও হেপাটোবিলিয়ারি চিকিৎসা সেবা" },
+  image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200",
+  intro: {
+    en: "The liver is one of the most important organs in the human body. Hepatology focuses on the diagnosis, treatment, and prevention of liver diseases including hepatitis, fatty liver disease, cirrhosis, liver cancer, and other hepatobiliary disorders. At Medical Center Chattagram, our hepatology specialists provide comprehensive liver care using modern diagnostic and therapeutic approaches.",
+    bn: "লিভার মানবদেহের অন্যতম গুরুত্বপূর্ণ অঙ্গ। হেপাটোলজি বিভাগ হেপাটাইটিস, ফ্যাটি লিভার, সিরোসিস, লিভার ক্যান্সার এবং অন্যান্য লিভার ও পিত্তনালীর রোগের নির্ণয়, চিকিৎসা ও প্রতিরোধে বিশেষজ্ঞ। মেডিকেল সেন্টার চট্টগ্রামে আমাদের হেপাটোলজি বিশেষজ্ঞরা আধুনিক চিকিৎসা পদ্ধতির মাধ্যমে সর্বোচ্চ মানের সেবা প্রদান করেন।"
+  },
+  services: [
+    {
+      title: { en: "Liver Disease Management", bn: "লিভার রোগ ব্যবস্থাপনা" },
+      desc: { en: "Diagnosis and treatment of acute and chronic liver diseases.", bn: "তীব্র ও দীর্ঘমেয়াদি লিভার রোগের নির্ণয় ও চিকিৎসা।" }
+    },
+    {
+      title: { en: "Hepatitis Care", bn: "হেপাটাইটিস চিকিৎসা" },
+      desc: { en: "Comprehensive treatment for Hepatitis A, B, C and related conditions.", bn: "হেপাটাইটিস A, B, C এবং সংশ্লিষ্ট রোগের আধুনিক চিকিৎসা।" }
+    },
+    {
+      title: { en: "Fatty Liver Clinic", bn: "ফ্যাটি লিভার ক্লিনিক" },
+      desc: { en: "Specialized care for fatty liver and metabolic liver diseases.", bn: "ফ্যাটি লিভার ও মেটাবলিক লিভার রোগের বিশেষায়িত সেবা।" }
+    },
+    {
+      title: { en: "Liver Cancer Screening", bn: "লিভার ক্যান্সার স্ক্রিনিং" },
+      desc: { en: "Early detection and monitoring of liver tumors and cancers.", bn: "লিভার টিউমার ও ক্যান্সারের প্রাথমিক শনাক্তকরণ ও পর্যবেক্ষণ।" }
+    }
+  ],
+  facilities: {
+    en: [
+      "Liver Clinic",
+      "FibroScan Service",
+      "Hepatitis Program",
+      "Advanced Liver Imaging",
+      "Endoscopy Support",
+      "Liver Cancer Screening",
+      "Inpatient Care",
+      "24/7 Emergency Support",
+      "Laboratory Services"
+    ],
+    bn: [
+      "লিভার ক্লিনিক",
+      "ফাইব্রোস্ক্যান সেবা",
+      "হেপাটাইটিস প্রোগ্রাম",
+      "উন্নত লিভার ইমেজিং",
+      "এন্ডোস্কোপি সাপোর্ট",
+      "লিভার ক্যান্সার স্ক্রিনিং",
+      "ভর্তি সেবা",
+      "২৪/৭ জরুরি সহায়তা",
+      "ল্যাবরেটরি সেবা"
+    ]
+  }
+},
+
+"hematology": {
+  title: { en: "Department of Hematology", bn: "হেমাটোলজি বিভাগ" },
+  subtitle: { en: "Advanced Blood Disorder Diagnosis & Treatment", bn: "রক্তরোগ নির্ণয় ও উন্নত চিকিৎসা" },
+  image: "https://images.unsplash.com/photo-1584515933487-779824d29309?w=1200",
+  intro: {
+    en: "Hematology specializes in the diagnosis and treatment of blood disorders, bone marrow diseases, anemia, leukemia, lymphoma, clotting disorders, and other hematologic conditions. Our expert hematologists provide comprehensive care using advanced laboratory and treatment facilities.",
+    bn: "হেমাটোলজি বিভাগ রক্ত, অস্থিমজ্জা, রক্তস্বল্পতা, লিউকেমিয়া, লিম্ফোমা, রক্ত জমাট বাঁধার সমস্যা এবং অন্যান্য রক্তরোগের নির্ণয় ও চিকিৎসায় বিশেষজ্ঞ। আমাদের অভিজ্ঞ হেমাটোলজিস্টরা আধুনিক প্রযুক্তির মাধ্যমে সর্বোচ্চ মানের চিকিৎসা প্রদান করেন।"
+  },
+  services: [
+    {
+      title: { en: "Anemia Management", bn: "রক্তস্বল্পতা চিকিৎসা" },
+      desc: { en: "Diagnosis and treatment of all types of anemia.", bn: "সব ধরনের রক্তস্বল্পতার নির্ণয় ও চিকিৎসা।" }
+    },
+    {
+      title: { en: "Leukemia & Lymphoma Care", bn: "লিউকেমিয়া ও লিম্ফোমা চিকিৎসা" },
+      desc: { en: "Comprehensive management of blood cancers.", bn: "রক্তের ক্যান্সারের আধুনিক চিকিৎসা ও ব্যবস্থাপনা।" }
+    },
+    {
+      title: { en: "Bleeding Disorders", bn: "রক্তক্ষরণজনিত রোগ" },
+      desc: { en: "Treatment of clotting and bleeding disorders including hemophilia.", bn: "হিমোফিলিয়া সহ রক্তক্ষরণ ও জমাট বাঁধার সমস্যার চিকিৎসা।" }
+    },
+    {
+      title: { en: "Bone Marrow Evaluation", bn: "বোন ম্যারো মূল্যায়ন" },
+      desc: { en: "Advanced diagnostic procedures for bone marrow diseases.", bn: "অস্থিমজ্জা রোগ নির্ণয়ের আধুনিক পরীক্ষা ও মূল্যায়ন।" }
+    }
+  ],
+  facilities: {
+    en: [
+      "Hematology Laboratory",
+      "Bone Marrow Study",
+      "Blood Transfusion Services",
+      "Cancer Screening",
+      "Day Care Chemotherapy",
+      "Advanced Diagnostics",
+      "Inpatient Services",
+      "24/7 Emergency Care",
+      "Specialist Consultation"
+    ],
+    bn: [
+      "হেমাটোলজি ল্যাবরেটরি",
+      "বোন ম্যারো পরীক্ষা",
+      "রক্ত সঞ্চালন সেবা",
+      "ক্যান্সার স্ক্রিনিং",
+      "ডে কেয়ার কেমোথেরাপি",
+      "উন্নত ডায়াগনস্টিকস",
+      "ভর্তি সেবা",
+      "২৪/৭ জরুরি সেবা",
+      "বিশেষজ্ঞ পরামর্শ"
+    ]
+  }
+},
+
   "ent": {
     title: { en: "Department of ENT", bn: "ENT বিভাগ" },
     subtitle: { en: "Ear, Nose, Throat & Head-Neck Surgery", bn: "কান, নাক, গলা ও মাথা-গলা সার্জারি" },
@@ -225,6 +330,8 @@ const departmentMap = {
   "cardiology": "Cardiology",
   "neuro-medicine": "Neuro Medicine",
   "gastroenterology": "Gastroenterology",
+  "hepatology": "Hepatology",
+"hematology": "Hematology",
   "ent": "ENT",
   "gynee-obs": "Gynee & Obs.",  // Fixed: matches admin panel exactly
   "nephrology": "Nephrology",

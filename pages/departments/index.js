@@ -12,6 +12,23 @@ const departmentsList = [
   { id: "neuro-medicine", name: "Neuro Medicine", name_bn: "নিউরো মেডিসিন", description: "Advanced Neurological Care & Treatment", description_bn: "উন্নত নিউরোলজিক্যাল যত্ন ও চিকিৎসা", image: "" },
   { id: "neurosurgery", name: "Neurosurgery", name_bn: "নিউরোসার্জারি", description: "Advanced Neurosurgical Care & Treatment", description_bn: "উন্নত নিউরোসার্জিক্যাল যত্ন ও চিকিৎসা", image: "" },
   { id: "gastroenterology", name: "Gastroenterology", name_bn: "গ্যাস্ট্রোএন্টারোলজি", description: "Advanced Digestive & Liver Care", description_bn: "উন্নত হজম ও লিভার যত্ন", image: "" },
+  { 
+  id: "hepatology",
+  name: "Hepatology",
+  name_bn: "হেপাটোলজি",
+  description: "Comprehensive Liver Care & Hepatobiliary Services",
+  description_bn: "ব্যাপক লিভার ও হেপাটোবিলিয়ারি চিকিৎসা সেবা",
+  image: ""
+},
+
+{ 
+  id: "hematology",
+  name: "Hematology",
+  name_bn: "হেমাটোলজি",
+  description: "Advanced Blood Disorder Diagnosis & Treatment",
+  description_bn: "রক্তরোগ নির্ণয় ও উন্নত চিকিৎসা",
+  image: ""
+},
   { id: "ent", name: "ENT", name_bn: "ENT", description: "Ear, Nose, Throat & Head-Neck Surgery", description_bn: "কান, নাক, গলা ও মাথা-গলা সার্জারি", image: "" },
   { id: "gynee-obs", name: "Gynecology & Obstetrics", name_bn: "গাইনি ও প্রসূতি", description: "Complete Women's Healthcare", description_bn: "সম্পূর্ণ মহিলা স্বাস্থ্যসেবা", image: "" },
   { id: "nephrology", name: "Nephrology", name_bn: "নেফ্রোলজি", description: "Comprehensive Kidney Care", description_bn: "ব্যাপক কিডনি যত্ন", image: "" },

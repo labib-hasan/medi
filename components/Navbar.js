@@ -82,6 +82,8 @@ const mainMenuItems = [
       { label: "Neurosurgery", href: "/departments/neurosurgery" },
       { label: "Cardiology", href: "/departments/cardiology" },
       { label: "Gastroenterology", href: "/departments/gastroenterology" },
+      { label: "Hepatology", href: "/departments/hepatology" },
+{ label: "Hematology", href: "/departments/hematology" },
       { label: "ENT", href: "/departments/ent" },
       { label: "Gynee & Obs.", href: "/departments/gynee-obs" },
       { label: "Nephrology", href: "/departments/nephrology" },
