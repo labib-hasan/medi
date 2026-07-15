@@ -211,7 +211,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-sm text-white/70 hover:text-white transition-colors duration-200 inline-block mt-1"
             >
-              Labib Hasan
+              _Labib Hasan_
             </a>
           </div>
         </div>
