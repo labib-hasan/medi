@@ -514,7 +514,7 @@ export default function Navbar() {
                         <div className="flex-1 rounded-lg bg-white/5 px-3 py-2">
                           <p className="text-[10px] uppercase tracking-wider text-cyan-100/75">Emergency</p>
                           <a href="tel:+8809610818888" className="text-sm font-semibold text-white">
-                            +8809610-818888
+                            +880241355143
                           </a>
                         </div>
                         <div className="flex gap-1 rounded-lg bg-black/20 p-1">

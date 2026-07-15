@@ -176,10 +176,10 @@ const Footer = () => {
           {/* Premium Stats Section */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
             {[
-              { value: "50+", label: "Specialist Doctors", icon: "👨‍⚕️" },
-              { value: "24/7", label: "Emergency Service", icon: "🚨" },
-              { value: "10K+", label: "Happy Patients", icon: "😊" },
-              { value: "100%", label: "Patient Care", icon: "💯" },
+              { value: "50+", label: "Specialist Doctors", icon: "" },
+              { value: "24/7", label: "Emergency Service", icon: "" },
+              { value: "10K+", label: "Happy Patients", icon: "" },
+              { value: "100%", label: "Patient Care", icon: "" },
             ].map((stat, idx) => (
               <div
                 key={idx}
@@ -204,6 +204,14 @@ const Footer = () => {
               className="text-sm text-white/70 hover:text-white transition-colors duration-200 inline-block mt-1"
             >
               Designed & Developed by Tawazun Computer Labib Hasan
+            </a>
+            <a
+              href="https://www.facebook.com/share/1D1UsUWK8P/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-white/70 hover:text-white transition-colors duration-200 inline-block mt-1"
+            >
+              Labib Hasan
             </a>
           </div>
         </div>
