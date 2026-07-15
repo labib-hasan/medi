@@ -203,7 +203,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-sm text-white/70 hover:text-white transition-colors duration-200 inline-block mt-1"
             >
-              Designed & Developed by Tawazun Computer Labib Hasan
+              Designed & Developed by Tawazun Computer
             </a>
             <a
               href="https://www.facebook.com/share/1D1UsUWK8P/"
