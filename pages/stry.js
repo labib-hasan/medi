@@ -412,14 +412,15 @@ export default function OurStory() {
           </motion.div>
         </div>
       </main>
-        <div className="relative h-[400px] w-100 justify-center item-center rounded-2xl overflow-hidden shadow-xl">
-                  <Image
-                    src="/v.jpeg"
-                    alt=""
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+        <div className="relative h-[400px] w-full flex items-center justify-center rounded-2xl overflow-hidden shadow-xl">
+  <Image
+    src="/v.jpeg"
+    alt=""
+    width={500}
+    height={500}
+    className="object-contain"
+  />
+</div>
       <Footer />
     </>
   );
