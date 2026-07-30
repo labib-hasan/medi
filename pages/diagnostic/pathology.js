@@ -220,6 +220,161 @@ export default function PathologyPage() {
             </div>
           </motion.div>
 
+          {/* ADDITIONAL PATHOLOGY SERVICES - SEROLOGY & CYTOPATHOLOGY */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="mb-16"
+          >
+            <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+              Pathology Services
+            </h3>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Serology Service */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all"
+              >
+                <div className="h-2 bg-gradient-to-r from-blue-500 to-cyan-500"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-2xl">
+                      🧪
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800">SEROLOGY</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    Serology testing involves the diagnostic identification of antibodies and antigens in blood serum. Our advanced serology laboratory provides accurate detection of infectious diseases, autoimmune disorders, and immunological conditions.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Hepatitis B & C Screening</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>HIV Antibody Testing</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Dengue & Chikungunya Serology</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Syphilis & Typhoid Testing</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Autoimmune Disease Markers</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <span className="inline-block bg-blue-50 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      Turnaround: 4-6 hours
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Cytopathology Service */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all"
+              >
+                <div className="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-2xl">
+                      🔬
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800">CYTOPATHOLOGY</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    Cytopathology is the study of individual cells to detect disease, particularly cancer. Our expert cytopathologists provide precise cellular analysis for early diagnosis and treatment planning.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Pap Smear (Cervical Cancer Screening)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Fine Needle Aspiration Cytology (FNAC)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Body Fluid Cytology (Ascites, Pleural)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Urine Cytology</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Breast Cytology & Thyroid Cytology</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <span className="inline-block bg-purple-50 text-purple-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      Turnaround: 24-48 hours
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Additional Service - Molecular Pathology */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all"
+              >
+                <div className="h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-2xl">
+                      🧬
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800">MOLECULAR PATHOLOGY</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    Molecular pathology utilizes molecular biology techniques to diagnose disease at the genetic level. Our advanced molecular lab provides precise diagnostic and prognostic information.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>PCR Testing (COVID-19, TB, etc.)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Genetic Mutation Analysis</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Oncogene & Tumor Marker Testing</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Pharmacogenomics Testing</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Infectious Disease Molecular Diagnostics</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <span className="inline-block bg-green-50 text-green-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      Turnaround: 24-72 hours
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
           {/* LABORATORY TESTS */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -247,7 +402,11 @@ export default function PathologyPage() {
                 "Typhoid Test",
                 "Malaria Test",
                 "Pregnancy Test",
-                "Tumor Markers"
+                "Tumor Markers",
+                "Pap Smear",
+                "FNAC",
+                "PCR Test",
+                "Autoimmune Panel"
               ].map((test, i) => (
                 <motion.div
                   key={i}
@@ -486,4 +645,3 @@ export default function PathologyPage() {
     </>
   );
 }
-

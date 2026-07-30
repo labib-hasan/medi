@@ -219,6 +219,161 @@ export default function RadiologyPage() {
             </div>
           </motion.div>
 
+          {/* ADDITIONAL RADIOLOGY SERVICES - ECHOCARDIOGRAPHY, ECG, ETT */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="mb-16"
+          >
+            <h3 className="text-xl md:text-2xl font-semibold text-gray-800 mb-6">
+              Cardiology Diagnostic Services
+            </h3>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Echocardiography Service */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all"
+              >
+                <div className="h-2 bg-gradient-to-r from-red-500 to-pink-500"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-2xl">
+                      💓
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800">ECHOCARDIOGRAPHY</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    Echocardiography (Echo) is a non-invasive ultrasound test that uses sound waves to create detailed images of the heart's structure and function. Our advanced echocardiography services provide comprehensive cardiac assessment.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-red-500 font-bold">•</span>
+                      <span>Transthoracic Echocardiogram (TTE)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-red-500 font-bold">•</span>
+                      <span>Transesophageal Echocardiogram (TEE)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-red-500 font-bold">•</span>
+                      <span>Stress Echocardiogram</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-red-500 font-bold">•</span>
+                      <span>Doppler Echocardiography</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-red-500 font-bold">•</span>
+                      <span>Fetal Echocardiography</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <span className="inline-block bg-red-50 text-red-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      Turnaround: 30-45 minutes
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* ECG Service */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all"
+              >
+                <div className="h-2 bg-gradient-to-r from-green-500 to-emerald-500"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-2xl">
+                      📈
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800">ECG</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    Electrocardiography (ECG/EKG) is a quick and painless test that records the electrical activity of the heart to detect cardiac abnormalities. Our state-of-the-art ECG machines provide accurate and reliable results.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Resting 12-Lead ECG</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Ambulatory ECG (Holter Monitoring)</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Stress ECG</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Signal-Averaged ECG</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-green-500 font-bold">•</span>
+                      <span>Bedside ECG for Critical Care</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <span className="inline-block bg-green-50 text-green-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      Turnaround: 10-15 minutes
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Exercise Tolerance Test (ETT) Service */}
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all"
+              >
+                <div className="h-2 bg-gradient-to-r from-purple-500 to-indigo-500"></div>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-2xl">
+                      🏃
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-800">EXERCISE TOLERANCE TEST (ETT)</h4>
+                  </div>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    Exercise Tolerance Test (ETT), also known as a stress test or treadmill test, evaluates the heart's response to physical stress. This test helps diagnose coronary artery disease and assesses functional capacity.
+                  </p>
+                  <div className="space-y-2">
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Bruce Protocol Treadmill Test</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Pharmacological Stress Test</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Myocardial Perfusion Imaging</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Cardiopulmonary Exercise Testing</span>
+                    </div>
+                    <div className="flex items-start gap-2 text-sm text-gray-600">
+                      <span className="text-purple-500 font-bold">•</span>
+                      <span>Recovery Period Monitoring</span>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <span className="inline-block bg-purple-50 text-purple-600 text-xs font-semibold px-3 py-1 rounded-full">
+                      Duration: 45-60 minutes
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
           {/* EQUIPMENT & TECHNOLOGY */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -238,7 +393,11 @@ export default function RadiologyPage() {
                 "Color Doppler",
                 "Digital Mammography",
                 "C-Arm Fluoroscopy",
-                "Picture Archiving System (PACS)"
+                "Picture Archiving System (PACS)",
+                "Echocardiography Machine",
+                "12-Lead ECG System",
+                "Stress Test System",
+                "Holter Monitor"
               ].map((equipment, i) => (
                 <motion.div
                   key={i}
@@ -477,4 +636,3 @@ export default function RadiologyPage() {
     </>
   );
 }
-
