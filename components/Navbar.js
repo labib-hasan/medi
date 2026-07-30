@@ -120,7 +120,7 @@ const useMenuItems = () => {
         label: t.about,
         href: "#",
         submenu: [
-          { label: "Our Story", href: "/about/our-story" },
+          { label: "Our Story", href: "/stry" },
           { label: "Mission & Vision", href: "/msn" },
         ],
       },
