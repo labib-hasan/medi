@@ -89,6 +89,8 @@ export default function HomePage() {
   const targetDepartments = [
     { key: "icu", match: ["icu"] },
     { key: "ccu", match: ["ccu"] },
+    { key: "blood-bank", match: ["blood bank", "transfusion"] },
+    { key: "anesthesia", match: ["anesthesia", "anaesthesia", "anesthesiology"] },
     { key: "hdu", match: ["hdu"] },
     { key: "sdu", match: ["sdu"] },
     { key: "nicu", match: ["nicu"] },

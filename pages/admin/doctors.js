@@ -45,6 +45,8 @@ const DEPARTMENTS = [
   "SDU - Step Down Unit",
   "NICU - Neonatal ICU",
   "ICU - Intensive Care Unit",
+  "Blood Bank",
+  "Anesthesia",
   "GYNAE - Gynecology",
   "PAEDI - Pediatric",
   "OT - Operation Theatre",

@@ -20,6 +20,20 @@ const specialtiesList = [
     link: "/specialities/ccu",
     icon: "💓"
   },
+  {
+    id: 'blood-bank',
+    title: { en: "Blood Bank", bn: "ব্লাড ব্যাংক" },
+    description: { en: "Safe blood collection, testing, storage, and transfusion support.", bn: "নিরাপদ রক্ত সংগ্রহ, পরীক্ষা, সংরক্ষণ ও সঞ্চালন সহায়তা।" },
+    link: "/specialities/blood-bank",
+    icon: "🩸"
+  },
+  {
+    id: 'anesthesia',
+    title: { en: "Anesthesia", bn: "অ্যানেসথেসিয়া" },
+    description: { en: "Safe anesthesia and perioperative care for surgical procedures.", bn: "অস্ত্রোপচার প্রক্রিয়ার জন্য নিরাপদ অ্যানেসথেসিয়া ও সেবা।" },
+    link: "/specialities/anesthesia",
+    icon: "💉"
+  },
   { 
     id: 'hdu', 
     title: { en: "HDU – High Dependency Unit", bn: "এইচডিইউ - হাই ডিপেন্ডেন্সি ইউনিট" }, 

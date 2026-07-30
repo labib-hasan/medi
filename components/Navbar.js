@@ -83,6 +83,8 @@ const useMenuItems = () => {
         submenu: [
           { label: "ICU - Intensive Care Unit", href: "/specialities/icu" },
           { label: "CCU - Critical Care Unit", href: "/specialities/ccu" },
+          { label: "Blood Bank", href: "/specialities/blood-bank" },
+          { label: "Anesthesia", href: "/specialities/anesthesia" },
           { label: "HDU - High Dependency Unit", href: "/specialities/hdu" },
           { label: "SDU - Step Down Unit", href: "/specialities/sdu" },
           { label: "NICU - Neonatal ICU", href: "/specialities/nicu" },
@@ -102,6 +104,8 @@ const useMenuItems = () => {
         submenu: [
           { label: "ICU", href: "/specialities/icu" },
           { label: "CCU", href: "/specialities/ccu" },
+          { label: "Blood Bank", href: "/specialities/blood-bank" },
+          { label: "Anesthesia", href: "/specialities/anesthesia" },
           { label: "HDU", href: "/specialities/hdu" },
           { label: "SDU", href: "/specialities/sdu" },
           { label: "NICU", href: "/specialities/nicu" },
@@ -153,11 +157,11 @@ const useMenuItems = () => {
         ],
       },
       {
-        label: t.forDoctors,
+        label: t.directors,
         href: "#",
         submenu: [
-          { label: "Doctor Info 1", href: "/for-doctors/info1" },
-          { label: "Doctor Info 2", href: "/for-doctors/info2" },
+          { label: "Director 1", href: "/directors/director-1" },
+          { label: "Director 2", href: "/directors/director-2" },
         ],
       },
       { label: t.news, href: "/news" },

@@ -23,6 +23,7 @@ export default function AdminLayout({ children }) {
   const menu = [
     { name: "Dashboard", path: "/admin/dashboard" },
     { name: "MD Message", path: "/admin/md-message" },
+    { name: "Directors", path: "/admin/directors" },
     { name: "Photo Gallery", path: "/admin/gallery" },
     { name: "Contact Info", path: "/admin/contact" },
     { name: "Doctors", path: "/admin/doctors" },

@@ -16,6 +16,7 @@ export const translations = {
     about: "About Us",
     forPatient: "Our clinic",
     forDoctors: "For Doctors",
+    directors: "Directors",
     ourClinic: "Our Clinic",
 
     // HOME PAGE
@@ -179,6 +180,7 @@ export const translations = {
     about: "আমাদের সম্পর্কে",
     forPatient: "রোগীদের জন্য",
     forDoctors: "ডাক্তারদের জন্য",
+    directors: "পরিচালকবৃন্দ",
     ourClinic: "আমাদের ক্লিনিক",
 
     // HOME PAGE

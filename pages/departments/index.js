@@ -47,6 +47,8 @@ const specialitiesList = [
   { id: "ot", name: "OT", name_bn: "ওটি", description: "Operation Theatre for surgeries", description_bn: "সার্জারির জন্য অপারেশন থিয়েটার", image: "" },
   { id: "icu", name: "ICU", name_bn: "আইসিইউ", description: "Intensive Care Unit for critically ill patients", description_bn: "গুরুতর অসুস্থ রোগীদের জন্য নিবিড় পরিচর্যা কেন্দ্র", image: "" },
   { id: "ccu", name: "CCU", name_bn: "সিসিইউ", description: "Coronary Care Unit for heart patients", description_bn: "হৃদরোগীদের জন্য কোরোনারি কেয়ার ইউনিট", image: "" },
+  { id: "blood-bank", name: "Blood Bank", name_bn: "ব্লাড ব্যাংক", description: "Safe blood collection, testing, and transfusion support", description_bn: "নিরাপদ রক্ত সংগ্রহ, পরীক্ষা ও সঞ্চালন সহায়তা", image: "" },
+  { id: "anesthesia", name: "Anesthesia", name_bn: "অ্যানেসথেসিয়া", description: "Safe anesthesia and perioperative care", description_bn: "নিরাপদ অ্যানেসথেসিয়া ও অস্ত্রোপচারকালীন সেবা", image: "" },
   { id: "nicu", name: "NICU", name_bn: "নিসিইউ", description: "Neonatal Intensive Care Unit for newborns", description_bn: "নবজাতকদের জন্য নিওনেটাল ইন্টেন্সিভ কেয়ার ইউনিট", image: "" },
   { id: "hdu", name: "HDU", name_bn: "এইচডিইউ", description: "High Dependency Unit for serious but stable patients", description_bn: "গুরুতর কিন্তু স্থিতিশীল রোগীদের জন্য হাই ডিপেন্ডেন্সি ইউনিট", image: "" },
   { id: "ed", name: "ED", name_bn: "ইডি", description: "Emergency Department for urgent care", description_bn: "জরুরি চিকিৎসার জন্য জরুরি বিভাগ", image: "" },
