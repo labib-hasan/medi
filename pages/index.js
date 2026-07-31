@@ -131,9 +131,9 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="pt-[88px] lg:pt-[120px]">
-        <HeroImageUpload isAdmin={false} />
-      </section>
+    <section className="pt-[88px] lg:pt-[120px]">
+  <HeroImageUpload isAdmin={false} />
+</section>
 
       {/* Quick Access Tiles */}
       <section

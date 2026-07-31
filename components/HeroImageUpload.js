@@ -135,10 +135,10 @@ export default function HeroImageUpload({ isAdmin = false }) {
   };
 
   return (
-    <section className="relative w-full bg-gray-200">
+    <section className="relative w-full  overflow-visible">
 
       {/* HERO SLIDER */}
-      <div className="relative h-[50vh] md:h-[70vh] lg:h-[80vh] overflow-hidden">
+      <div className="relative w-full aspect-[16/9] md:aspect-[16/8] lg:aspect-[16/7] overflow-visible lg:overflow-hidden">
         <div
           ref={sliderRef}
           className={`flex overflow-x-auto snap-x h-full scrollbar-hide ${
@@ -159,19 +159,15 @@ export default function HeroImageUpload({ isAdmin = false }) {
                 {img && !hasError ? (
                   <div className="relative w-full h-full overflow-hidden">
                     <img
-                      src={hdImageUrl}
-                      alt={`Hero ${index + 1}`}
-                      className="w-full h-full object-cover object-top"
-                      style={{
-                        minHeight: '100%',
-                        minWidth: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center top',
-                        imageRendering: '-webkit-optimize-contrast', // Sharper rendering
-                      }}
-                      loading="eager" // Load immediately for hero images
-                      onError={() => handleImageError(index)}
-                    />
+  src={hdImageUrl}
+  alt={`Hero ${index + 1}`}
+  className="absolute inset-0 w-full h-full object-cover"
+  style={{
+    objectPosition: "left top",
+  }}
+  loading="eager"
+  onError={() => handleImageError(index)}
+/>
                     
                     {/* Optional: Add overlay gradient for better text visibility */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20 pointer-events-none" />
@@ -203,9 +199,9 @@ export default function HeroImageUpload({ isAdmin = false }) {
         </div>
 
         {/* ✅ HERO BUTTONS – ALWAYS VISIBLE */}
-        <div className="absolute inset-x-0 bottom-4 z-20 flex justify-center">
-          <HeroButtons />
-        </div>
+       <div className="absolute left-0 right-0 bottom-0 translate-y-1/2 lg:translate-y-0 lg:bottom-6 z-40 flex justify-center px-3 bg-transparent">
+  <HeroButtons />
+</div>
 
         {/* Slide indicators */}
         <div className="absolute bottom-20 left-0 right-0 z-20 flex justify-center gap-2">

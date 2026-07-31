@@ -397,7 +397,7 @@ export default function Navbar() {
                 width={32}
                 height={32}
                 unoptimized
-                className="h-20 w-55 lg:h-24 lg:w-70"
+                className="h-22 w-55 lg:h-24 lg:w-70"
                 priority
               />
             </Link>
