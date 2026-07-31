@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { fetchDoctors, fetchServices, fetchDepartments } from "../utils/api";
 import { useLanguage } from "../context/LanguageContext";
 import { translations } from "../utils/translations";
+import Head from "next/head";
 
 import HeroImageUpload from "../components/HeroImageUpload";
 
@@ -113,6 +114,20 @@ export default function HomePage() {
 
   return (
     <>
+     <Head>
+    <title>Medical Centre Hospital</title>
+
+    <meta
+      name="description"
+      content="Medical Centre Hospital - Trusted Healthcare in Chattogram, Bangladesh."
+    />
+
+    <meta property="og:title" content="Medical Centre Hospital" />
+    <meta
+      property="og:description"
+      content="Trusted Healthcare in Chattogram."
+    />
+  </Head>
       <Navbar />
 
       {/* Hero Section */}
