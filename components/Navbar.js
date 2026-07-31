@@ -178,59 +178,47 @@ const useMenuItems = () => {
   }), [language, t]);
 };
 
-// Memoized Submenu Item component
-const SubmenuItem = memo(({ subitem, closeMenu }) => (
+// Memoized Submenu Item component - MFB style
+const SubmenuItem = memo(({ subitem, closeMenu, index }) => (
   <motion.div
     initial={{ opacity: 0, x: 10 }}
     animate={{ opacity: 1, x: 0 }}
     exit={{ opacity: 0, x: 5 }}
-    transition={{ duration: 0.15 }}
+    transition={{ duration: 0.15, delay: index * 0.02 }}
+    className="mfb-component__child-wrapper"
   >
     <Link
       href={subitem.href}
       onClick={closeMenu}
-      className="flex items-center justify-between rounded-xl border border-transparent bg-white/5 px-4 py-2.5 text-sm text-slate-100/90 transition-all duration-200 hover:border-cyan-300/30 hover:bg-white/10 hover:text-white"
+      className="mfb-component__child-link"
     >
-      <span>{subitem.label}</span>
-      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/5 text-cyan-200 transition-transform duration-200 group-hover:translate-x-0.5">
-        <svg className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </span>
+      <span className="mfb-component__child-icon">✦</span>
+      <span className="mfb-component__child-label">{subitem.label}</span>
     </Link>
   </motion.div>
 ));
 
 SubmenuItem.displayName = 'SubmenuItem';
 
-// Memoized Menu Item component
+// Memoized Menu Item component - MFB style
 const MenuItem = memo(({ item, idx, openSubmenu, toggleSubmenu, closeMenu }) => {
   if (item.submenu) {
     return (
       <motion.div
         variants={itemVariants}
-        className="overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+        className="mfb-menu-item"
       >
         <button
           onClick={() => toggleSubmenu(idx)}
-          className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left transition-all duration-200 hover:bg-white/5"
+          className={`mfb-menu-item__button ${openSubmenu === idx ? 'active' : ''}`}
           aria-expanded={openSubmenu === idx}
         >
-          <div>
-            <p className="text-base font-semibold text-white">{item.label}</p>
-            <p className="mt-0.5 text-[10px] uppercase tracking-wider text-cyan-100/60">
-              {item.submenu.length} links
-            </p>
-          </div>
-          <div
-            className={`flex h-8 w-8 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 ${
-              openSubmenu === idx ? "rotate-180 bg-cyan-300/10 text-cyan-100" : ""
-            }`}
-          >
+          <span className="mfb-menu-item__label">{item.label}</span>
+          <span className={`mfb-menu-item__arrow ${openSubmenu === idx ? 'open' : ''}`}>
             <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
-          </div>
+          </span>
         </button>
 
         <AnimatePresence initial={false}>
@@ -241,13 +229,16 @@ const MenuItem = memo(({ item, idx, openSubmenu, toggleSubmenu, closeMenu }) => 
               animate="expanded"
               exit="collapsed"
               variants={submenuVariants}
-              className="overflow-hidden"
+              className="mfb-submenu"
             >
-              <div className="mx-3 mb-3 space-y-1.5 rounded-xl bg-black/20 p-2">
-                {item.submenu.map((subitem, subidx) => (
-                  <SubmenuItem key={subidx} subitem={subitem} closeMenu={closeMenu} />
-                ))}
-              </div>
+              {item.submenu.map((subitem, subidx) => (
+                <SubmenuItem 
+                  key={subidx} 
+                  subitem={subitem} 
+                  closeMenu={closeMenu}
+                  index={subidx}
+                />
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
@@ -256,21 +247,14 @@ const MenuItem = memo(({ item, idx, openSubmenu, toggleSubmenu, closeMenu }) => 
   }
 
   return (
-    <motion.div variants={itemVariants}>
+    <motion.div variants={itemVariants} className="mfb-menu-item">
       <Link
         href={item.href}
         onClick={closeMenu}
-        className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/10"
+        className="mfb-menu-item__link"
       >
-        <div>
-          <p className="text-base font-semibold">{item.label}</p>
-          <p className="mt-0.5 text-[10px] uppercase tracking-wider text-cyan-100/60">Direct access</p>
-        </div>
-        <span className="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-300/20 to-emerald-300/20 text-cyan-100 transition-transform duration-200 group-hover:translate-x-0.5">
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </span>
+        <span className="mfb-menu-item__icon">▸</span>
+        <span className="mfb-menu-item__label">{item.label}</span>
       </Link>
     </motion.div>
   );
@@ -281,12 +265,14 @@ MenuItem.displayName = 'MenuItem';
 export default function Navbar() {
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const { language, changeLanguage } = useLanguage();
   const { menuItems, mainMenuItems } = useMenuItems();
 
   const closeMenu = useCallback(() => {
     setMobileMenuOpen(false);
     setOpenSubmenu(null);
+    setIsHovering(false);
   }, []);
 
   const toggleSubmenu = useCallback((index) => {
@@ -442,8 +428,16 @@ export default function Navbar() {
               )}
             </ul>
 
-            {/* Mobile Menu Button */}
-            <button
+            {/* Mobile Menu Button - MFB Style with Sky Blue Gradient */}
+            <div className="lg:hidden">
+              <div 
+                className="mfb-component mfb-component--br relative"
+                data-mfb-toggle="hover"
+                data-mfb-state={mobileMenuOpen ? 'open' : 'closed'}
+                onMouseEnter={() => setIsHovering(true)}
+                onMouseLeave={() => setIsHovering(false)}
+              >
+                <button
               onClick={() => setMobileMenuOpen(true)}
               className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-700 via-sky-500 to-cyan-300 p-2.5 text-white shadow-[0_14px_32px_rgba(14,165,233,0.38)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_38px_rgba(14,165,233,0.42)] active:scale-95 lg:hidden"
               aria-label="Open menu"
@@ -461,9 +455,11 @@ export default function Navbar() {
                 <circle cx="12" cy="12" r="1.2" fill="currentColor" />
               </svg>
             </button>
+              </div>
+            </div>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Menu - MFB Style */}
           <AnimatePresence mode="wait">
             {mobileMenuOpen && (
               <>
@@ -478,25 +474,37 @@ export default function Navbar() {
                   transition={{ duration: 0.2 }}
                   onClick={closeMenu}
                   style={{
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
-                    background: "rgba(0, 0, 0, 0.6)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    background: "rgba(0, 0, 0, 0.5)",
                   }}
                 />
 
                 <motion.aside
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  variants={drawerVariants}
-                  className="fixed right-0 top-0 z-50 h-full w-[85vw] max-w-[360px] overflow-hidden rounded-l-3xl bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 shadow-2xl"
-                >
+  initial="hidden"
+  animate="visible"
+  exit="exit"
+  variants={drawerVariants}
+  className="fixed right-0 top-2 z-50 h-full w-[85vw] max-w-[380px] overflow-hidden rounded-l-3xl shadow-2xl"
+   style={{
+    background: "transparent",
+    backdropFilter: "none",
+    WebkitBackdropFilter: "none",
+    boxShadow: "none", // optional
+  }}
+>
                   <div className="relative flex h-full flex-col">
-                    {/* Header */}
-                    <div className="border-b border-white/10 px-5 pb-4 pt-6">
+                    {/* Header - MFB Style */}
+                    <div
+  className="border-b border-white/10 px-5 pb-4 pt-6 rounded-bl-3xl"
+  style={{
+    background: "#133d5d",
+  }}
+>
                       <div className="mb-4 flex items-start justify-between">
                         <div>
-                          <div className="mb-1 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-cyan-100/90">
+                          <div className="mb-1 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-sky-300/90">
+                            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
                             WELCOME
                           </div>
                           <h3 className="text-lg font-bold text-white">MEDICAL CENTRE</h3>
@@ -505,7 +513,10 @@ export default function Navbar() {
 
                         <button
                           onClick={closeMenu}
-                          className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white transition-all duration-200 hover:rotate-90 hover:bg-white/10"
+                          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white transition-all duration-200 hover:rotate-90 hover:bg-white/10"
+                          style={{
+                            border: '1px solid rgba(255,255,255,0.1)',
+                          }}
                           aria-label="Close menu"
                         >
                           <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -514,9 +525,13 @@ export default function Navbar() {
                         </button>
                       </div>
 
-                      <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-2">
+                      <div className="flex items-center gap-2 rounded-xl p-2"
+  style={{
+    background: "#133d5d",
+    border: "1px solid rgba(255,255,255,0.08)",
+  }}>
                         <div className="flex-1 rounded-lg bg-white/5 px-3 py-2">
-                          <p className="text-[10px] uppercase tracking-wider text-cyan-100/75">Emergency</p>
+                          <p className="text-[10px] uppercase tracking-wider text-sky-300/75">Emergency</p>
                           <a href="tel:+8809610818888" className="text-sm font-semibold text-white">
                             +880241355143
                           </a>
@@ -536,7 +551,7 @@ export default function Navbar() {
                             onClick={() => changeLanguage("bn")}
                             className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold transition duration-200 ${
                               language === "bn"
-                                ? "bg-cyan-300 text-slate-900"
+                                ? "bg-sky-400 text-slate-900"
                                 : "text-white/70 hover:bg-white/10 hover:text-white"
                             }`}
                           >
@@ -546,9 +561,10 @@ export default function Navbar() {
                       </div>
                     </div>
 
-                    {/* Menu Items */}
+                    {/* Menu Items - MFB Style */}
                     <motion.div
                       className="flex-1 overflow-y-auto px-4 pb-4 pt-3"
+                      style={{ background: "transparent" }}
                       initial="hidden"
                       animate="visible"
                       variants={listVariants}
@@ -566,17 +582,26 @@ export default function Navbar() {
                         ))}
                       </div>
 
-                      {/* Bottom CTA */}
+                      {/* Bottom CTA - MFB Style with Sky Blue Gradient */}
                       <motion.div variants={itemVariants} className="mt-3">
-                        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/20 via-sky-500/20 to-emerald-500/20 p-4">
+                       <div
+  className="relative overflow-hidden rounded-2xl p-4"
+  style={{
+    background: "#133d5d",
+    border: "1px solid rgba(255,255,255,0.08)",
+  }}
+>
                           <div className="relative">
-                            <p className="text-[10px] uppercase tracking-wider text-cyan-50/75">Quick Access</p>
+                            <p className="text-[10px] uppercase tracking-wider text-sky-300/75">Quick Access</p>
                             <h4 className="mt-1 text-base font-semibold text-white">Book Appointment</h4>
                             <p className="mt-0.5 text-sm text-slate-100/80">Get care in one tap</p>
                             <Link
                               href="/appointment"
                               onClick={closeMenu}
-                              className="mt-3 inline-block rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 transition-transform duration-200 hover:translate-x-1"
+                              className="mt-3 inline-block rounded-full bg-sky-600 hover:bg-sky-700 px-6 py-2.5 text-sm font-semibold text-white transition-colors duration-200"
+                              style={{
+                                boxShadow: '0 4px 15px rgba(14,165,233,0.4)',
+                              }}
                             >
                               {translations[language].appointment}
                             </Link>
@@ -591,6 +616,196 @@ export default function Navbar() {
           </AnimatePresence>
         </nav>
       </header>
+
+      {/* Global styles for MFB mobile menu */}
+      <style jsx global>{`
+        /* MFB Component Styles for Mobile Menu */
+        .mfb-component {
+          position: relative;
+          z-index: 30;
+        }
+
+        .mfb-component__button--main {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mfb-component__button--main-hover:hover {
+          transform: scale(1.1) !important;
+          box-shadow: 0 0 8px rgba(14, 165, 233, 0.5), 0 8px 16px rgba(14, 165, 233, 0.4) !important;
+        }
+
+        .mfb-component__main-icon--resting,
+        .mfb-component__main-icon--active {
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Menu Items */
+        .mfb-menu-item {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: #133d5d;
+  overflow: hidden;
+  transition: all .2s ease;
+}
+
+        .mfb-menu-item:hover {
+  background: #1a4d73;
+  border-color: rgba(255,255,255,.15);
+}
+
+        .mfb-menu-item__button {
+          display: flex;
+          width: 100%;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.75rem;
+          padding: 0.875rem 1rem;
+          text-align: left;
+          color: white;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .mfb-menu-item__button:hover {
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mfb-menu-item__button.active {
+          background: rgba(14, 165, 233, 0.15);
+        }
+
+        .mfb-menu-item__link {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.875rem 1rem;
+          color: white;
+          text-decoration: none;
+          transition: all 0.2s ease;
+        }
+
+        .mfb-menu-item__link:hover {
+          background: rgba(255, 255, 255, 0.05);
+          color: #60a5fa;
+        }
+
+        .mfb-menu-item__label {
+          font-size: 0.95rem;
+          font-weight: 500;
+          letter-spacing: 0.01em;
+        }
+
+        .mfb-menu-item__icon {
+          color: rgba(255, 255, 255, 0.3);
+          font-size: 0.75rem;
+          transition: all 0.2s ease;
+        }
+
+        .mfb-menu-item__link:hover .mfb-menu-item__icon {
+          color: #60a5fa;
+          transform: translateX(3px);
+        }
+
+        .mfb-menu-item__arrow {
+          display: flex;
+          height: 32px;
+          width: 32px;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          color: rgba(255, 255, 255, 0.6);
+          transition: all 0.3s ease;
+        }
+
+        .mfb-menu-item__arrow.open {
+          background: rgba(14, 165, 233, 0.2);
+          border-color: rgba(14, 165, 233, 0.3);
+          color: #7dd3fc;
+          transform: rotate(180deg);
+        }
+
+        .mfb-menu-item__button:hover .mfb-menu-item__arrow {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Submenu */
+        .mfb-submenu {
+          overflow: hidden;
+          background: rgba(0, 0, 0, 0.2);
+          padding: 0.5rem 0.75rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .mfb-component__child-wrapper {
+          margin-bottom: 0.375rem;
+        }
+
+        .mfb-component__child-wrapper:last-child {
+          margin-bottom: 0;
+        }
+
+        .mfb-component__child-link {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.625rem 0.75rem;
+          border-radius: 12px;
+          color: rgba(255, 255, 255, 0.85);
+          text-decoration: none;
+          transition: all 0.2s ease;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid transparent;
+        }
+
+        .mfb-component__child-link:hover {
+          background: rgba(14, 165, 233, 0.1);
+          border-color: rgba(14, 165, 233, 0.15);
+          color: white;
+          transform: translateX(4px);
+        }
+
+        .mfb-component__child-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: rgba(14, 165, 233, 0.15);
+          color: #7dd3fc;
+          font-size: 12px;
+          flex-shrink: 0;
+          transition: all 0.2s ease;
+        }
+
+        .mfb-component__child-link:hover .mfb-component__child-icon {
+          background: rgba(14, 165, 233, 0.25);
+          transform: scale(1.1);
+        }
+
+        .mfb-component__child-label {
+          font-size: 0.875rem;
+          font-weight: 400;
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 480px) {
+          .mfb-component__button--main {
+            height: 48px !important;
+            width: 48px !important;
+          }
+          
+          .mfb-component__main-icon--resting,
+          .mfb-component__main-icon--active {
+            line-height: 48px !important;
+            font-size: 20px !important;
+          }
+        }
+      `}</style>
     </>
   );
 }
